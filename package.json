@@ -1,0 +1,13 @@
+{
+  "name": "mktemp",
+  "version": "0.0.0",
+  "author": "sasa+1 <sasaplus1@gmail.com>",
+  "description": "mktemp command for node.js",
+  "main": "./index.js",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sasaplus1/mktemp.git"
+  }
+}
