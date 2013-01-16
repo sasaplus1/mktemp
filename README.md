@@ -2,6 +2,87 @@
 
 mktemp for node.js
 
+## Installation
+
+```sh
+$ npm install mktemp
+```
+
+## Usage
+
+```js
+var mktemp = require('mktemp');
+
+mktemp.createFile('file-XXXXXX', function(err, path) {
+  if (err) throw err;
+  // path is match for /^file-[\da-zA-Z]{6}$/
+});
+
+mktemp.createFileSync('file-XXX');
+// return value is match for /^file-[\da-zA-Z]{3}$/
+
+mktemp.createDir('dir-XXXXX', function(err, path) {
+  if (err) throw err;
+  // path is match for /^dir-[\da-zA-Z]{5}$/
+});
+
+mktemp.createDirSync('dir-XXX');
+// return value is match for /^dir-[\da-zA-Z]{3}$/
+```
+
+mktemp functions replace to random string from placeholder of "X".
+"X" is must be end of line.
+
+```js
+'XXXXX'  // /^[\da-zA-Z]{5}$/
+'abc-X'  // /^abc-[\da-zA-Z]$/
+'XX-XX'  // /^XX-[\da-zA-Z]{2}$/
+'XXXX_'  // /^XXXX_$/
+```
+
+## Functions
+
+### createFile(path, callback)
+
+  * `path` string - file path
+  * `callback` function(err, path) - callback function
+    * `err` - error object
+    * `path` - replaced path
+
+create blank file of random filename.
+
+### createFileSync(path)
+
+  * `path` string - file path
+  * `return` string - replaced path
+
+sync version createFile.
+
+### createDir(path, [mode], callback)
+
+  * `path` string - dir path
+  * `mode` number - permission (default: 0777)
+  * `callback` function(err, path) - callback function
+    * `err` - error object
+    * `path` - replaced path
+
+create directory of random dirname.
+
+### createDirSync(path, [mode])
+
+  * `path` string - dir path
+  * `mode` number - permission (default: 0777)
+  * `return` string - replaced path
+
+sync version createDir.
+
+## Test
+
+```sh
+$ npm install
+$ npm test
+```
+
 ## License
 
 The MIT License. Please see LICENSE file.
