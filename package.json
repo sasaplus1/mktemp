@@ -1,6 +1,6 @@
 {
   "name": "mktemp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "description": "mktemp command for node.js",
   "main": "./index.js",
