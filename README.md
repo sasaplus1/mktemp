@@ -15,7 +15,7 @@ var mktemp = require('mktemp');
 
 mktemp.createFile('file-XXXXXX', function(err, path) {
   if (err) throw err;
-  // path is match for /^file-[\da-zA-Z]{6}$/
+  console.log(path);  // match for /^file-[\da-zA-Z]{6}$/
 });
 
 mktemp.createFileSync('file-XXX');
@@ -23,21 +23,20 @@ mktemp.createFileSync('file-XXX');
 
 mktemp.createDir('dir-XXXXX', function(err, path) {
   if (err) throw err;
-  // path is match for /^dir-[\da-zA-Z]{5}$/
+  console.log(path);  // match for /^dir-[\da-zA-Z]{5}$/
 });
 
 mktemp.createDirSync('dir-XXX');
 // return value is match for /^dir-[\da-zA-Z]{3}$/
 ```
 
-mktemp functions replace to random string from placeholder of "X".
-"X" is must be end of line.
+mktemp functions replace to random string from placeholder of "X" near end of line.
 
 ```js
-'XXXXX'  // /^[\da-zA-Z]{5}$/
-'abc-X'  // /^abc-[\da-zA-Z]$/
-'XX-XX'  // /^XX-[\da-zA-Z]{2}$/
-'XXXX_'  // /^XXXX_$/
+'XXXXXXXXXXX'  // /^[\da-zA-Z]{11}$/
+'abc-XXXXXXX'  // /^abc-[\da-zA-Z]{7}$/
+'XXX-XXXXXXX'  // /^XXX-[\da-zA-Z]{7}$/
+'XXX-XXX.tmp'  // /^XXX-[\da-zA-Z]{3}\.tmp$/
 ```
 
 ## Functions
