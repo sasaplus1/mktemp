@@ -57,7 +57,7 @@ create blank file of random filename.
 
 sync version createFile.
 
-### createDir(path, [mode], callback)
+### createDir(path, [mode,] callback)
 
   * `path` string - dir path
   * `mode` number - permission (default: 0777)
