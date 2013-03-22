@@ -11,6 +11,7 @@
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
+    "fix": "fixjsstyle --strict --nojsdoc -r ./lib",
     "lint": "gjslint --strict --nojsdoc -r ./lib",
     "test": "./node_modules/.bin/mocha"
   },
