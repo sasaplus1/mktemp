@@ -6,15 +6,19 @@ var fs = require('fs'),
 suite('mktempのテスト', function() {
 
   suiteSetup(function() {
-    sinon.stub(fs, 'writeFile').callsArgWith(2, null);
-    sinon.stub(fs, 'writeFileSync');
+    sinon.stub(fs, 'open').callsArgWith(2, null);
+    sinon.stub(fs, 'close').callsArgWith(1, null);
+    sinon.stub(fs, 'openSync');
+    sinon.stub(fs, 'closeSync');
     sinon.stub(fs, 'mkdir').callsArgWith(2, null);
     sinon.stub(fs, 'mkdirSync');
   });
 
   suiteTeardown(function() {
-    fs.writeFile.restore();
-    fs.writeFileSync.restore();
+    fs.open.restore();
+    fs.openSync.restore();
+    fs.close.restore();
+    fs.closeSync.restore();
     fs.mkdir.restore();
     fs.mkdirSync.restore();
   });
