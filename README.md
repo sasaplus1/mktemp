@@ -82,6 +82,10 @@ $ npm install
 $ npm test
 ```
 
+## Contributors
+
+  * [Michael Ficarra](https://github.com/michaelficarra)
+
 ## License
 
 The MIT License. Please see LICENSE file.
