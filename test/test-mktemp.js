@@ -6,7 +6,7 @@ var fs = require('fs'),
 suite('mktempのテスト', function() {
 
   suiteSetup(function() {
-    sinon.stub(fs, 'open').callsArgWith(2, null);
+    sinon.stub(fs, 'open').callsArgWith(3, null);
     sinon.stub(fs, 'close').callsArgWith(1, null);
     sinon.stub(fs, 'openSync');
     sinon.stub(fs, 'closeSync');
