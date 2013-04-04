@@ -41,18 +41,20 @@ mktemp functions replace to random string from placeholder of "X" near end of li
 
 ## Functions
 
-### createFile(path, callback)
+### createFile(path, [mode,] callback)
 
   * `path` string - file path
+  * `mode` number - permission (default: 0777)
   * `callback` function(err, path) - callback function
     * `err` - error object
     * `path` - replaced path
 
 create blank file of random filename.
 
-### createFileSync(path)
+### createFileSync(path, [mode])
 
   * `path` string - file path
+  * `mode` number - permission (default: 0777)
   * `return` string - replaced path
 
 sync version createFile.
