@@ -41,36 +41,36 @@ mktemp functions replace to random string from placeholder of "X" near end of li
 
 ## Functions
 
-### createFile(path, callback)
+### createFile(template, callback)
 
-  * `path` string - file path
+  * `template` string - filename template
   * `callback` function(err, path) - callback function
     * `err` - error object
     * `path` - replaced path
 
 create blank file of random filename.
+permission is `0600`.
 
-### createFileSync(path)
+### createFileSync(template)
 
-  * `path` string - file path
+  * `template` string - filename template
   * `return` string - replaced path
 
 sync version createFile.
 
-### createDir(path, [mode,] callback)
+### createDir(template, callback)
 
-  * `path` string - dir path
-  * `mode` number - permission (default: 0777)
+  * `template` string - dirname template
   * `callback` function(err, path) - callback function
     * `err` - error object
     * `path` - replaced path
 
 create directory of random dirname.
+permission is `0700`.
 
-### createDirSync(path, [mode])
+### createDirSync(template)
 
-  * `path` string - dir path
-  * `mode` number - permission (default: 0777)
+  * `template` string - dirname template
   * `return` string - replaced path
 
 sync version createDir.
@@ -81,6 +81,10 @@ sync version createDir.
 $ npm install
 $ npm test
 ```
+
+## Contributors
+
+  * [Michael Ficarra](https://github.com/michaelficarra)
 
 ## License
 

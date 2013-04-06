@@ -1,3 +1,8 @@
+# 0.3.1 / 2013-04-06
+
+  - changed to create random name again if file exists
+  - deleted mode parameter
+
 # 0.2.1 / 2013-02-29
 
   - added support for node.js 0.10

@@ -1,7 +1,10 @@
 {
   "name": "mktemp",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "sasa+1 <sasaplus1@gmail.com>",
+  "contributors": [
+    "Michael Ficarra <github.public.email@michael.ficarra.me>"
+  ],
   "description": "mktemp command for node.js",
   "main": "./index.js",
   "license": "MIT",
@@ -13,7 +16,7 @@
   "scripts": {
     "fix": "fixjsstyle --strict --nojsdoc -r ./lib",
     "lint": "gjslint --strict --nojsdoc -r ./lib",
-    "test": "./node_modules/.bin/mocha"
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
   },
   "devDependencies": {
     "chai": "~1.4",
