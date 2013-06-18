@@ -1,38 +1,37 @@
 var assert = require('chai').assert,
     mkrand = require('../lib/mkrand');
 
-suite('mkrandのテスト', function() {
+suite('mkrand()', function() {
 
-  test('"X"の数だけ0-9a-zA-Zのランダムな文字列に置換されること', function() {
-    var randomString = mkrand('XXXXX');
+  test('replace "X" in end of line', function() {
+    var str = mkrand('XXXXX_XXXXX');
 
-    assert.isTrue(/^[\da-zA-Z]{5}$/.test(randomString),
-        'replace to random string from "XXXXX"');
-    assert.notStrictEqual(randomString, 'XXXXX',
-        'randomString is not "XXXXX"');
+    assert.isTrue(
+        /^X{5}_[\da-zA-Z]{5}$/.test(str),
+        'str should be match in /^X{5}_[\\da-zA-Z]{5}$/');
+    assert.notStrictEqual(
+        str,
+        'XXXXX_XXXXX',
+        'str should not be "XXXXX_XXXXX"');
   });
 
-  test('"X"が複数ある場合、末尾の"X"が優先的に置換されること', function() {
-    var randomString = mkrand('XXXXX_XXXXX');
+  test('replace "X" in near end of line', function() {
+    var str = mkrand('temp-XXXXX.tmp');
 
-    assert.isTrue(/^X{5}_[\da-zA-Z]{5}$/.test(randomString),
-        'replace to random string from XXXXX');
-    assert.notStrictEqual(randomString, 'XXXXX_XXXXX',
-        'randomString is not "XXXXX_XXXXX"');
+    assert.isTrue(
+        /^temp-[\da-zA-Z]{5}\.tmp$/.test(str),
+        'str should be match in /^temp-[\\da-zA-Z]{5}\\.tmp$/');
+    assert.notStrictEqual(
+        str,
+        'temp-XXXXX.tmp',
+        'str should not be "temp-XXXXX.tmp"');
   });
 
-  test('"X"が末尾で無くても置換されること', function() {
-    var randomString = mkrand('temp-XXXXX.tmp');
-
-    assert.isTrue(/^temp-[\da-zA-Z]{5}\.tmp$/.test(randomString),
-        'replace to random string from temp-XXXXX.tmp');
-    assert.notStrictEqual(randomString, 'temp-XXXXX.tmp',
-        'randomString is not "temp-XXXXX.tmp"');
-  });
-
-  test('"X"が無い場合置換されないこと', function() {
-    assert.strictEqual(mkrand('abcdef'), 'abcdef',
-        'randomString is not replaced');
+  test('not replace if string not has "X"', function() {
+    assert.strictEqual(
+        mkrand('abcde'),
+        'abcde',
+        'mkrand("abcde") should be returned "abcde"');
   });
 
 });
