@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/sasaplus1/mktemp.png)](https://travis-ci.org/sasaplus1/mktemp)
 [![Dependency Status](https://gemnasium.com/sasaplus1/mktemp.png)](https://gemnasium.com/sasaplus1/mktemp)
 
-mktemp for node.js
+mktemp command for node.js
 
 ## Installation
 
