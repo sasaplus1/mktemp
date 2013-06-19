@@ -6,4 +6,4 @@
 
 
 /** export mktemp functions. */
-module.exports = require('./lib/mktemp');
+module.exports = require('./lib');

@@ -1,7 +1,7 @@
 var fs = require('fs'),
     assert = require('chai').assert,
     sinon = require('sinon'),
-    mktemp = require('../');
+    mktemp = require('../lib/mktemp');
 
 suite('mktemp', function() {
 
