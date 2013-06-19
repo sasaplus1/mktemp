@@ -19,6 +19,7 @@
     "test": "NODE_ENV=test ./node_modules/.bin/mocha"
   },
   "devDependencies": {
+    "benchmark": "~1.0",
     "chai": "~1.7",
     "mocha": "~1.11",
     "sinon": "~1.7"
