@@ -1,6 +1,9 @@
-# mktemp  [![Build Status](https://travis-ci.org/sasaplus1/mktemp.png)](https://travis-ci.org/sasaplus1/mktemp)
+# mktemp
 
-mktemp for node.js
+[![Build Status](https://travis-ci.org/sasaplus1/mktemp.png)](https://travis-ci.org/sasaplus1/mktemp)
+[![Dependency Status](https://gemnasium.com/sasaplus1/mktemp.png)](https://gemnasium.com/sasaplus1/mktemp)
+
+mktemp command for node.js
 
 ## Installation
 
@@ -15,22 +18,22 @@ var mktemp = require('mktemp');
 
 mktemp.createFile('file-XXXXXX', function(err, path) {
   if (err) throw err;
-  console.log(path);  // match for /^file-[\da-zA-Z]{6}$/
+  console.log(path);  // match in /^file-[\da-zA-Z]{6}$/
 });
 
 mktemp.createFileSync('file-XXX');
-// return value is match for /^file-[\da-zA-Z]{3}$/
+// return value is match in /^file-[\da-zA-Z]{3}$/
 
 mktemp.createDir('dir-XXXXX', function(err, path) {
   if (err) throw err;
-  console.log(path);  // match for /^dir-[\da-zA-Z]{5}$/
+  console.log(path);  // match in /^dir-[\da-zA-Z]{5}$/
 });
 
 mktemp.createDirSync('dir-XXX');
-// return value is match for /^dir-[\da-zA-Z]{3}$/
+// return value is match in /^dir-[\da-zA-Z]{3}$/
 ```
 
-mktemp functions replace to random string from placeholder of "X" near end of line.
+mktemp functions replace to unique name from "X" at near end of line.
 
 ```js
 'XXXXXXXXXXX'  // /^[\da-zA-Z]{11}$/
@@ -48,7 +51,7 @@ mktemp functions replace to random string from placeholder of "X" near end of li
     * `err` - error object
     * `path` - replaced path
 
-create blank file of random filename.
+create blank file of unique filename.
 permission is `0600`.
 
 ### createFileSync(template)
@@ -65,7 +68,7 @@ sync version createFile.
     * `err` - error object
     * `path` - replaced path
 
-create directory of random dirname.
+create directory of unique dirname.
 permission is `0700`.
 
 ### createDirSync(template)

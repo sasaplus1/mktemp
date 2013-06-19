@@ -1,9 +1,9 @@
 var fs = require('fs'),
     assert = require('chai').assert,
     sinon = require('sinon'),
-    mktemp = require('../');
+    mktemp = require('../lib/mktemp');
 
-suite('mktempのテスト', function() {
+suite('mktemp', function() {
 
   suiteSetup(function() {
     sinon.stub(fs, 'open').callsArgWith(3, null);
@@ -23,42 +23,103 @@ suite('mktempのテスト', function() {
     fs.mkdirSync.restore();
   });
 
-  test('createFileのテスト', function(done) {
-    mktemp.createFile('file-XXXXX', function(err, path) {
-      assert.isTrue(/^file-[\da-zA-Z]{5}$/.test(path),
-          'create file of random filename');
-      assert.isFalse(/^file-X{5}$/.test(path),
-          'path is replaced to random filename');
-      done();
+  suite('#createUniqueName()', function() {
+
+    test('generate unique name', function(done) {
+      mktemp.createUniqueName('XXX-XXXXX', function(err, path) {
+        assert.isTrue(
+            /^X{3}-[\da-zA-Z]{5}$/.test(path),
+            'path should be match in /^X{3}-[\\da-zA-Z]{5}$/');
+        assert.notStrictEqual(
+            path,
+            'XXX-XXXXX',
+            'path should not be "XXX-XXXXX"');
+        done();
+      });
     });
+
   });
 
-  test('createFileSyncのテスト', function() {
-    var path = mktemp.createFileSync('file-XXX');
+  suite('#createUniqueNameSync()', function() {
 
-    assert.isTrue(/^file-[\da-zA-Z]{3}$/.test(path),
-        'create file of random filename');
-    assert.isFalse(/^file-X{3}$/.test(path),
-        'path is replaced to random filename');
-  });
+    test('generate unique name', function() {
+      var path = mktemp.createUniqueNameSync('XXX-XXXXX');
 
-  test('createDirのテスト', function(done) {
-    mktemp.createDir('dir-X', function(err, path) {
-      assert.isTrue(/^dir-[\da-zA-Z]$/.test(path),
-          'create dir of random dirname');
-      assert.isFalse(/^dir-X$/.test(path),
-          'path is replaced to random dirname');
-      done();
+      assert.isTrue(
+          /^X{3}-[\da-zA-Z]{5}$/.test(path),
+          'path should be match in /^X{3}-[\\da-zA-Z]{5}$/');
+      assert.notStrictEqual(
+          path,
+          'XXX-XXXXX',
+          'path should not be "XXX-XXXXX"');
     });
+
   });
 
-  test('createDirSyncのテスト', function() {
-    var path = mktemp.createDirSync('dir-XXXXXXX');
+  suite('#createFile()', function() {
 
-    assert.isTrue(/^dir-[\da-zA-Z]{7}$/.test(path),
-        'create dir of random dirname');
-    assert.isFalse(/^dir-X{7}$/.test(path),
-        'path is replaced to random dirname');
+    test('generate random filename', function(done) {
+      mktemp.createFile('file-XXXXX', function(err, path) {
+        assert.isTrue(
+            /^file-[\da-zA-Z]{5}$/.test(path),
+            'path should be match in /^file-[\\da-zA-Z]{5}$/');
+        assert.notStrictEqual(
+            path,
+            'file-XXXXX',
+            'path should not be "file-XXXXX"');
+        done();
+      });
+    });
+
+  });
+
+  suite('#createFileSync()', function() {
+
+    test('generate random filename', function() {
+      var path = mktemp.createFileSync('file-XXX');
+
+      assert.isTrue(
+          /^file-[\da-zA-Z]{3}$/.test(path),
+          'path should be match in /^file-[\\da-zA-Z]{3}$/');
+      assert.notStrictEqual(
+          path,
+          'file-XXX',
+          'path should not be "file-XXX"');
+    });
+
+  });
+
+  suite('#createDir()', function() {
+
+    test('generate random dirname', function(done) {
+      mktemp.createDir('dir-XXXXX', function(err, path) {
+        assert.isTrue(
+            /^dir-[\da-zA-Z]{5}$/.test(path),
+            'path should be match in /^dir-[\\da-zA-Z]{5}$/');
+        assert.notStrictEqual(
+            path,
+            'dir-XXXXX',
+            'path should not be "dir-XXXXX"');
+        done();
+      });
+    });
+
+  });
+
+  suite('#createDirSync()', function() {
+
+    test('generate random dirname', function() {
+      var path = mktemp.createDirSync('dir-XXX');
+
+      assert.isTrue(
+          /^dir-[\da-zA-Z]{3}$/.test(path),
+          'path should be match in /^dir-[\\da-zA-Z]{3}$/');
+      assert.notStrictEqual(
+          path,
+          'dir-XXX',
+          'path should not be "dir-XXX"');
+    });
+
   });
 
 });
