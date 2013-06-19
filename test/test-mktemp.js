@@ -23,6 +23,39 @@ suite('mktemp', function() {
     fs.mkdirSync.restore();
   });
 
+  suite('#createUniqueName()', function() {
+
+    test('generate unique name', function(done) {
+      mktemp.createUniqueName('XXX-XXXXX', function(err, path) {
+        assert.isTrue(
+            /^X{3}-[\da-zA-Z]{5}$/.test(path),
+            'path should be match in /^X{3}-[\\da-zA-Z]{5}$/');
+        assert.notStrictEqual(
+            path,
+            'XXX-XXXXX',
+            'path should not be "XXX-XXXXX"');
+        done();
+      });
+    });
+
+  });
+
+  suite('#createUniqueNameSync()', function() {
+
+    test('generate unique name', function() {
+      var path = mktemp.createUniqueNameSync('XXX-XXXXX');
+
+      assert.isTrue(
+          /^X{3}-[\da-zA-Z]{5}$/.test(path),
+          'path should be match in /^X{3}-[\\da-zA-Z]{5}$/');
+      assert.notStrictEqual(
+          path,
+          'XXX-XXXXX',
+          'path should not be "XXX-XXXXX"');
+    });
+
+  });
+
   suite('#createFile()', function() {
 
     test('generate random filename', function(done) {
