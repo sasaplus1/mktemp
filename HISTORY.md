@@ -1,4 +1,8 @@
-# 0.3.1 / 2013-04-06
+# 0.3.1 / 2013-06-19
+
+  - changed to fast mkrand
+
+# 0.3.0 / 2013-04-06
 
   - changed to create random name again if file exists
   - deleted mode parameter
