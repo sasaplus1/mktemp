@@ -1,37 +1,18 @@
-var assert = require('chai').assert,
+var expect = require('expect.js'),
     mkrand = require('../lib/mkrand');
 
-suite('mkrand()', function() {
+describe('mkrand', function() {
 
-  test('replace "X" in end of line', function() {
-    var str = mkrand('XXXXX_XXXXX');
-
-    assert.isTrue(
-        /^X{5}_[\da-zA-Z]{5}$/.test(str),
-        'str should be match in /^X{5}_[\\da-zA-Z]{5}$/');
-    assert.notStrictEqual(
-        str,
-        'XXXXX_XXXXX',
-        'str should not be "XXXXX_XXXXX"');
+  it('should replace "X", and matching to /^X{5}_[\\da-zA-Z]{5}$/', function() {
+    expect(mkrand('XXXXX_XXXXX')).to.match(/^X{5}_[\da-zA-Z]{5}$/);
   });
 
-  test('replace "X" in near end of line', function() {
-    var str = mkrand('temp-XXXXX.tmp');
-
-    assert.isTrue(
-        /^temp-[\da-zA-Z]{5}\.tmp$/.test(str),
-        'str should be match in /^temp-[\\da-zA-Z]{5}\\.tmp$/');
-    assert.notStrictEqual(
-        str,
-        'temp-XXXXX.tmp',
-        'str should not be "temp-XXXXX.tmp"');
+  it('should replace "X", and matching to /^[\\da-zA-Z]{5}.tmp$/', function() {
+    expect(mkrand('XXXXX.tmp')).to.match(/^[\da-zA-Z]{5}.tmp$/);
   });
 
-  test('not replace if string not has "X"', function() {
-    assert.strictEqual(
-        mkrand('abcde'),
-        'abcde',
-        'mkrand("abcde") should be returned "abcde"');
+  it('should not replace if parameter not has "X"', function() {
+    expect(mkrand('abcdef')).to.be('abcdef');
   });
 
 });
