@@ -18,19 +18,19 @@ var mktemp = require('mktemp');
 
 mktemp.createFile('file-XXXXXX', function(err, path) {
   if (err) throw err;
-  console.log(path);  // match in /^file-[\da-zA-Z]{6}$/
+  console.log(path);  // match to /^file-[\da-zA-Z]{6}$/
 });
 
 mktemp.createFileSync('file-XXX');
-// return value is match in /^file-[\da-zA-Z]{3}$/
+// return value is match to /^file-[\da-zA-Z]{3}$/
 
 mktemp.createDir('dir-XXXXX', function(err, path) {
   if (err) throw err;
-  console.log(path);  // match in /^dir-[\da-zA-Z]{5}$/
+  console.log(path);  // match to /^dir-[\da-zA-Z]{5}$/
 });
 
 mktemp.createDirSync('dir-XXX');
-// return value is match in /^dir-[\da-zA-Z]{3}$/
+// return value is match to /^dir-[\da-zA-Z]{3}$/
 ```
 
 mktemp functions replace to unique name from "X" at near end of line.

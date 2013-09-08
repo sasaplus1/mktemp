@@ -1,11 +1,11 @@
 var fs = require('fs'),
-    assert = require('chai').assert,
+    expect = require('expect.js'),
     sinon = require('sinon'),
     mktemp = require('../lib/mktemp');
 
-suite('mktemp', function() {
+describe('mktemp', function() {
 
-  suiteSetup(function() {
+  before(function() {
     sinon.stub(fs, 'open').callsArgWith(3, null);
     sinon.stub(fs, 'close').callsArgWith(1, null);
     sinon.stub(fs, 'openSync');
@@ -14,7 +14,7 @@ suite('mktemp', function() {
     sinon.stub(fs, 'mkdirSync');
   });
 
-  suiteTeardown(function() {
+  after(function() {
     fs.open.restore();
     fs.openSync.restore();
     fs.close.restore();
@@ -23,101 +23,61 @@ suite('mktemp', function() {
     fs.mkdirSync.restore();
   });
 
-  suite('#createUniqueName()', function() {
+  describe('#createFile()', function() {
 
-    test('generate unique name', function(done) {
-      mktemp.createUniqueName('XXX-XXXXX', function(err, path) {
-        assert.isTrue(
-            /^X{3}-[\da-zA-Z]{5}$/.test(path),
-            'path should be match in /^X{3}-[\\da-zA-Z]{5}$/');
-        assert.notStrictEqual(
-            path,
-            'XXX-XXXXX',
-            'path should not be "XXX-XXXXX"');
-        done();
-      });
-    });
-
-  });
-
-  suite('#createUniqueNameSync()', function() {
-
-    test('generate unique name', function() {
-      var path = mktemp.createUniqueNameSync('XXX-XXXXX');
-
-      assert.isTrue(
-          /^X{3}-[\da-zA-Z]{5}$/.test(path),
-          'path should be match in /^X{3}-[\\da-zA-Z]{5}$/');
-      assert.notStrictEqual(
-          path,
-          'XXX-XXXXX',
-          'path should not be "XXX-XXXXX"');
-    });
-
-  });
-
-  suite('#createFile()', function() {
-
-    test('generate random filename', function(done) {
+    it('should create file of random name', function(done) {
       mktemp.createFile('file-XXXXX', function(err, path) {
-        assert.isTrue(
-            /^file-[\da-zA-Z]{5}$/.test(path),
-            'path should be match in /^file-[\\da-zA-Z]{5}$/');
-        assert.notStrictEqual(
-            path,
-            'file-XXXXX',
-            'path should not be "file-XXXXX"');
+        expect(path).to.match(/^file-[\da-zA-Z]{5}$/);
         done();
       });
     });
 
   });
 
-  suite('#createFileSync()', function() {
+  describe('#createFileSync()', function() {
 
-    test('generate random filename', function() {
-      var path = mktemp.createFileSync('file-XXX');
-
-      assert.isTrue(
-          /^file-[\da-zA-Z]{3}$/.test(path),
-          'path should be match in /^file-[\\da-zA-Z]{3}$/');
-      assert.notStrictEqual(
-          path,
-          'file-XXX',
-          'path should not be "file-XXX"');
+    it('should create file of random name', function() {
+      expect(mktemp.createFileSync('XXX')).to.match(/^[\da-zA-Z]{3}$/);
     });
 
   });
 
-  suite('#createDir()', function() {
+  describe('#createDir()', function() {
 
-    test('generate random dirname', function(done) {
+    it('should create directory of random name', function(done) {
       mktemp.createDir('dir-XXXXX', function(err, path) {
-        assert.isTrue(
-            /^dir-[\da-zA-Z]{5}$/.test(path),
-            'path should be match in /^dir-[\\da-zA-Z]{5}$/');
-        assert.notStrictEqual(
-            path,
-            'dir-XXXXX',
-            'path should not be "dir-XXXXX"');
+        expect(path).to.match(/^dir-[\da-zA-Z]{5}$/);
         done();
       });
     });
 
   });
 
-  suite('#createDirSync()', function() {
+  describe('#createDirSync()', function() {
 
-    test('generate random dirname', function() {
-      var path = mktemp.createDirSync('dir-XXX');
+    it('should create directory of random name', function() {
+      expect(mktemp.createDirSync('XXX')).to.match(/^[\da-zA-Z]{3}$/);
+    });
 
-      assert.isTrue(
-          /^dir-[\da-zA-Z]{3}$/.test(path),
-          'path should be match in /^dir-[\\da-zA-Z]{3}$/');
-      assert.notStrictEqual(
-          path,
-          'dir-XXX',
-          'path should not be "dir-XXX"');
+  });
+
+  describe('#createUniqueName_()', function() {
+
+    it('should create unique name', function(done) {
+      mktemp.createUniqueName_('XXX-XXXXX', function(err, path) {
+        expect(path).to.match(/^X{3}-[\da-zA-Z]{5}$/);
+        done();
+      });
+    });
+
+  });
+
+  describe('#createUniqueNameSync_()', function() {
+
+    it('should create unique name', function() {
+      expect(
+          mktemp.createUniqueNameSync_('XXX-XXXXX')
+      ).to.match(/^X{3}-[\da-zA-Z]{5}$/);
     });
 
   });

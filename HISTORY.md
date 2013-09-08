@@ -1,3 +1,7 @@
+# 0.3.2 / 2013-09-08
+
+  - changed from chai to expect.js
+
 # 0.3.1 / 2013-06-19
 
   - changed to fast mkrand
