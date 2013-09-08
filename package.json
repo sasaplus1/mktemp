@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "benchmark": "~1.0",
-    "chai": "~1.7",
+    "expect.js": "~0.2",
     "mocha": "~1.11",
     "sinon": "~1.7"
   }
