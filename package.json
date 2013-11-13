@@ -1,6 +1,6 @@
 {
   "name": "mktemp",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "contributors": [
     "Michael Ficarra <github.public.email@michael.ficarra.me>"
@@ -17,12 +17,12 @@
     "bench": "node ./bench/index.js",
     "fix": "fixjsstyle --strict --nojsdoc -r ./lib -r ./test ./index.js",
     "lint": "gjslint --strict --nojsdoc -r ./lib -r ./test ./index.js",
-    "test": "NODE_ENV=test mocha"
+    "test": "mocha"
   },
   "devDependencies": {
     "benchmark": "~1.0",
     "expect.js": "~0.2",
-    "mocha": "~1.12",
+    "mocha": "~1.14",
     "sinon": "~1.7"
   }
 }

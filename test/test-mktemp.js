@@ -28,6 +28,7 @@ describe('mktemp', function() {
     it('should create file of random name', function(done) {
       mktemp.createFile('file-XXXXX', function(err, path) {
         expect(path).to.match(/^file-[\da-zA-Z]{5}$/);
+        expect(path).not.to.be('file-XXXXX');
         done();
       });
     });
@@ -38,6 +39,7 @@ describe('mktemp', function() {
 
     it('should create file of random name', function() {
       expect(mktemp.createFileSync('XXX')).to.match(/^[\da-zA-Z]{3}$/);
+      expect(mktemp.createFileSync('XXX')).not.to.be('XXX');
     });
 
   });
@@ -47,6 +49,7 @@ describe('mktemp', function() {
     it('should create directory of random name', function(done) {
       mktemp.createDir('dir-XXXXX', function(err, path) {
         expect(path).to.match(/^dir-[\da-zA-Z]{5}$/);
+        expect(path).not.to.be('dir-XXXXX');
         done();
       });
     });
@@ -57,27 +60,7 @@ describe('mktemp', function() {
 
     it('should create directory of random name', function() {
       expect(mktemp.createDirSync('XXX')).to.match(/^[\da-zA-Z]{3}$/);
-    });
-
-  });
-
-  describe('#createUniqueName_()', function() {
-
-    it('should create unique name', function(done) {
-      mktemp.createUniqueName_('XXX-XXXXX', function(err, path) {
-        expect(path).to.match(/^X{3}-[\da-zA-Z]{5}$/);
-        done();
-      });
-    });
-
-  });
-
-  describe('#createUniqueNameSync_()', function() {
-
-    it('should create unique name', function() {
-      expect(
-          mktemp.createUniqueNameSync_('XXX-XXXXX')
-      ).to.match(/^X{3}-[\da-zA-Z]{5}$/);
+      expect(mktemp.createDirSync('XXX')).to.not.be('XXX');
     });
 
   });

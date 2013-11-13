@@ -91,4 +91,4 @@ $ npm test
 
 ## License
 
-The MIT License. Please see LICENSE file.
+The MIT license. Please see LICENSE file.
