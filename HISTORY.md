@@ -1,3 +1,7 @@
+# 0.3.4 / 2013-11-23
+
+  - changed to throw error if error code is not EEXIST
+
 # 0.3.3 / 2013-11-14
 
   - changed from fs.exists to fs.open/fs.close/fs.mkdir
