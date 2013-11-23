@@ -36,10 +36,10 @@ mktemp.createDirSync('dir-XXX');
 mktemp functions replace to unique name from "X" at near end of line.
 
 ```js
-'XXXXXXXXXXX'  // /^[\da-zA-Z]{11}$/
-'abc-XXXXXXX'  // /^abc-[\da-zA-Z]{7}$/
-'XXX-XXXXXXX'  // /^XXX-[\da-zA-Z]{7}$/
-'XXX-XXX.tmp'  // /^XXX-[\da-zA-Z]{3}\.tmp$/
+mktemp.createFileSync('XXXXXXXXXXX');  // match to /^[\da-zA-Z]{11}$/
+mktemp.createFileSync('abc-XXXXXXX');  // match to /^abc-[\da-zA-Z]{7}$/
+mktemp.createFileSync('XXX-XXXXXXX');  // match to /^XXX-[\da-zA-Z]{7}$/
+mktemp.createFileSync('XXX-XXX.tmp');  // match to /^XXX-[\da-zA-Z]{3}\.tmp$/
 ```
 
 ## Functions
