@@ -31,7 +31,7 @@ describe('mktemp', function() {
 
     describe('has error, err.code is EEXIST', function() {
 
-      before(function() {
+      beforeEach(function() {
         var transientObject = {
           getCount: 0
         };
@@ -47,7 +47,7 @@ describe('mktemp', function() {
         sinon.stub(fs, 'close').callsArgWith(1, transientObject);
       });
 
-      after(function() {
+      afterEach(function() {
         fs.open.restore();
         fs.close.restore();
       });
@@ -110,7 +110,7 @@ describe('mktemp', function() {
 
     describe('throws error, err.code is EEXIST', function() {
 
-      before(function() {
+      beforeEach(function() {
         var transientObject = {
           getCount: 0
         };
@@ -126,7 +126,7 @@ describe('mktemp', function() {
         sinon.stub(fs, 'closeSync').throws(transientObject);
       });
 
-      after(function() {
+      afterEach(function() {
         fs.openSync.restore();
         fs.closeSync.restore();
       });
@@ -190,7 +190,7 @@ describe('mktemp', function() {
 
     describe('has error, err.code is EEXIST', function() {
 
-      before(function() {
+      beforeEach(function() {
         var transientObject = {
           getCount: 0
         };
@@ -205,7 +205,7 @@ describe('mktemp', function() {
         sinon.stub(fs, 'mkdir').callsArgWith(2, transientObject);
       });
 
-      after(function() {
+      afterEach(function() {
         fs.mkdir.restore();
       });
 
@@ -262,7 +262,7 @@ describe('mktemp', function() {
 
     describe('throws error, err.code is EEXIST', function() {
 
-      before(function() {
+      beforeEach(function() {
         var transientObject = {
           getCount: 0
         };
@@ -277,7 +277,7 @@ describe('mktemp', function() {
         sinon.stub(fs, 'mkdirSync').throws(transientObject);
       });
 
-      after(function() {
+      afterEach(function() {
         fs.mkdirSync.restore();
       });
 
