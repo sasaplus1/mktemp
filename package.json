@@ -15,8 +15,8 @@
   },
   "scripts": {
     "bench": "node ./bench/index.js",
-    "fix": "fixjsstyle --strict --nojsdoc -r ./lib -r ./test ./index.js",
-    "lint": "gjslint --strict --nojsdoc -r ./lib -r ./test ./index.js",
+    "fix": "fixjsstyle --flagfile .closurelinter -r ./lib -r ./test ./index.js",
+    "lint": "gjslint --flagfile .closurelinter -r ./lib -r ./test ./index.js",
     "test": "mocha"
   },
   "devDependencies": {
