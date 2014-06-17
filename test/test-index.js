@@ -4,12 +4,12 @@ var expect = require('expect.js'),
 describe('index', function() {
 
   it('should export some functions', function() {
-    expect(mktemp).to.eql({
-      createFile: mktemp.createFile,
-      createFileSync: mktemp.createFileSync,
-      createDir: mktemp.createDir,
-      createDirSync: mktemp.createDirSync
-    });
+    expect(mktemp).to.only.have.keys([
+      'createFile',
+      'createFileSync',
+      'createDir',
+      'createDirSync'
+    ]);
   });
 
 });
