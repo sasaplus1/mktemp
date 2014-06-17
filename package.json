@@ -14,13 +14,11 @@
     "url": "git://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
-    "bench": "node ./bench/index.js",
     "fix": "fixjsstyle --flagfile .closurelinter -r ./lib -r ./test ./index.js",
     "lint": "gjslint --flagfile .closurelinter -r ./lib -r ./test ./index.js",
     "test": "mocha"
   },
   "devDependencies": {
-    "benchmark": "~1.0",
     "expect.js": "~0.2",
     "mocha": "~1.14",
     "sinon": "~1.7"
