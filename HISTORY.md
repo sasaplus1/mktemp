@@ -1,3 +1,8 @@
+# 0.3.5 / 2014-06-25
+
+  - changed to use setImmediate in async functions
+  - refactored
+
 # 0.3.4 / 2013-11-23
 
   - changed to throw error if error code is not EEXIST
