@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sasaplus1/mktemp.svg)](https://travis-ci.org/sasaplus1/mktemp)
 [![Dependency Status](https://gemnasium.com/sasaplus1/mktemp.svg)](https://gemnasium.com/sasaplus1/mktemp)
+[![NPM version](https://badge.fury.io/js/mktemp.svg)](http://badge.fury.io/js/mktemp)
 
 mktemp command for node.js
 
