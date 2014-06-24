@@ -1,18 +1,22 @@
 var expect = require('expect.js'),
-    mkrand = require('../lib/mkrand');
+    randomstring = require('../lib/randomstring');
 
-describe('mkrand', function() {
+describe('randomstring', function() {
 
-  it('should replace "X", and matching to /^X{5}_[\\da-zA-Z]{5}$/', function() {
-    expect(mkrand('XXXXX_XXXXX')).to.match(/^X{5}_[\da-zA-Z]{5}$/);
-  });
+  describe('#generate()', function() {
 
-  it('should replace "X", and matching to /^[\\da-zA-Z]{5}.tmp$/', function() {
-    expect(mkrand('XXXXX.tmp')).to.match(/^[\da-zA-Z]{5}.tmp$/);
-  });
+    it('should generated str, match to /^X-[\\da-zA-Z]{3}$/', function() {
+      expect(randomstring.generate('X-XXX')).to.match(/^X-[\da-zA-Z]{3}$/);
+    });
 
-  it('should not replace if parameter not has "X"', function() {
-    expect(mkrand('abcdef')).to.be('abcdef');
+    it('should generated str, match to /^[\\da-zA-Z]{3}\.tmp$/', function() {
+      expect(randomstring.generate('XXX.tmp')).to.match(/^[\da-zA-Z]{3}\.tmp$/);
+    });
+
+    it('should returned template string', function() {
+      expect(randomstring.generate('template')).to.be('template');
+    });
+
   });
 
 });
