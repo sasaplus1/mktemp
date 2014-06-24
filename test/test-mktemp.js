@@ -7,9 +7,10 @@ describe('mktemp', function() {
 
   describe('#createFile()', function() {
 
-    describe('success', function() {
+    describe('case in success', function() {
 
       before(function() {
+        // callback's err is always null
         sinon.stub(fs, 'open').callsArgWith(3, null);
         sinon.stub(fs, 'close').callsArgWith(1, null);
       });
@@ -19,65 +20,72 @@ describe('mktemp', function() {
         fs.close.restore();
       });
 
-      it('should create file of random name', function(done) {
-        mktemp.createFile('file-XXXXX', function(err, path) {
-          expect(path).to.match(/^file-[\da-zA-Z]{5}$/);
-          expect(path).not.to.be('file-XXXXX');
+      it('should created file of random name', function(done) {
+        mktemp.createFile('XXXXX.tmp', function(err, path) {
+          expect(path).to.match(/^[\da-zA-Z]{5}\.tmp$/);
+          done();
+        });
+      });
+
+      it('should created file of template name', function(done) {
+        mktemp.createFile('template.txt', function(err, path) {
+          expect(path).to.be('template.txt');
           done();
         });
       });
 
     });
 
-    describe('has error, err.code is EEXIST', function() {
+    describe('case in error', function() {
 
-      before(function() {
-        var transientObject = {
-          getCount: 0
-        };
-
-        Object.defineProperty(transientObject, 'code', {
-          get: function() {
-            // return 'EEXIST' if first call
-            return (this.getCount++ > 0) ? null : 'EEXIST';
-          }
-        });
-
-        sinon.stub(fs, 'open').callsArgWith(3, transientObject);
-        sinon.stub(fs, 'close').callsArgWith(1, transientObject);
+      beforeEach(function() {
+        // callback's err is always null
+        sinon.stub(fs, 'close').callsArgWith(1, null);
       });
 
-      after(function() {
+      afterEach(function() {
         fs.open.restore();
         fs.close.restore();
       });
 
-      it('should once more call for callback', function(done) {
-        mktemp.createFile('', function(err, path) {
-          expect(err.getCount).to.be(2);
-          expect(err.code).to.be(null);
-          expect(path).to.be(null);
+      it('should repeated if error is EEXIST', function(done) {
+        var stub = sinon.stub(),
+            spy;
+
+        stub
+            .onCall(0).returns({
+              code: 'EEXIST'
+            })
+            .onCall(1).returns({
+              code: 'EEXIST'
+            })
+            .onCall(2).returns(null);
+
+        sinon.stub(fs, 'open', function(path, flags, mode, callback) {
+          callback(stub(), null);
+        });
+
+        spy = sinon.spy(function(err, path) {
+          expect(spy.calledOnce).to.be.ok();
+          expect(stub.calledThrice).to.be.ok();
+          expect(err).to.be(null);
+          expect(path).to.match(/^[\da-zA-Z]{3}\.tmp$/);
           done();
         });
+
+        mktemp.createFile('XXX.tmp', spy);
       });
 
-    });
+      it('should passed error to callback', function(done) {
+        // EACCES err
+        sinon.stub(fs, 'open').callsArgWith(3, {
+          code: 'EACCES'
+        });
 
-    describe('has error, err.code is not EEXIST', function() {
-
-      before(function() {
-        sinon.stub(fs, 'open').callsArgWith(3, {code: 'ENOENT'});
-        sinon.stub(fs, 'close').callsArgWith(1, {code: 'ENOENT'});
-      });
-
-      after(function() {
-        fs.open.restore();
-        fs.close.restore();
-      });
-
-      it('should set error to err and set null to path', function(done) {
-        mktemp.createFile('', function(err, path) {
-          expect(err).to.eql({code: 'ENOENT'});
+        mktemp.createFile('XXX.tmp', function(err, path) {
+          expect(err).to.eql({
+            code: 'EACCES'
+          });
           expect(path).to.be(null);
           done();
         });
@@ -89,11 +97,11 @@ describe('mktemp', function() {
 
   describe('#createFileSync()', function() {
 
-    describe('success', function() {
+    describe('case in success', function() {
 
       before(function() {
-        sinon.stub(fs, 'openSync').returns(1);
-        sinon.stub(fs, 'closeSync').returns(1);
+        sinon.stub(fs, 'openSync').returns(100);
+        sinon.stub(fs, 'closeSync');
       });
 
       after(function() {
@@ -101,64 +109,61 @@ describe('mktemp', function() {
         fs.closeSync.restore();
       });
 
-      it('should create file of random name', function() {
+      it('should created file of random name', function() {
         expect(mktemp.createFileSync('XXX')).to.match(/^[\da-zA-Z]{3}$/);
-        expect(mktemp.createFileSync('XXX')).not.to.be('XXX');
+      });
+
+      it('should created file of template name', function() {
+        expect(mktemp.createFileSync('template.txt')).to.be('template.txt');
       });
 
     });
 
-    describe('throws error, err.code is EEXIST', function() {
+    describe('case in error', function() {
 
-      before(function() {
-        var transientObject = {
-          getCount: 0
-        };
-
-        Object.defineProperty(transientObject, 'code', {
-          get: function() {
-            // return 'EEXIST' if first call
-            return (this.getCount++ > 0) ? null : 'EEXIST';
-          }
-        });
-
-        sinon.stub(fs, 'openSync').throws(transientObject);
-        sinon.stub(fs, 'closeSync').throws(transientObject);
+      beforeEach(function() {
+        sinon.stub(fs, 'closeSync');
       });
 
-      after(function() {
+      afterEach(function() {
         fs.openSync.restore();
         fs.closeSync.restore();
       });
 
-      it('should once more call for fs.openSync', function() {
-        expect(function() {
-          mktemp.createFileSync('');
-        }).to.throwError(function(e) {
-          expect(e.getCount).to.be(2);
-          expect(e.code).to.be(null);
+      it('should repeated if error is EEXIST', function() {
+        var stub = sinon.stub(),
+            result;
+
+        stub
+            .onCall(0).throws({
+              code: 'EEXIST'
+            })
+            .onCall(1).throws({
+              code: 'EEXIST'
+            })
+            .onCall(2).returns(100);
+
+        sinon.stub(fs, 'openSync', function(path, flags, mode) {
+          return stub();
         });
+
+        result = mktemp.createFileSync('XXX.tmp');
+
+        expect(stub.calledThrice).to.be.ok();
+        expect(result).to.match(/^[\da-zA-Z]{3}\.tmp$/);
       });
 
-    });
+      it('should threw error', function() {
+        sinon.stub(fs, 'openSync').throws({
+          code: 'EACCES'
+        });
 
-    describe('throws error, err.code is not EEXIST', function() {
-
-      before(function() {
-        sinon.stub(fs, 'openSync').throws({code: 'ENOENT'});
-        sinon.stub(fs, 'closeSync').throws({code: 'ENOENT'});
-      });
-
-      after(function() {
-        fs.openSync.restore();
-        fs.closeSync.restore();
-      });
-
-      it('should throws error of fs.openSync', function() {
         expect(function() {
           mktemp.createFileSync('');
         }).to.throwError(function(e) {
-          expect(e.code).to.be('ENOENT');
+          expect(e).to.eql({
+            code: 'EACCES'
+          });
         });
       });
 
@@ -168,9 +173,10 @@ describe('mktemp', function() {
 
   describe('#createDir()', function() {
 
-    describe('success', function() {
+    describe('case in success', function() {
 
       before(function() {
+        // callback's err is always null
         sinon.stub(fs, 'mkdir').callsArgWith(2, null);
       });
 
@@ -178,60 +184,66 @@ describe('mktemp', function() {
         fs.mkdir.restore();
       });
 
-      it('should create directory of random name', function(done) {
-        mktemp.createDir('dir-XXXXX', function(err, path) {
-          expect(path).to.match(/^dir-[\da-zA-Z]{5}$/);
-          expect(path).not.to.be('dir-XXXXX');
+      it('should created dir of random name', function(done) {
+        mktemp.createDir('XXXXX', function(err, path) {
+          expect(path).to.match(/^[\da-zA-Z]{5}$/);
+          done();
+        });
+      });
+
+      it('should created dir of template name', function(done) {
+        mktemp.createDir('template', function(err, path) {
+          expect(path).to.be('template');
           done();
         });
       });
 
     });
 
-    describe('has error, err.code is EEXIST', function() {
+    describe('case in error', function() {
 
-      before(function() {
-        var transientObject = {
-          getCount: 0
-        };
-
-        Object.defineProperty(transientObject, 'code', {
-          get: function() {
-            // return 'EEXIST' if first call
-            return (this.getCount++ > 0) ? null : 'EEXIST';
-          }
-        });
-
-        sinon.stub(fs, 'mkdir').callsArgWith(2, transientObject);
-      });
-
-      after(function() {
+      afterEach(function() {
         fs.mkdir.restore();
       });
 
-      it('should once more call for callback', function(done) {
-        mktemp.createDir('', function(err, path) {
-          expect(err.getCount).to.be(2);
-          expect(path).to.be(null);
+      it('should repeated if error is EEXIST', function(done) {
+        var stub = sinon.stub(),
+            spy;
+
+        stub
+            .onCall(0).returns({
+              code: 'EEXIST'
+            })
+            .onCall(1).returns({
+              code: 'EEXIST'
+            })
+            .onCall(2).returns(null);
+
+        sinon.stub(fs, 'mkdir', function(path, mode, callback) {
+          callback(stub(), null);
+        });
+
+        spy = sinon.spy(function(err, path) {
+          expect(spy.calledOnce).to.be.ok();
+          expect(stub.calledThrice).to.be.ok();
+          expect(err).to.be(null);
+          expect(path).to.match(/^[\da-zA-Z]{3}\.tmp$/);
           done();
         });
+
+        mktemp.createDir('XXX.tmp', spy);
       });
 
-    });
+      it('should passed error to callback', function(done) {
+        // EACCES err
+        sinon.stub(fs, 'mkdir').callsArgWith(2, {
+          code: 'EACCES'
+        });
 
-    describe('has error, err.code is not EEXIST', function() {
-
-      before(function() {
-        sinon.stub(fs, 'mkdir').callsArgWith(2, {code: 'ENOENT'});
-      });
-
-      after(function() {
-        fs.mkdir.restore();
-      });
-
-      it('should set error to err and set null to path', function(done) {
-        mktemp.createDir('', function(err, path) {
-          expect(err).to.eql({code: 'ENOENT'});
+        mktemp.createDir('XXX.tmp', function(err, path) {
+          expect(err).to.eql({
+            code: 'EACCES'
+          });
           expect(path).to.be(null);
           done();
         });
@@ -243,7 +255,7 @@ describe('mktemp', function() {
 
   describe('#createDirSync()', function() {
 
-    describe('success', function() {
+    describe('case in success', function() {
 
       before(function() {
         sinon.stub(fs, 'mkdirSync');
@@ -253,60 +265,56 @@ describe('mktemp', function() {
         fs.mkdirSync.restore();
       });
 
-      it('should create directory of random name', function() {
+      it('should created dir of random name', function() {
         expect(mktemp.createDirSync('XXX')).to.match(/^[\da-zA-Z]{3}$/);
-        expect(mktemp.createDirSync('XXX')).to.not.be('XXX');
+      });
+
+      it('should created dir of template name', function() {
+        expect(mktemp.createDirSync('template')).to.be('template');
       });
 
     });
 
-    describe('throws error, err.code is EEXIST', function() {
+    describe('case in error', function() {
 
-      before(function() {
-        var transientObject = {
-          getCount: 0
-        };
-
-        Object.defineProperty(transientObject, 'code', {
-          get: function() {
-            // return 'EEXIST' if first call
-            return (this.getCount++ > 0) ? null : 'EEXIST';
-          }
-        });
-
-        sinon.stub(fs, 'mkdirSync').throws(transientObject);
-      });
-
-      after(function() {
+      afterEach(function() {
         fs.mkdirSync.restore();
       });
 
-      it('should once more call for fs.mkdirSync', function() {
+      it('should repeated if error is EEXIST', function() {
+        var stub = sinon.stub(),
+            result;
+
+        stub
+            .onCall(0).throws({
+              code: 'EEXIST'
+            })
+            .onCall(1).throws({
+              code: 'EEXIST'
+            })
+            .onCall(2).returns(100);
+
+        sinon.stub(fs, 'mkdirSync', function(path, mode) {
+          return stub();
+        });
+
+        result = mktemp.createDirSync('XXX.tmp');
+
+        expect(stub.calledThrice).to.be.ok();
+        expect(result).to.match(/^[\da-zA-Z]{3}\.tmp$/);
+      });
+
+      it('should threw error', function() {
+        sinon.stub(fs, 'mkdirSync').throws({
+          code: 'EACCES'
+        });
+
         expect(function() {
           mktemp.createDirSync('');
         }).to.throwError(function(e) {
-          expect(e.getCount).to.be(2);
-          expect(e.code).to.be(null);
-        });
-      });
-
-    });
-
-    describe('throws error, err.code is not EEXIST', function() {
-
-      before(function() {
-        sinon.stub(fs, 'mkdirSync').throws({code: 'ENOENT'});
-      });
-
-      after(function() {
-        fs.mkdirSync.restore();
-      });
-
-      it('should throws error of fs.mkdirSync', function() {
-        expect(function() {
-          mktemp.createFileSync('');
-        }).to.throwError(function(e) {
-          expect(e.code).to.be('ENOENT');
+          expect(e).to.eql({
+            code: 'EACCES'
+          });
         });
       });
 
