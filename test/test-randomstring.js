@@ -6,11 +6,17 @@ describe('randomstring', function() {
   describe('#generate()', function() {
 
     it('should generated str, match to /^X-[\\da-zA-Z]{3}$/', function() {
-      expect(randomstring.generate('X-XXX')).to.match(/^X-[\da-zA-Z]{3}$/);
+      var result = randomstring.generate('X-XXX');
+
+      expect(result).to.match(/^X-[\da-zA-Z]{3}$/);
+      expect(result).not.to.be('X-XXX');
     });
 
     it('should generated str, match to /^[\\da-zA-Z]{3}\.tmp$/', function() {
-      expect(randomstring.generate('XXX.tmp')).to.match(/^[\da-zA-Z]{3}\.tmp$/);
+      var result = randomstring.generate('XXX.tmp');
+
+      expect(result).to.match(/^[\da-zA-Z]{3}\.tmp$/);
+      expect(result).not.to.be('XXX.tmp');
     });
 
     it('should returned template string', function() {
