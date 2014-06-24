@@ -17,65 +17,76 @@ $ npm install mktemp
 ```js
 var mktemp = require('mktemp');
 
-mktemp.createFile('file-XXXXXX', function(err, path) {
+mktemp.createFile('XXXXX.txt', function(err, path) {
   if (err) throw err;
-  console.log(path);  // match to /^file-[\da-zA-Z]{6}$/
+
+  // path match a /^[\da-zA-Z]{5}\.txt$/
+  console.log(path);
 });
 
-mktemp.createFileSync('file-XXX');
-// return value is match to /^file-[\da-zA-Z]{3}$/
+// return value match a /^[\da-zA-Z]{5}\.tmp$/
+mktemp.createFileSync('XXXXX.tmp');
 
-mktemp.createDir('dir-XXXXX', function(err, path) {
+mktemp.createDir('XXXXXXX', function(err, path) {
   if (err) throw err;
-  console.log(path);  // match to /^dir-[\da-zA-Z]{5}$/
+
+  // path match a /^[\da-zA-Z]{7}$/
+  console.log(path);
 });
 
-mktemp.createDirSync('dir-XXX');
-// return value is match to /^dir-[\da-zA-Z]{3}$/
+// return value match a /^XXX-[\da-zA-Z]{3}$/
+mktemp.createDirSync('XXX-XXX');
 ```
 
-mktemp functions replace to unique name from "X" at near end of line.
+mktemp functions are replace to random string from placeholder "X" in template. see example:
 
 ```js
-mktemp.createFileSync('XXXXXXXXXXX');  // match to /^[\da-zA-Z]{11}$/
-mktemp.createFileSync('abc-XXXXXXX');  // match to /^abc-[\da-zA-Z]{7}$/
-mktemp.createFileSync('XXX-XXXXXXX');  // match to /^XXX-[\da-zA-Z]{7}$/
-mktemp.createFileSync('XXX-XXX.tmp');  // match to /^XXX-[\da-zA-Z]{3}\.tmp$/
+mktemp.createFileSync('XXXXXXX');  // match a /^[\da-zA-Z]{7}$/
+mktemp.createFileSync('XXX.tmp');  // match a /^[\da-zA-Z]{3}\.tmp$/
+mktemp.createFileSync('XXX-XXX');  // match a /^XXX-[\da-zA-Z]{3}$/
 ```
 
 ## Functions
 
 ### createFile(template, callback)
 
-  * `template` string - filename template
-  * `callback` function(err, path) - callback function
-    * `err` - error object
-    * `path` - replaced path
+* `template`
+  * `String` - filename template
+* `callback`
+  * `function(err, path)` - callback function
+    * `err` : `Error|Null` - error object
+    * `path` :  `String` -  path
 
 create blank file of unique filename.
 permission is `0600`.
 
 ### createFileSync(template)
 
-  * `template` string - filename template
-  * `return` string - replaced path
+* `template`
+  * `String` - filename template
+* `return`
+  * `String` - path
 
 sync version createFile.
 
 ### createDir(template, callback)
 
-  * `template` string - dirname template
-  * `callback` function(err, path) - callback function
-    * `err` - error object
-    * `path` - replaced path
+* `template`
+  * `String` - dirname template
+* `callback`
+  * `function(err, path)` - callback function
+    * `err` : `Error|Null` - error object
+    * `path` : `String` - path
 
 create directory of unique dirname.
 permission is `0700`.
 
 ### createDirSync(template)
 
-  * `template` string - dirname template
-  * `return` string - replaced path
+* `template`
+  * `String` - dirname template
+* `return`
+  * `String` - path
 
 sync version createDir.
 
@@ -88,7 +99,7 @@ $ npm test
 
 ## Contributors
 
-  * [Michael Ficarra](https://github.com/michaelficarra)
+* [Michael Ficarra](https://github.com/michaelficarra)
 
 ## License
 
