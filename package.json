@@ -14,8 +14,8 @@
     "url": "git://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
-    "fix": "fixjsstyle --flagfile .closurelinter -r ./lib -r ./test ./index.js",
-    "lint": "gjslint --flagfile .closurelinter -r ./lib -r ./test ./index.js",
+    "fix": "fixjsstyle --flagfile .closurelinter -r .",
+    "lint": "gjslint --flagfile .closurelinter -r .",
     "test": "mocha"
   },
   "devDependencies": {
