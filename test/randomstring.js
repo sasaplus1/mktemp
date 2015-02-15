@@ -1,26 +1,24 @@
-var expect = require('expect.js'),
+var assert = require('power-assert'),
     randomstring = require('../lib/randomstring');
 
 describe('randomstring', function() {
 
-  describe('#generate()', function() {
+  describe('.generate()', function() {
 
-    it('should generated str, match to /^X-[\\da-zA-Z]{3}$/', function() {
-      var result = randomstring.generate('X-XXX');
+    it('should generated random string', function() {
+      var result;
 
-      expect(result).to.match(/^X-[\da-zA-Z]{3}$/);
-      expect(result).not.to.be('X-XXX');
-    });
+      result = randomstring.generate('X-XXX');
+      assert(/^X-[\da-zA-Z]{3}$/.test(result));
+      assert(result !== 'X-XXX');
 
-    it('should generated str, match to /^[\\da-zA-Z]{3}\.tmp$/', function() {
-      var result = randomstring.generate('XXX.tmp');
-
-      expect(result).to.match(/^[\da-zA-Z]{3}\.tmp$/);
-      expect(result).not.to.be('XXX.tmp');
+      result = randomstring.generate('XXX.tmp');
+      assert(/^[\da-zA-Z]{3}\.tmp$/.test(result));
+      assert(result !== 'XXX.tmp');
     });
 
     it('should returned template string', function() {
-      expect(randomstring.generate('template')).to.be('template');
+      assert(randomstring.generate('template') === 'template');
     });
 
   });
