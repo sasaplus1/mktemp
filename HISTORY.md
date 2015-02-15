@@ -1,3 +1,8 @@
+# 0.4.0 / 2015-02-16
+
+  - supported Promise
+  - changed to use power-assert from expect.js
+
 # 0.3.5 / 2014-06-25
 
   - changed to use setImmediate in async functions

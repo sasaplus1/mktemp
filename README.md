@@ -38,6 +38,32 @@ mktemp.createDir('XXXXXXX', function(err, path) {
 mktemp.createDirSync('XXX-XXX');
 ```
 
+if support Promise, can use Promise style.
+
+```js
+var mktemp = require('mktemp');
+
+mktemp
+  .createFile('XXXXX.txt')
+  .then(function(path) {
+    // path match a /^[\da-zA-Z]{5}\.txt$/
+    console.log(path);
+  })
+  .catch(function(err) {
+    console.error(err);
+  });
+
+mktemp
+  .createDir('XXXXX')
+  .then(function(path) {
+    // path match a /^[\da-zA-Z]{5}$/
+    console.log(path);
+  })
+  .catch(function(err) {
+    console.error(err);
+  });
+```
+
 mktemp functions are replace to random string from placeholder "X" in template. see example:
 
 ```js
@@ -48,7 +74,7 @@ mktemp.createFileSync('XXX-XXX');  // match a /^XXX-[\da-zA-Z]{3}$/
 
 ## Functions
 
-### createFile(template, callback)
+### createFile(template[, callback])
 
 * `template`
   * `String` - filename template
@@ -57,8 +83,9 @@ mktemp.createFileSync('XXX-XXX');  // match a /^XXX-[\da-zA-Z]{3}$/
     * `err` : `Error|Null` - error object
     * `path` :  `String` -  path
 
-create blank file of unique filename.
-permission is `0600`.
+create blank file of unique filename. permission is `0600`.
+
+it throws TypeError if node.js unsupported Promise and callback is not a function.
 
 ### createFileSync(template)
 
@@ -69,7 +96,7 @@ permission is `0600`.
 
 sync version createFile.
 
-### createDir(template, callback)
+### createDir(template[, callback])
 
 * `template`
   * `String` - dirname template
@@ -78,8 +105,9 @@ sync version createFile.
     * `err` : `Error|Null` - error object
     * `path` : `String` - path
 
-create directory of unique dirname.
-permission is `0700`.
+create directory of unique dirname. permission is `0700`.
+
+it throws TypeError if node.js unsupported Promise and callback is not a function.
 
 ### createDirSync(template)
 

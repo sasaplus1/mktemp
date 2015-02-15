@@ -1,6 +1,6 @@
 {
   "name": "mktemp",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "contributors": [
     "Michael Ficarra <github.public.email@michael.ficarra.me>"
@@ -13,15 +13,19 @@
     "type": "git",
     "url": "git://github.com/sasaplus1/mktemp.git"
   },
+  "directories": {
+    "test": "test/"
+  },
   "scripts": {
-    "fix": "fixjsstyle --flagfile .closurelinter -r ./lib -r ./test ./index.js",
-    "lint": "gjslint --flagfile .closurelinter -r ./lib -r ./test ./index.js",
+    "fix": "fixjsstyle --flagfile .closurelinter -r .",
+    "lint": "gjslint --flagfile .closurelinter -r .",
     "test": "mocha"
   },
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "mocha": "^1.20.1",
-    "sinon": "^1.10.2"
+    "intelli-espower-loader": "^0.6.0",
+    "mocha": "^2.1.0",
+    "power-assert": "^0.10.1",
+    "sinon": "^1.12.2"
   },
   "engines": {
     "node": ">0.9"
