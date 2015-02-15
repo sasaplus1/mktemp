@@ -19,8 +19,9 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "expect.js": "^0.3.1",
+    "intelli-espower-loader": "^0.6.0",
     "mocha": "^2.0.1",
+    "power-assert": "^0.10.1",
     "sinon": "^1.12.1"
   },
   "engines": {
