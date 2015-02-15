@@ -23,9 +23,9 @@
   },
   "devDependencies": {
     "intelli-espower-loader": "^0.6.0",
-    "mocha": "^2.0.1",
+    "mocha": "^2.1.0",
     "power-assert": "^0.10.1",
-    "sinon": "^1.12.1"
+    "sinon": "^1.12.2"
   },
   "engines": {
     "node": ">0.9"
