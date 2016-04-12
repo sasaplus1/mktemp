@@ -3,7 +3,8 @@
   "version": "0.4.0",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "contributors": [
-    "Michael Ficarra <github.public.email@michael.ficarra.me>"
+    "Michael Ficarra <github.public.email@michael.ficarra.me>",
+    "rjz <rj@rjzaworski.com>"
   ],
   "description": "mktemp command for node.js",
   "main": "./index.js",

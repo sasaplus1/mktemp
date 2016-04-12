@@ -128,6 +128,7 @@ $ npm test
 ## Contributors
 
 * [Michael Ficarra](https://github.com/michaelficarra)
+* [rjz](https://github.com/rjz)
 
 ## License
 
