@@ -18,9 +18,13 @@
     "test": "test/"
   },
   "scripts": {
+    "lint": "eslint --ext .js .",
     "test": "mocha"
   },
   "devDependencies": {
+    "babel-eslint": "^6.0.2",
+    "eslint": "^2.7.0",
+    "eslint-config-sasaplus1": "git+https://github.com/sasaplus1-prototype/eslint-config-sasaplus1.git",
     "intelli-espower-loader": "^0.6.0",
     "mocha": "^2.1.0",
     "power-assert": "^0.10.1",
