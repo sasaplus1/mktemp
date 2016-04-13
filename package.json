@@ -18,8 +18,6 @@
     "test": "test/"
   },
   "scripts": {
-    "fix": "fixjsstyle --flagfile .closurelinter -r .",
-    "lint": "gjslint --flagfile .closurelinter -r .",
     "test": "mocha"
   },
   "devDependencies": {
