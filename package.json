@@ -14,9 +14,6 @@
     "type": "git",
     "url": "git://github.com/sasaplus1/mktemp.git"
   },
-  "directories": {
-    "test": "test/"
-  },
   "scripts": {
     "lint": "eslint --ext .js .",
     "test": "mocha"
