@@ -12,7 +12,7 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git://github.com/sasaplus1/mktemp.git"
+    "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
     "lint": "eslint --ext .js .",
