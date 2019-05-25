@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "config:base",
+    ":automergePatch",
+    ":label(renovate)",
+    ":timezone(Asia/Tokyo)"
+  ],
+  "packageRules": [
+    {
+      "extends": "monorepo:babel",
+      "groupName": "babel monorepo"
+    }
+  ]
+}
