@@ -13,4 +13,7 @@ node_js:
 git:
   depth: 3
 
-cache: npm
+cache:
+  - npm
+  - directories:
+      - .eslintcache
