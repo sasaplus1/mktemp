@@ -111,6 +111,24 @@ describe('mktemp', function() {
 
     });
 
+    describe('when no files are available', function() {
+
+      beforeEach(function () {
+        sinon.stub(fs, 'open').callsArgWith(3, { code: 'EEXIST' });
+      });
+
+      afterEach(function () {
+        fs.open.restore();
+      });
+
+      it('throws an error', function (done) {
+        mktemp.createFile('temp-X', function (err) {
+          assert.equal('EEXIST', err.code);
+          done();
+        });
+      });
+    });
+
     describe('when unsupported Promise', function() {
 
       if (isPromise) {
@@ -169,6 +187,28 @@ describe('mktemp', function() {
         });
       });
 
+    });
+
+    describe('when no files are available', function() {
+
+      before(function() {
+        sinon.stub(fs, 'openSync').throws({ code: 'EEXIST' });
+      });
+
+      after(function() {
+        fs.openSync.restore();
+      });
+
+      it('throws an error', function() {
+        assert.throws(function() {
+          try {
+            mktemp.createFileSync('foo-X');
+          } catch (e) {
+            assert.equal('EEXIST', e.code);
+            throw e;
+          }
+        });
+      });
     });
 
     describe('when duplicate path', function() {
@@ -303,6 +343,24 @@ describe('mktemp', function() {
 
     });
 
+    describe('when no files are available', function() {
+
+      beforeEach(function () {
+        sinon.stub(fs, 'mkdir').callsArgWith(2, { code: 'EEXIST' });
+      });
+
+      afterEach(function () {
+        fs.mkdir.restore();
+      });
+
+      it('throws an error', function (done) {
+        mktemp.createDir('temp-X', function (err) {
+          assert.equal('EEXIST', err.code);
+          done();
+        });
+      });
+    });
+
     describe('when unsupported Promise', function() {
 
       if (isPromise) {
@@ -388,6 +446,26 @@ describe('mktemp', function() {
 
     });
 
-  });
+    describe('when no files are available', function() {
 
+      before(function() {
+        sinon.stub(fs, 'mkdirSync').throws({ code: 'EEXIST' });
+      });
+
+      after(function() {
+        fs.mkdirSync.restore();
+      });
+
+      it('throws an error', function() {
+        assert.throws(function() {
+          try {
+            mktemp.createDirSync('foo');
+          } catch (e) {
+            assert.equal('EEXIST', e.code);
+            throw e;
+          }
+        });
+      });
+    });
+  });
 });
