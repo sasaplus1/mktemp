@@ -23,7 +23,7 @@
     "sinon": "^1.17.3"
   },
   "engines": {
-    "node": ">0.9"
+    "node": ">=8"
   },
   "license": "MIT",
   "main": "./index.js",
