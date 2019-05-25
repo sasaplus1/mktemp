@@ -33,6 +33,7 @@
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
+    "fix": "eslint --cache --fix .",
     "lint": "eslint --cache .",
     "test": "npm run lint && mocha"
   }
