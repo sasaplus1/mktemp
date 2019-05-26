@@ -5,23 +5,23 @@ describe('randomstring', function() {
   describe('.outcomeCount()', function() {
     describe('when missing template placeholders', function() {
       it('returns 1', function() {
-        assert.equal(1, randomstring.outcomeCount('no-placeholder'));
+        assert(1 === randomstring.outcomeCount('no-placeholder'));
       });
     });
 
     describe('when template has a single placeholder', function() {
       // 62 == TABLE_LEN
       it('returns 62', function() {
-        assert.equal(62, randomstring.outcomeCount('short-placeholder-X'));
+        assert(62 === randomstring.outcomeCount('short-placeholder-X'));
       });
     });
 
     describe('when template has 7 placeholders', function() {
       // 3521614606208 == TABLE_LEN ^ 7
       it('returns 3521614606208', function() {
-        assert.equal(
-          3521614606208,
-          randomstring.outcomeCount('short-placeholder-XXXXXXX')
+        assert(
+          3521614606208 ===
+            randomstring.outcomeCount('short-placeholder-XXXXXXX')
         );
       });
     });

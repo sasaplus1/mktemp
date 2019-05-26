@@ -82,7 +82,7 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(null);
 
-        sinon.stub(fs, 'open', function(path, flags, mode, callback) {
+        sinon.stub(fs, 'open').callsFake(function(path, flags, mode, callback) {
           callback(stub(), null);
         });
         sinon.stub(fs, 'close').callsArgWith(1, null);
@@ -117,7 +117,7 @@ describe('mktemp', function() {
 
       it('throws an error', function(done) {
         mktemp.createFile('temp-X', function(err) {
-          assert.equal('EEXIST', err.code);
+          assert('EEXIST' === err.code);
           done();
         });
       });
@@ -192,7 +192,7 @@ describe('mktemp', function() {
           try {
             mktemp.createFileSync('foo-X');
           } catch (e) {
-            assert.equal('EEXIST', e.code);
+            assert('EEXIST' === e.code);
             throw e;
           }
         });
@@ -213,7 +213,7 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(100);
 
-        sinon.stub(fs, 'openSync', function() {
+        sinon.stub(fs, 'openSync').callsFake(function() {
           return stub();
         });
         sinon.stub(fs, 'closeSync');
@@ -305,7 +305,7 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(null);
 
-        sinon.stub(fs, 'mkdir', function(path, mode, callback) {
+        sinon.stub(fs, 'mkdir').callsFake(function(path, mode, callback) {
           callback(stub(), null);
         });
       });
@@ -338,7 +338,7 @@ describe('mktemp', function() {
 
       it('throws an error', function(done) {
         mktemp.createDir('temp-X', function(err) {
-          assert.equal('EEXIST', err.code);
+          assert('EEXIST' === err.code);
           done();
         });
       });
@@ -409,7 +409,7 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(100);
 
-        sinon.stub(fs, 'mkdirSync', function() {
+        sinon.stub(fs, 'mkdirSync').callsFake(function() {
           return stub();
         });
       });
@@ -440,7 +440,7 @@ describe('mktemp', function() {
           try {
             mktemp.createDirSync('foo');
           } catch (e) {
-            assert.equal('EEXIST', e.code);
+            assert('EEXIST' === e.code);
             throw e;
           }
         });

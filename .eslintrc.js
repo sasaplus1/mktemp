@@ -13,7 +13,11 @@ module.exports = {
       env: {
         mocha: true
       },
-      files: ['test/**/*.js']
+      files: ['test/**/*.js'],
+      rules: {
+        'node/no-unpublished-import': 'off',
+        'node/no-unpublished-require': 'off'
+      }
     }
   ],
   parserOptions: {
