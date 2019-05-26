@@ -1,4 +1,4 @@
-var assert = require('power-assert'),
+var assert = require('assert'),
   mktemp = require('../');
 
 describe('index', function() {

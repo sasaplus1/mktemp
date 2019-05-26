@@ -8,6 +8,9 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "babel-preset-power-assert": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-node": "^9.1.0",

@@ -1,5 +1,5 @@
 var fs = require('fs'),
-  assert = require('power-assert'),
+  assert = require('assert'),
   sinon = require('sinon'),
   mktemp = require('../lib/mktemp');
 
