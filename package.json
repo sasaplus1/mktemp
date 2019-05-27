@@ -8,19 +8,19 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/register": "^7.4.4",
-    "babel-preset-power-assert": "^3.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^2.3.0",
-    "lint-staged": "^8.1.7",
-    "mocha": "^6.1.4",
-    "power-assert": "^1.6.1",
-    "prettier": "^1.17.1",
-    "sinon": "^7.3.2"
+    "@babel/core": "7.4.5",
+    "@babel/register": "7.4.4",
+    "babel-preset-power-assert": "3.0.0",
+    "eslint": "5.16.0",
+    "eslint-config-prettier": "4.3.0",
+    "eslint-plugin-node": "9.1.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "husky": "2.3.0",
+    "lint-staged": "8.1.7",
+    "mocha": "6.1.4",
+    "power-assert": "1.6.1",
+    "prettier": "1.17.1",
+    "sinon": "7.3.2"
   },
   "engines": {
     "node": ">=8"
