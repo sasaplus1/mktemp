@@ -4,14 +4,9 @@
  * Released under the MIT license.
  */
 
-var mktemp = require('./lib/mktemp');
+const dir = require('./src/dir');
+const file = require('./src/file');
 
-/**
- * export.
- */
-module.exports = {
-  createFile: mktemp.createFile,
-  createFileSync: mktemp.createFileSync,
-  createDir: mktemp.createDir,
-  createDirSync: mktemp.createDirSync
-};
+module.exports = {};
+
+Object.assign(module.exports, dir, file);

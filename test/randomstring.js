@@ -1,18 +1,19 @@
-var assert = require('assert'),
-  randomstring = require('../lib/randomstring');
+const assert = require('assert');
 
-describe('randomstring', function() {
-  describe('.outcomeCount()', function() {
+const uniqueName = require('../src/unique_name');
+
+describe('uniqueName', function() {
+  describe('.getOutcomeCount()', function() {
     describe('when missing template placeholders', function() {
       it('returns 1', function() {
-        assert(1 === randomstring.outcomeCount('no-placeholder'));
+        assert(1 === uniqueName.getOutcomeCount('no-placeholder'));
       });
     });
 
     describe('when template has a single placeholder', function() {
       // 62 == TABLE_LEN
       it('returns 62', function() {
-        assert(62 === randomstring.outcomeCount('short-placeholder-X'));
+        assert(62 === uniqueName.getOutcomeCount('short-placeholder-X'));
       });
     });
 
@@ -21,7 +22,7 @@ describe('randomstring', function() {
       it('returns 3521614606208', function() {
         assert(
           3521614606208 ===
-            randomstring.outcomeCount('short-placeholder-XXXXXXX')
+            uniqueName.getOutcomeCount('short-placeholder-XXXXXXX')
         );
       });
     });
@@ -31,17 +32,17 @@ describe('randomstring', function() {
     it('should generated random string', function() {
       var result;
 
-      result = randomstring.generate('X-XXX');
+      result = uniqueName.generate('X-XXX');
       assert(/^X-[\da-zA-Z]{3}$/.test(result));
       assert(result !== 'X-XXX');
 
-      result = randomstring.generate('XXX.tmp');
+      result = uniqueName.generate('XXX.tmp');
       assert(/^[\da-zA-Z]{3}\.tmp$/.test(result));
       assert(result !== 'XXX.tmp');
     });
 
     it('should returned template string', function() {
-      assert(randomstring.generate('template') === 'template');
+      assert(uniqueName.generate('template') === 'template');
     });
   });
 });

@@ -1,7 +1,8 @@
-var fs = require('fs'),
-  assert = require('assert'),
-  sinon = require('sinon'),
-  mktemp = require('../lib/mktemp');
+const assert = require('assert');
+const fs = require('fs');
+
+const sinon = require('sinon');
+const mktemp = require('../');
 
 describe('mktemp', function() {
   var isPromise = typeof Promise === 'function';
