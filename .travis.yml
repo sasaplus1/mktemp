@@ -17,3 +17,7 @@ cache:
   - npm
   - directories:
       - .eslintcache
+
+script:
+  - npm run lint
+  - npm run mocha

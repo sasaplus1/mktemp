@@ -35,6 +35,7 @@
   "scripts": {
     "fix": "eslint --cache --fix .",
     "lint": "eslint --cache .",
+    "mocha": "mocha",
     "test": "npm run lint && mocha"
   }
 }
