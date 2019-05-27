@@ -1,3 +1,7 @@
+# 1.0.0 / 2019-05-27
+
+  - modernize
+
 # 0.4.0 / 2015-02-16
 
   - supported Promise
