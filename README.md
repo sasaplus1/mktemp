@@ -1,8 +1,9 @@
 # mktemp
 
-[![Build Status](https://travis-ci.org/sasaplus1/mktemp.svg)](https://travis-ci.org/sasaplus1/mktemp)
-[![Dependency Status](https://gemnasium.com/sasaplus1/mktemp.svg)](https://gemnasium.com/sasaplus1/mktemp)
-[![NPM version](https://badge.fury.io/js/mktemp.svg)](http://badge.fury.io/js/mktemp)
+[![Build Status](https://travis-ci.org/sasaplus1/mktemp.svg?branch=master)](https://travis-ci.org/sasaplus1/mktemp)
+[![npm version](https://badge.fury.io/js/mktemp.svg)](https://badge.fury.io/js/mktemp)
+[![Try mktemp on RunKit](https://badge.runkitcdn.com/mktemp.svg)](https://npm.runkit.com/mktemp)
+[![renovate](https://badges.renovateapi.com/github/sasaplus1/mktemp)](https://renovatebot.com)
 
 mktemp command for node.js
 
