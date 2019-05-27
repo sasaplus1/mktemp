@@ -10,7 +10,7 @@ module.exports = {
       'git diff --exit-code --quiet'
     ],
     'package.json': [
-      'npx fixpack',
+      'npm run fixpack',
       'npx --no-install prettier --parser json-stringify --write',
       'git diff --exit-code --quiet'
     ]

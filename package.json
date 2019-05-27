@@ -34,6 +34,7 @@
   },
   "scripts": {
     "fix": "eslint --cache --fix .",
+    "fixpack": "npx fixpack",
     "lint": "eslint --cache .",
     "mocha": "mocha",
     "test": "npm run lint && mocha"
