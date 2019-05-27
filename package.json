@@ -25,6 +25,10 @@
   "engines": {
     "node": ">=8"
   },
+  "files": [
+    "index.js",
+    "src"
+  ],
   "license": "MIT",
   "main": "./index.js",
   "readmeFilename": "README.md",
