@@ -9,7 +9,7 @@ mktemp command for node.js
 
 ## Installation
 
-```sh
+```console
 $ npm install mktemp
 ```
 
@@ -119,13 +119,6 @@ it throws TypeError if node.js unsupported Promise and callback is not a functio
 
 sync version createDir.
 
-## Test
-
-```sh
-$ npm install
-$ npm test
-```
-
 ## Contributors
 
 * [Michael Ficarra](https://github.com/michaelficarra)
@@ -133,4 +126,4 @@ $ npm test
 
 ## License
 
-The MIT license. Please see LICENSE file.
+The MIT license.
