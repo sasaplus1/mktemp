@@ -10,6 +10,12 @@ module.exports = {
   ],
   overrides: [
     {
+      files: ['**/*.ts'],
+      rules: {
+        'node/no-unsupported-features/es-syntax': 'off'
+      }
+    },
+    {
       env: {
         mocha: true
       },
@@ -20,8 +26,15 @@ module.exports = {
       }
     }
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018
+    sourceType: 'module'
   },
-  root: true
+  plugins: ['@typescript-eslint'],
+  root: true,
+  settings: {
+    node: {
+      tryExtensions: ['.ts', '.js', '.json', '.node']
+    }
+  }
 };
