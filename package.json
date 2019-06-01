@@ -44,9 +44,9 @@
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
-    "fix": "eslint --cache --fix .",
+    "fix": "eslint --cache --ext .ts --fix .",
     "fixpack": "npx fixpack",
-    "lint": "eslint --cache .",
+    "lint": "eslint --cache --ext .ts .",
     "mocha": "mocha",
     "test": "npm run lint && mocha"
   }
