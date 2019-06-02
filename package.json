@@ -10,24 +10,35 @@
   "devDependencies": {
     "@babel/core": "7.4.5",
     "@babel/register": "7.4.4",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^12.0.2",
+    "@types/sinon": "^7.0.12",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
     "babel-preset-power-assert": "3.0.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.3.0",
     "eslint-plugin-node": "9.1.0",
     "eslint-plugin-prettier": "3.1.0",
+    "espower-typescript": "^9.0.2",
     "husky": "2.3.0",
     "lint-staged": "8.1.7",
     "mocha": "6.1.4",
     "power-assert": "1.6.1",
     "prettier": "1.17.1",
-    "sinon": "7.3.2"
+    "sinon": "7.3.2",
+    "typescript": "^3.4.5"
   },
   "engines": {
     "node": ">=8"
   },
   "files": [
+    "index.d.ts",
     "index.js",
-    "src"
+    "index.js.map",
+    "src/*.d.ts",
+    "src/*.js",
+    "src/*.js.map"
   ],
   "license": "MIT",
   "main": "./index.js",
@@ -37,10 +48,13 @@
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
-    "fix": "eslint --cache --fix .",
+    "build": "tsc",
+    "fix": "eslint --cache --ext .ts --fix .",
     "fixpack": "npx fixpack",
-    "lint": "eslint --cache .",
+    "lint": "eslint --cache --ext .ts .",
     "mocha": "mocha",
-    "test": "npm run lint && mocha"
-  }
+    "test": "npm run lint && npm run mocha"
+  },
+  "sideEffects": false,
+  "types": "./index.d.ts"
 }

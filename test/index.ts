@@ -1,5 +1,8 @@
-var assert = require('assert'),
-  mktemp = require('../');
+import assert = require('assert');
+
+import { describe, it } from 'mocha';
+
+import * as mktemp from '../';
 
 describe('index', function() {
   it('should export some functions', function() {

@@ -1,11 +1,11 @@
+"use strict";
 /**
  * @file generate unique name
  */
-
+Object.defineProperty(exports, "__esModule", { value: true });
 const placeholder = /(X+)[^X]*$/;
 const table = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const tableLength = table.length;
-
 /**
  * count the number of possible outcomes for the template
  *
@@ -14,19 +14,16 @@ const tableLength = table.length;
  * @return {number} count of possible outcomes
  */
 function getOutcomeCount(template) {
-  if (typeof template !== 'string') {
-    throw new TypeError(`template must be a string: ${template}`);
-  }
-
-  const matches = template.match(placeholder);
-
-  if (matches === null) {
-    return 1;
-  }
-
-  return Math.pow(tableLength, matches[1].length);
+    if (typeof template !== 'string') {
+        throw new TypeError(`template must be a string: ${template}`);
+    }
+    const matches = template.match(placeholder);
+    if (matches === null) {
+        return 1;
+    }
+    return Math.pow(tableLength, matches[1].length);
 }
-
+exports.getOutcomeCount = getOutcomeCount;
 /**
  * generate unique name
  *
@@ -35,32 +32,21 @@ function getOutcomeCount(template) {
  * @return {string} unique name string
  */
 function generate(template) {
-  if (typeof template !== 'string') {
-    throw new TypeError(`template must be a string: ${template}`);
-  }
-
-  const matches = template.match(placeholder);
-
-  if (matches === null) {
-    return template;
-  }
-
-  const result = [];
-
-  for (let i = 0, len = matches[1].length; i < len; ++i) {
-    result.push(table[Math.floor(Math.random() * tableLength)]);
-  }
-
-  const { index: matchesIndex } = matches;
-
-  return (
-    template.slice(0, matchesIndex) +
-    result.join('') +
-    template.slice(matchesIndex + result.length)
-  );
+    if (typeof template !== 'string') {
+        throw new TypeError(`template must be a string: ${template}`);
+    }
+    const matches = template.match(placeholder);
+    if (matches === null) {
+        return template;
+    }
+    const result = [];
+    for (let i = 0, len = matches[1].length; i < len; ++i) {
+        result.push(table[Math.floor(Math.random() * tableLength)]);
+    }
+    const { index: matchesIndex = 0 } = matches;
+    return (template.slice(0, matchesIndex) +
+        result.join('') +
+        template.slice(matchesIndex + result.length));
 }
-
-module.exports = {
-  getOutcomeCount,
-  generate
-};
+exports.generate = generate;
+//# sourceMappingURL=unique_name.js.map

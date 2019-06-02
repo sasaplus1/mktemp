@@ -1,27 +1,41 @@
-const assert = require('assert');
-const fs = require('fs');
+import assert = require('assert');
+import * as fs from 'fs';
 
-const sinon = require('sinon');
-const mktemp = require('../');
+import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
+import * as sinon from 'sinon';
+
+import * as mktemp from '../';
 
 describe('mktemp', function() {
-  var isPromise = typeof Promise === 'function';
+  const isPromise = typeof Promise === 'function';
 
   describe('.createFile()', function() {
     describe('case in success', function() {
+      let fsOpenStub: sinon.SinonStub;
+      let fsCloseStub: sinon.SinonStub;
+
       before(function() {
         // always pass with null
-        sinon.stub(fs, 'open').callsArgWith(3, null);
-        sinon.stub(fs, 'close').callsArgWith(1, null);
+        fsOpenStub = sinon.stub(fs, 'open');
+        fsOpenStub.callsArgWith(3, null);
+        fsCloseStub = sinon.stub(fs, 'close');
+        fsCloseStub.callsArgWith(1, null);
       });
 
       after(function() {
-        fs.open.restore();
-        fs.close.restore();
+        fsOpenStub.restore();
+        fsCloseStub.restore();
       });
 
       it('should created file of random name', function(done) {
         mktemp.createFile('XXXXX.tmp', function(err, path) {
+          if (path === null) {
+            assert.fail();
+            done(new Error());
+
+            return;
+          }
+
           assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
           done();
         });
@@ -29,7 +43,13 @@ describe('mktemp', function() {
 
       if (isPromise) {
         it('should created file of random name, use Promise', function() {
-          return mktemp.createFile('XXXXX.tmp').then(function(path) {
+          return mktemp.createFile('XXXXX.tmp')!.then(function(path) {
+            if (path === null) {
+              assert.fail();
+
+              return;
+            }
+
             assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
           });
         });
@@ -39,20 +59,25 @@ describe('mktemp', function() {
     });
 
     describe('case in fail', function() {
+      let fsOpenStub: sinon.SinonStub;
+      let fsCloseStub: sinon.SinonStub;
+
       before(function() {
         // always pass with error
-        sinon.stub(fs, 'open').callsArgWith(3, { code: 'EACCES' });
-        sinon.stub(fs, 'close').callsArgWith(1, null);
+        fsOpenStub = sinon.stub(fs, 'open');
+        fsOpenStub.callsArgWith(3, { code: 'EACCES' });
+        fsCloseStub = sinon.stub(fs, 'close');
+        fsCloseStub.callsArgWith(1, null);
       });
 
       after(function() {
-        fs.open.restore();
-        fs.close.restore();
+        fsOpenStub.restore();
+        fsCloseStub.restore();
       });
 
       it('should passed error', function(done) {
         mktemp.createFile('XXX.tmp', function(err, path) {
-          assert(err.code === 'EACCES');
+          assert(err!.code === 'EACCES');
           assert(path === null);
           done();
         });
@@ -60,7 +85,7 @@ describe('mktemp', function() {
 
       if (isPromise) {
         it('should passed error to Promise', function() {
-          return mktemp.createFile('XXX.tmp')['catch'](function(err) {
+          return mktemp.createFile('XXX.tmp')!['catch'](function(err) {
             assert(err.code === 'EACCES');
           });
         });
@@ -70,7 +95,9 @@ describe('mktemp', function() {
     });
 
     describe('when duplicate path', function() {
-      var stub;
+      let stub: sinon.SinonStub;
+      let fsOpenStub: sinon.SinonStub;
+      let fsCloseStub: sinon.SinonStub;
 
       before(function() {
         // pass with error sometimes
@@ -83,15 +110,17 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(null);
 
-        sinon.stub(fs, 'open').callsFake(function(path, flags, mode, callback) {
+        fsOpenStub = sinon.stub(fs, 'open');
+        fsOpenStub.callsFake(function(path, flags, mode, callback) {
           callback(stub(), null);
         });
-        sinon.stub(fs, 'close').callsArgWith(1, null);
+        fsCloseStub = sinon.stub(fs, 'close');
+        fsCloseStub.callsArgWith(1, null);
       });
 
       after(function() {
-        fs.open.restore();
-        fs.close.restore();
+        fsOpenStub.restore();
+        fsCloseStub.restore();
       });
 
       it('should created file of random name', function(done) {
@@ -108,17 +137,20 @@ describe('mktemp', function() {
     });
 
     describe('when no files are available', function() {
+      let fsOpenStub: sinon.SinonStub;
+
       beforeEach(function() {
-        sinon.stub(fs, 'open').callsArgWith(3, { code: 'EEXIST' });
+        fsOpenStub = sinon.stub(fs, 'open');
+        fsOpenStub.callsArgWith(3, { code: 'EEXIST' });
       });
 
       afterEach(function() {
-        fs.open.restore();
+        fsOpenStub.restore();
       });
 
       it('throws an error', function(done) {
         mktemp.createFile('temp-X', function(err) {
-          assert('EEXIST' === err.code);
+          assert(err!.code === 'EEXIST');
           done();
         });
       });
@@ -139,15 +171,19 @@ describe('mktemp', function() {
 
   describe('.createFileSync()', function() {
     describe('case in success', function() {
+      let fsOpenSyncStub: sinon.SinonStub;
+      let fsCloseSyncStub: sinon.SinonStub;
+
       before(function() {
         // always return fd
-        sinon.stub(fs, 'openSync').returns(100);
-        sinon.stub(fs, 'closeSync');
+        fsOpenSyncStub = sinon.stub(fs, 'openSync');
+        fsOpenSyncStub.returns(100);
+        fsCloseSyncStub = sinon.stub(fs, 'closeSync');
       });
 
       after(function() {
-        fs.openSync.restore();
-        fs.closeSync.restore();
+        fsOpenSyncStub.restore();
+        fsCloseSyncStub.restore();
       });
 
       it('should created file of random name', function() {
@@ -156,15 +192,19 @@ describe('mktemp', function() {
     });
 
     describe('case in fail', function() {
+      let fsOpenSyncStub: sinon.SinonStub;
+      let fsCloseSyncStub: sinon.SinonStub;
+
       before(function() {
         // always throws error
-        sinon.stub(fs, 'openSync').throws({ code: 'EACCES' });
-        sinon.stub(fs, 'closeSync');
+        fsOpenSyncStub = sinon.stub(fs, 'openSync');
+        fsOpenSyncStub.throws({ code: 'EACCES' });
+        fsCloseSyncStub = sinon.stub(fs, 'closeSync');
       });
 
       after(function() {
-        fs.openSync.restore();
-        fs.closeSync.restore();
+        fsOpenSyncStub.restore();
+        fsCloseSyncStub.restore();
       });
 
       it('should threw error', function() {
@@ -172,7 +212,7 @@ describe('mktemp', function() {
           function() {
             mktemp.createFileSync('');
           },
-          function(err) {
+          function(err: any) {
             return err.code === 'EACCES';
           }
         );
@@ -180,12 +220,15 @@ describe('mktemp', function() {
     });
 
     describe('when no files are available', function() {
+      let fsOpenSyncStub: sinon.SinonStub;
+
       before(function() {
-        sinon.stub(fs, 'openSync').throws({ code: 'EEXIST' });
+        fsOpenSyncStub = sinon.stub(fs, 'openSync');
+        fsOpenSyncStub.throws({ code: 'EEXIST' });
       });
 
       after(function() {
-        fs.openSync.restore();
+        fsOpenSyncStub.restore();
       });
 
       it('throws an error', function() {
@@ -201,7 +244,9 @@ describe('mktemp', function() {
     });
 
     describe('when duplicate path', function() {
-      var stub;
+      let stub: sinon.SinonStub;
+      let fsOpenSyncStub: sinon.SinonStub;
+      let fsCloseSyncStub: sinon.SinonStub;
 
       before(function() {
         // throws error sometimes
@@ -214,15 +259,16 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(100);
 
-        sinon.stub(fs, 'openSync').callsFake(function() {
+        fsOpenSyncStub = sinon.stub(fs, 'openSync');
+        fsOpenSyncStub.callsFake(function() {
           return stub();
         });
-        sinon.stub(fs, 'closeSync');
+        fsCloseSyncStub = sinon.stub(fs, 'closeSync');
       });
 
       after(function() {
-        fs.openSync.restore();
-        fs.closeSync.restore();
+        fsOpenSyncStub.restore();
+        fsCloseSyncStub.restore();
       });
 
       it('should created file of random name', function() {
@@ -236,17 +282,27 @@ describe('mktemp', function() {
 
   describe('.createDir()', function() {
     describe('case in success', function() {
+      let fsMkdirStub: sinon.SinonStub;
+
       before(function() {
         // always pass with null
-        sinon.stub(fs, 'mkdir').callsArgWith(2, null);
+        fsMkdirStub = sinon.stub(fs, 'mkdir');
+        fsMkdirStub.callsArgWith(2, null);
       });
 
       after(function() {
-        fs.mkdir.restore();
+        fsMkdirStub.restore();
       });
 
       it('should created dir of random name', function(done) {
         mktemp.createDir('XXXXX', function(err, path) {
+          if (path === null) {
+            assert.fail();
+            done(new Error());
+
+            return;
+          }
+
           assert(/^[\da-zA-Z]{5}$/.test(path));
           done();
         });
@@ -254,7 +310,13 @@ describe('mktemp', function() {
 
       if (isPromise) {
         it('should created dir of random name, use Promise', function() {
-          return mktemp.createDir('XXXXX').then(function(path) {
+          return mktemp.createDir('XXXXX')!.then(function(path) {
+            if (path === null) {
+              assert.fail();
+
+              return;
+            }
+
             assert(/^[\da-zA-Z]{5}$/.test(path));
           });
         });
@@ -264,18 +326,21 @@ describe('mktemp', function() {
     });
 
     describe('case in fail', function() {
+      let fsMkdirStub: sinon.SinonStub;
+
       before(function() {
         // always pass with error
-        sinon.stub(fs, 'mkdir').callsArgWith(2, { code: 'EACCES' });
+        fsMkdirStub = sinon.stub(fs, 'mkdir');
+        fsMkdirStub.callsArgWith(2, { code: 'EACCES' });
       });
 
       after(function() {
-        fs.mkdir.restore();
+        fsMkdirStub.restore();
       });
 
       it('should passed error', function(done) {
         mktemp.createDir('XXX', function(err, path) {
-          assert(err.code === 'EACCES');
+          assert(err!.code === 'EACCES');
           assert(path === null);
           done();
         });
@@ -283,7 +348,7 @@ describe('mktemp', function() {
 
       if (isPromise) {
         it('should passed error to Promise', function() {
-          return mktemp.createDir('XXX')['catch'](function(err) {
+          return mktemp.createDir('XXX')!['catch'](function(err) {
             assert(err.code === 'EACCES');
           });
         });
@@ -293,7 +358,8 @@ describe('mktemp', function() {
     });
 
     describe('when duplicate path', function() {
-      var stub;
+      let stub: sinon.SinonStub;
+      let fsMkdirStub: sinon.SinonStub;
 
       before(function() {
         // pass with error sometimes
@@ -306,13 +372,14 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(null);
 
-        sinon.stub(fs, 'mkdir').callsFake(function(path, mode, callback) {
+        fsMkdirStub = sinon.stub(fs, 'mkdir');
+        fsMkdirStub.callsFake(function(path, mode, callback) {
           callback(stub(), null);
         });
       });
 
       after(function() {
-        fs.mkdir.restore();
+        fsMkdirStub.restore();
       });
 
       it('should created dir of random name', function(done) {
@@ -329,17 +396,20 @@ describe('mktemp', function() {
     });
 
     describe('when no files are available', function() {
+      let fsMkdirStub: sinon.SinonStub;
+
       beforeEach(function() {
-        sinon.stub(fs, 'mkdir').callsArgWith(2, { code: 'EEXIST' });
+        fsMkdirStub = sinon.stub(fs, 'mkdir');
+        fsMkdirStub.callsArgWith(2, { code: 'EEXIST' });
       });
 
       afterEach(function() {
-        fs.mkdir.restore();
+        fsMkdirStub.restore();
       });
 
       it('throws an error', function(done) {
         mktemp.createDir('temp-X', function(err) {
-          assert('EEXIST' === err.code);
+          assert(err!.code === 'EEXIST');
           done();
         });
       });
@@ -359,14 +429,16 @@ describe('mktemp', function() {
   });
 
   describe('.createDirSync()', function() {
+    let fsMkdirSyncStub: sinon.SinonStub;
+
     describe('case in success', function() {
       before(function() {
         // basic stub
-        sinon.stub(fs, 'mkdirSync');
+        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
       });
 
       after(function() {
-        fs.mkdirSync.restore();
+        fsMkdirSyncStub.restore();
       });
 
       it('should created dir of random name', function() {
@@ -375,13 +447,16 @@ describe('mktemp', function() {
     });
 
     describe('case in fail', function() {
+      let fsMkdirSyncStub: sinon.SinonStub;
+
       before(function() {
         // always throws error
-        sinon.stub(fs, 'mkdirSync').throws({ code: 'EACCES' });
+        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
+        fsMkdirSyncStub.throws({ code: 'EACCES' });
       });
 
       after(function() {
-        fs.mkdirSync.restore();
+        fsMkdirSyncStub.restore();
       });
 
       it('should threw error', function() {
@@ -389,7 +464,7 @@ describe('mktemp', function() {
           function() {
             mktemp.createDirSync('');
           },
-          function(err) {
+          function(err: any) {
             return err.code === 'EACCES';
           }
         );
@@ -397,7 +472,8 @@ describe('mktemp', function() {
     });
 
     describe('when duplicate path', function() {
-      var stub;
+      let stub: sinon.SinonStub;
+      let fsMkdirSyncStub: sinon.SinonStub;
 
       before(function() {
         // throws error sometimes
@@ -410,13 +486,14 @@ describe('mktemp', function() {
           .onCall(2)
           .returns(100);
 
-        sinon.stub(fs, 'mkdirSync').callsFake(function() {
+        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
+        fsMkdirSyncStub.callsFake(function() {
           return stub();
         });
       });
 
       after(function() {
-        fs.mkdirSync.restore();
+        fsMkdirSyncStub.restore();
       });
 
       it('should created dir of random name', function() {
@@ -428,12 +505,15 @@ describe('mktemp', function() {
     });
 
     describe('when no files are available', function() {
+      let fsMkdirSyncStub: sinon.SinonStub;
+
       before(function() {
-        sinon.stub(fs, 'mkdirSync').throws({ code: 'EEXIST' });
+        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
+        fsMkdirSyncStub.throws({ code: 'EEXIST' });
       });
 
       after(function() {
-        fs.mkdirSync.restore();
+        fsMkdirSyncStub.restore();
       });
 
       it('throws an error', function() {

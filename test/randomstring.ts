@@ -1,6 +1,8 @@
-const assert = require('assert');
+import assert = require('assert');
 
-const uniqueName = require('../src/unique_name');
+import { describe, it } from 'mocha';
+
+import * as uniqueName from '../src/unique_name';
 
 describe('uniqueName', function() {
   describe('.getOutcomeCount()', function() {

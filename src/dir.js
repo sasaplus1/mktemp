@@ -1,11 +1,10 @@
+"use strict";
 /**
  * @file for directory processing
  */
-
-const fs = require('fs');
-
-const uniqueName = require('./unique_name');
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
+const uniqueName = require("./unique_name");
 /**
  * try create unique name directory
  *
@@ -14,24 +13,19 @@ const uniqueName = require('./unique_name');
  * @param {Function} callback
  */
 function tryCreateDir(template, retryCount, callback) {
-  let dirname = uniqueName.generate(template);
-
-  fs.mkdir(dirname, 448 /*=0700*/, function(err) {
-    if (err) {
-      if (err.code === 'EEXIST' && retryCount > 0) {
-        setImmediate(tryCreateDir, template, retryCount - 1, callback);
-
-        return;
-      }
-
-      // dirname set to null if throws error
-      dirname = null;
-    }
-
-    callback(err, dirname);
-  });
+    let dirname = uniqueName.generate(template);
+    fs.mkdir(dirname, 448 /*=0700*/, function (err) {
+        if (err) {
+            if (err.code === 'EEXIST' && retryCount > 0) {
+                setImmediate(tryCreateDir, template, retryCount - 1, callback);
+                return;
+            }
+            // dirname set to null if throws error
+            dirname = null;
+        }
+        callback(err, dirname);
+    });
 }
-
 /**
  * create unique name directory
  *
@@ -40,19 +34,15 @@ function tryCreateDir(template, retryCount, callback) {
  * @return {Promise}
  */
 function createDir(template, callback) {
-  if (typeof callback !== 'function') {
-    return new Promise(function(resolve, reject) {
-      createDir(template, (err, dirname) =>
-        err ? reject(err) : resolve(dirname)
-      );
-    });
-  }
-
-  const retryCount = uniqueName.getOutcomeCount(template);
-
-  tryCreateDir(template, retryCount, callback);
+    if (typeof callback !== 'function') {
+        return new Promise(function (resolve, reject) {
+            createDir(template, (err, dirname) => err ? reject(err) : resolve(dirname));
+        });
+    }
+    const retryCount = uniqueName.getOutcomeCount(template);
+    tryCreateDir(template, retryCount, callback);
 }
-
+exports.createDir = createDir;
 /**
  * sync version createDir
  *
@@ -61,31 +51,26 @@ function createDir(template, callback) {
  * @return {string} dirname
  */
 function createDirSync(template) {
-  let dirname;
-  let isExist;
-
-  let retryCount = uniqueName.getOutcomeCount(template);
-
-  do {
-    isExist = false;
-    retryCount -= 1;
-    dirname = uniqueName.generate(template);
-
-    try {
-      fs.mkdirSync(dirname, 448 /*=0700*/);
-    } catch (e) {
-      if (e.code === 'EEXIST' && retryCount > 0) {
-        isExist = true;
-      } else {
-        throw e;
-      }
-    }
-  } while (isExist);
-
-  return dirname;
+    let dirname;
+    let isExist;
+    let retryCount = uniqueName.getOutcomeCount(template);
+    do {
+        isExist = false;
+        retryCount -= 1;
+        dirname = uniqueName.generate(template);
+        try {
+            fs.mkdirSync(dirname, 448 /*=0700*/);
+        }
+        catch (e) {
+            if (e.code === 'EEXIST' && retryCount > 0) {
+                isExist = true;
+            }
+            else {
+                throw e;
+            }
+        }
+    } while (isExist);
+    return dirname;
 }
-
-module.exports = {
-  createDir,
-  createDirSync
-};
+exports.createDirSync = createDirSync;
+//# sourceMappingURL=dir.js.map
