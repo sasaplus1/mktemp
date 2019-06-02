@@ -49,5 +49,7 @@
     "fixpack": "npx fixpack",
     "lint": "eslint --cache --ext .ts .",
     "test": "npm run lint && mocha"
-  }
+  },
+  "sideEffects": false,
+  "types": "./index.d.ts"
 }
