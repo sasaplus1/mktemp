@@ -1,3 +1,4 @@
+--extension ts
 --reporter spec
 --require espower-typescript/guess
 --ui bdd
