@@ -45,7 +45,7 @@ function tryCreateDir(
  */
 export function createDir(
   template: string,
-  callback: (err: NodeJS.ErrnoException | null, dirname: string | null) => void
+  callback?: (err: NodeJS.ErrnoException | null, dirname: string | null) => void
 ): undefined | Promise<string | null> {
   if (typeof callback !== 'function') {
     return new Promise(function(resolve, reject) {

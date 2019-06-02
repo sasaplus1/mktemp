@@ -11,7 +11,7 @@ import * as uniqueName from './unique_name';
  *
  * @param {string} template template string for file name
  * @param {number} retryCount
- * @param {Function} callback
+ * @param {Function} [callback]
  */
 function tryCreateFile(
   template: string,
@@ -51,7 +51,10 @@ function tryCreateFile(
  */
 export function createFile(
   template: string,
-  callback: (err: NodeJS.ErrnoException | null, filename: string | null) => void
+  callback?: (
+    err: NodeJS.ErrnoException | null,
+    filename: string | null
+  ) => void
 ): undefined | Promise<string | null> {
   if (typeof callback !== 'function') {
     return new Promise(function(resolve, reject) {
