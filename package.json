@@ -10,7 +10,7 @@
   "devDependencies": {
     "@babel/core": "7.4.5",
     "@babel/register": "7.4.4",
-    "@types/mocha": "5.2.7",
+    "@types/mocha": "7.0.2",
     "@types/node": "12.0.12",
     "@types/sinon": "7.0.13",
     "@typescript-eslint/eslint-plugin": "1.9.0",
@@ -23,7 +23,7 @@
     "espower-typescript": "9.0.2",
     "husky": "2.3.0",
     "lint-staged": "8.1.7",
-    "mocha": "6.1.4",
+    "mocha": "7.1.2",
     "power-assert": "1.6.1",
     "prettier": "1.17.1",
     "sinon": "7.3.2",
