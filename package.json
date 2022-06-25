@@ -54,6 +54,7 @@
     "fixpack": "npx fixpack",
     "lint": "eslint --cache --ext .ts .",
     "mocha": "mocha",
+    "prepare": "is-ci || husky install",
     "test": "npm run lint && npm run mocha"
   },
   "sideEffects": false,
