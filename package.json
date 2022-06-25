@@ -26,7 +26,7 @@
     "lint-staged": "13.0.3",
     "mocha": "6.1.4",
     "power-assert": "1.6.1",
-    "prettier": "1.17.1",
+    "prettier": "2.7.1",
     "sinon": "7.3.2",
     "typescript": "3.4.5"
   },
@@ -56,6 +56,18 @@
     "package-lock.json": "node -e 'process.exitCode = 1'"
   },
   "main": "./index.js",
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "overrides": [
+      {
+        "files": "*.json",
+        "options": {
+          "parser": "json-stringify"
+        }
+      }
+    ]
+  },
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
