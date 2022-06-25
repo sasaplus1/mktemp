@@ -1,40 +1,45 @@
-module.exports = {
-  env: {
-    es6: true,
-    node: true
+const typescriptExtends = [
+  'eslint:recommended',
+  'plugin:@typescript-eslint/eslint-recommended',
+  'plugin:@typescript-eslint/recommended',
+  'plugin:node/recommended-module',
+  'prettier'
+];
+
+const typescriptPlugins = ['eslint-plugin-tsdoc'];
+
+const tsdocRules = {
+  'tsdoc/syntax': 'warn'
+};
+
+const tryExtensions = ['.d.ts', '.ts', '.js', '.json'];
+
+const config = {};
+const overrides = [];
+
+overrides.push({
+  extends: typescriptExtends,
+  files: ['./**/*.ts'],
+  plugins: [...typescriptPlugins],
+  rules: {
+    ...tsdocRules
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:node/recommended',
-    'plugin:prettier/recommended'
-  ],
-  overrides: [
-    {
-      files: ['**/*.ts'],
-      rules: {
-        'node/no-unsupported-features/es-syntax': 'off'
-      }
-    },
-    {
-      env: {
-        mocha: true
-      },
-      files: ['test/**/*.js'],
-      rules: {
-        'node/no-unpublished-import': 'off',
-        'node/no-unpublished-require': 'off'
-      }
-    }
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    sourceType: 'module'
-  },
-  plugins: ['@typescript-eslint'],
-  root: true,
   settings: {
     node: {
-      tryExtensions: ['.ts', '.js', '.json', '.node']
+      tryExtensions
     }
   }
+});
+
+config.env = {
+  browser: true,
+  es6: true
 };
+config.extends = ['eslint:recommended', 'plugin:node/recommended', 'prettier'];
+config.overrides = overrides;
+config.parserOptions = {
+  sourceType: 'module'
+};
+config.root = true;
+
+module.exports = config;
