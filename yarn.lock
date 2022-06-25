@@ -551,6 +551,11 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
+ci-info@^3.2.0:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.3.2.tgz#6d2967ffa407466481c6c90b6e16b3098f080128"
+  integrity sha512-xmDt/QIAdeZ9+nfdPsaBCpMvHNLFiLdjj59qjqn+6iPe6YmHGQ35sBnQ8uslRBXFmXkiZQOJRjvQeoGppoTjjg==
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -1634,6 +1639,13 @@ is-callable@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/is-callable/-/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
   integrity sha512-r5p9sxJjYnArLjObpjA4xu5EKI3CuKHkJXMhT7kwbpUyIFD1n5PMAsoPvWnvtZiNz7LjkYDRZhd7FlI0eMijEA==
+
+is-ci@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-3.0.1.tgz#db6ecbed1bd659c43dac0f45661e7674103d1867"
+  integrity sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==
+  dependencies:
+    ci-info "^3.2.0"
 
 is-data-descriptor@^0.1.4:
   version "0.1.4"
