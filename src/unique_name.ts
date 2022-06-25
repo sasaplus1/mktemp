@@ -1,5 +1,5 @@
 /**
- * @file generate unique name
+ * generate unique name
  */
 
 const placeholder = /(X+)[^X]*$/;
