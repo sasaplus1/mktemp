@@ -79,12 +79,17 @@
     "build": "run-s --print-label build:*",
     "build:cjs": "tsc --outDir dist/cjs --module commonjs",
     "build:esm": "tsc --outDir dist/esm --module esnext",
-    "fix": "eslint --cache --ext .ts --fix .",
-    "fixpack": "npx fixpack",
-    "lint": "eslint --cache --ext .ts .",
-    "mocha": "mocha",
+    "fix": "run-p --print-label fix:*",
+    "fix:eslint": "eslint --fix .",
+    "fix:fixpack": "npx fixpack",
+    "fix:prettier": "prettier --write .",
+    "lint": "run-p --print-label lint:*",
+    "lint:eslint": "eslint .",
+    "lint:fixpack": "npx fixpack --dryRun",
+    "lint:prettier": "prettier --check .",
+    "lint:tsc": "tsc --noEmit",
     "prepare": "is-ci || husky install",
-    "test": "npm run lint && npm run mocha"
+    "test": "mocha"
   },
   "sideEffects": false,
   "types": "./index.d.ts"
