@@ -1,26 +1,24 @@
-/**
- * generate unique name
- */
-
-const placeholder = /(X+)[^X]*$/;
+const placeholderRegex = /(X+)[^X]*$/;
 const table = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const tableLength = table.length;
 
 /**
  * count the number of possible outcomes for the template
  *
- * @param {string} template template string
- * @throws {TypeError} if template is not a string
- * @return {number} count of possible outcomes
+ * @param template - template string
+ * @returns count of possible outcomes
+ *
+ * @throws {@link TypeError}
+ * if template is not a string
  */
 export function getOutcomeCount(template: string): number {
   if (typeof template !== 'string') {
     throw new TypeError(`template must be a string: ${template}`);
   }
 
-  const matches = template.match(placeholder);
+  const matches = template.match(placeholderRegex);
 
-  if (matches === null) {
+  if (matches === null || !matches[1]) {
     return 1;
   }
 
@@ -30,32 +28,34 @@ export function getOutcomeCount(template: string): number {
 /**
  * generate unique name
  *
- * @param {string} template template string
- * @throws {TypeError} if template is not a string
- * @return {string} unique name string
+ * @param template - template string
+ * @returns unique name string
+ *
+ * @throws {@link TypeError}
+ * if template is not a string
  */
-export function generate(template: string): string {
+export function generateUniqueName(template: string): string {
   if (typeof template !== 'string') {
     throw new TypeError(`template must be a string: ${template}`);
   }
 
-  const matches = template.match(placeholder);
+  const matches = template.match(placeholderRegex);
 
-  if (matches === null) {
+  if (matches === null || !matches[1]) {
     return template;
   }
 
   const result = [];
 
-  for (let i = 0, len = matches[1].length; i < len; ++i) {
+  for (let i = 0, len = matches[1].length; i < len; i += 1) {
     result.push(table[Math.floor(Math.random() * tableLength)]);
   }
 
-  const { index: matchesIndex = 0 } = matches;
+  const { index = 0 } = matches;
 
   return (
-    template.slice(0, matchesIndex) +
+    template.slice(0, index) +
     result.join('') +
-    template.slice(matchesIndex + result.length)
+    template.slice(index + result.length)
   );
 }
