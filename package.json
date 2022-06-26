@@ -58,6 +58,21 @@
     "package-lock.json": "node -e 'process.exitCode = 1'"
   },
   "main": "./index.js",
+  "mocha": {
+    "extension": [
+      "ts"
+    ],
+    "require": [
+      "espower-typescript/guess"
+    ],
+    "spec": [
+      "test/*.ts"
+    ],
+    "watch-files": [
+      "src/*.ts",
+      "test/*.ts"
+    ]
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
