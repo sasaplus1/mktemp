@@ -8,15 +8,12 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
-    "@babel/core": "7.4.5",
-    "@babel/register": "7.4.4",
     "@tsconfig/strictest": "^1.0.1",
     "@types/mocha": "9.1.1",
     "@types/node": "18.0.0",
     "@types/sinon": "10.0.11",
     "@typescript-eslint/eslint-plugin": "5.29.0",
     "@typescript-eslint/parser": "5.29.0",
-    "babel-preset-power-assert": "3.0.0",
     "eslint": "8.18.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-node": "11.1.0",
