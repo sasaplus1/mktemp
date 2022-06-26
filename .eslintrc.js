@@ -19,6 +19,7 @@ const overrides = [];
 
 overrides.push({
   extends: typescriptExtends,
+  excludedFiles: ['./**/*.test.ts'],
   files: ['./**/*.ts'],
   plugins: [...typescriptPlugins],
   rules: {
@@ -26,6 +27,21 @@ overrides.push({
   },
   settings: {
     node: {
+      tryExtensions
+    }
+  }
+});
+
+overrides.push({
+  extends: typescriptExtends,
+  files: ['./**/*.test.ts'],
+  plugins: [...typescriptPlugins],
+  rules: {
+    ...tsdocRules
+  },
+  settings: {
+    node: {
+      allowModules: ['sinon'],
       tryExtensions
     }
   }
