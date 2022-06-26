@@ -101,7 +101,7 @@
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
     "prepare": "is-ci || husky install",
-    "test": "mocha"
+    "test": "mocha './src/*.test.ts'"
   },
   "sideEffects": false,
   "types": "./index.d.ts"
