@@ -4,5 +4,5 @@
  * Released under the MIT license.
  */
 
-export * from './src/dir';
-export * from './src/file';
+export * from './dir';
+export * from './file';
