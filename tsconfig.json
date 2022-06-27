@@ -2,6 +2,7 @@
   "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
     "declaration": true,
+    "moduleResolution": "Node",
     "newLine": "lf",
     "sourceMap": true,
     "target": "ES2015"
