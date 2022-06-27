@@ -29,6 +29,9 @@
     "sinon": "^14.0.0",
     "typescript": "^4.7.4"
   },
+  "directories": {
+    "test": "src/"
+  },
   "engines": {
     "node": ">=8.3"
   },
@@ -59,15 +62,12 @@
     "extension": [
       "ts"
     ],
-    "require": [
-      "espower-typescript/guess"
-    ],
+    "require": "espower-typescript/guess",
     "spec": [
-      "test/*.ts"
+      "src/*.test.ts"
     ],
     "watch-files": [
-      "src/*.ts",
-      "test/*.ts"
+      "src/*.ts"
     ]
   },
   "prettier": {
@@ -101,7 +101,7 @@
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
     "prepare": "is-ci || husky install",
-    "test": "mocha './src/*.test.ts'"
+    "test": "mocha"
   },
   "sideEffects": false,
   "types": "./index.d.ts"
