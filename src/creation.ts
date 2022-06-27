@@ -61,17 +61,23 @@ function tryCreate({
   const path = generateUniqueName(template);
 
   const fn = function (err: NodeJS.ErrnoException | null, fd?: number): void {
-    if (err && err.code === 'EEXIST') {
-      if (retryCount > 0) {
-        setImmediate(tryCreate, {
-          callback,
-          isDir,
-          mode,
-          retryCount: retryCount - 1,
-          template
-        });
+    if (err) {
+      if (err.code === 'EEXIST') {
+        // NOTE: EEXIST error
+        if (retryCount > 0) {
+          setImmediate(tryCreate, {
+            callback,
+            isDir,
+            mode,
+            retryCount: retryCount - 1,
+            template
+          });
+        } else {
+          callback(new RangeError('over max retry count'), null);
+        }
       } else {
-        callback(new RangeError('over max retry count'), null);
+        // NOTE: other errors
+        callback(err, null);
       }
 
       return;
