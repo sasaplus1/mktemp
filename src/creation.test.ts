@@ -1,4 +1,6 @@
-import assert from 'assert';
+// @ts-expect-error power-assert
+import assert = require('assert');
+
 import fs from 'fs';
 
 import * as sinon from 'sinon';
