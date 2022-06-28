@@ -1,4 +1,3 @@
-// @ts-expect-error power-assert
 import assert = require('assert');
 
 import { generateUniqueName, getOutcomeCount } from './unique_name';
