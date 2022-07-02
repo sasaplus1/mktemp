@@ -27,6 +27,7 @@ const _rw_______ = 448; /* =0o700 */
 /**
  * check mode is fs.Mode
  *
+ * @internal
  * @param mode - target value
  * @returns true if mode is fs.Mode
  */
@@ -37,6 +38,7 @@ function isMode(mode: unknown): mode is fs.Mode {
 /**
  * check error is NodeJS.ErrnoException
  *
+ * @internal
  * @param error - target value
  * @returns true if error is NodeJS.ErrnoException
  */
@@ -50,6 +52,8 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 
 /**
  * try create unique name file or directory
+ *
+ * @internal
  */
 function tryCreate({
   callback,
@@ -107,7 +111,36 @@ function tryCreate({
  * create unique name file
  *
  * @param template - template string for filename
- * @returns result with Promise
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created file permission is `0600`.
+ *
+ * @example
+ *
+ * Promise:
+ *
+ * ```js
+ * createFile('./XXX.txt').then(
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ *   path => console.log(path)
+ * );
+ * ```
+ *
+ * async/await:
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ * const path = await createFile('./XXX.txt');
+ * ```
  */
 export function createFile(template: string): Promise<string | null>;
 /**
@@ -115,7 +148,32 @@ export function createFile(template: string): Promise<string | null>;
  *
  * @param template - template string for filename
  * @param mode - permission
- * @returns result with Promise
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @example
+ *
+ * Promise:
+ *
+ * ```js
+ * createFile('./XXX.txt', 0o600).then(
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ *   path => console.log(path)
+ * );
+ * ```
+ *
+ * async/await:
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ * const path = await createFile('./XXX.txt', 0o600);
+ * ```
  */
 export function createFile(
   template: string,
@@ -126,6 +184,28 @@ export function createFile(
  *
  * @param template - template string for filename
  * @param callback - callback function
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created file permission is `0600`.
+ *
+ * @example
+ *
+ * ```js
+ * createFile('./XXX.txt', function(err, path) {
+ *   if (err) throw err;
+ *
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ *   console.log(path);
+ * });
+ * ```
  */
 export function createFile(template: string, callback: Callback): void;
 /**
@@ -134,6 +214,24 @@ export function createFile(template: string, callback: Callback): void;
  * @param template - template string for filename
  * @param mode - permission
  * @param callback - callback function
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @example
+ *
+ * ```js
+ * createFile('./XXX.txt', 0o600, function(err, path) {
+ *   if (err) throw err;
+ *
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ *   console.log(path);
+ * });
+ * ```
  */
 export function createFile(
   template: string,
@@ -179,7 +277,25 @@ export function createFile(
  * create unique name file, sync version
  *
  * @param template - template string for filename
- * @returns unique filename
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created file permission is `0600`.
+ *
+ * @example
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ * const path = createFileSync('./XXX.txt');
+ * ```
  */
 export function createFileSync(template: string): string;
 /**
@@ -187,7 +303,21 @@ export function createFileSync(template: string): string;
  *
  * @param template - template string for filename
  * @param mode - permission
- * @returns unique filename
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @example
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+ * const path = createFileSync('./XXX.txt', 0o600);
+ * ```
  */
 export function createFileSync(template: string, mode: fs.Mode): string;
 
@@ -238,7 +368,36 @@ export function createFileSync(
  * create unique name directory
  *
  * @param template - template string for dirname
- * @returns result with Promise
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created directory permission is `0700`.
+ *
+ * @example
+ *
+ * Promise:
+ *
+ * ```js
+ * createDir('./XXX').then(
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ *   path => console.log(path)
+ * );
+ * ```
+ *
+ * async/await:
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ * const path = await createDir('./XXX');
+ * ```
  */
 export function createDir(template: string): Promise<string | null>;
 /**
@@ -246,7 +405,32 @@ export function createDir(template: string): Promise<string | null>;
  *
  * @param template - template string for dirname
  * @param mode - permission
- * @returns result with Promise
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @example
+ *
+ * Promise:
+ *
+ * ```js
+ * createDir('./XXX', 0o700).then(
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ *   path => console.log(path)
+ * );
+ * ```
+ *
+ * async/await:
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ * const path = await createDir('./XXX', 0o700);
+ * ```
  */
 export function createDir(
   template: string,
@@ -257,6 +441,28 @@ export function createDir(
  *
  * @param template - template string for dirname
  * @param callback - callback function
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created directory permission is `0700`.
+ *
+ * @example
+ *
+ * ```js
+ * createDir('./XXX', function(err, path) {
+ *   if (err) throw err;
+ *
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ *   console.log(path);
+ * });
+ * ```
  */
 export function createDir(template: string, callback: Callback): void;
 /**
@@ -265,6 +471,28 @@ export function createDir(template: string, callback: Callback): void;
  * @param template - template string for dirname
  * @param mode - permission
  * @param callback - callback function
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created directory permission is `0700`.
+ *
+ * @example
+ *
+ * ```js
+ * createDir('./XXX', 0o700, function(err, path) {
+ *   if (err) throw err;
+ *
+ *   // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ *   console.log(path);
+ * });
+ * ```
  */
 export function createDir(
   template: string,
@@ -310,14 +538,50 @@ export function createDir(
  * create unique name directory, sync version
  *
  * @param template - template string for dirname
- * @returns unique filename
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created file permission is `0700`.
+ *
+ * @example
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ * const path = createDirSync('./XXX');
+ * ```
  */
 export function createDirSync(template: string): string;
 /**
  * create unique name directory, sync version
  *
  * @param template - template string for dirname
- * @returns unique filename
+ * @returns path
+ * @see {@link generateUniqueName} replacing rules
+ *
+ * @throws RangeError
+ * if over retry count
+ *
+ * @throws Error
+ * otherwise
+ *
+ * @remarks
+ *
+ * created file permission is `0700`.
+ *
+ * @example
+ *
+ * ```js
+ * // path match a /^\.\/[0-9a-zA-Z]{3}$/
+ * const path = createDirSync('./XXX', 0o700);
+ * ```
  */
 export function createDirSync(template: string, mode: fs.Mode): string;
 
