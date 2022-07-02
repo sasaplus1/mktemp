@@ -5,6 +5,7 @@
     "newLine": "lf"
   },
   "exclude": [
-    "./dist"
+    "./dist",
+    "./docs"
   ]
 }
