@@ -8,120 +8,113 @@ mktemp command for node.js
 
 ## Installation
 
-```console
+### npm
+
+```bash
 $ npm install mktemp
+```
+
+### yarn
+
+```bash
+$ yarn add mktemp
 ```
 
 ## Usage
 
-```js
-var mktemp = require('mktemp');
+### createFile
 
-mktemp.createFile('XXXXX.txt', function(err, path) {
+```js
+const mktemp = require('mktemp');
+
+async function main() {
+  const path = await mktemp.createFile('./XXX.txt');
+
+  // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+  console.log(path);
+}
+main();
+```
+
+callback style:
+
+```js
+const mktemp = require('mktemp');
+
+mktemp.createFile('./XXX.txt', function (err, path) {
   if (err) throw err;
 
-  // path match a /^[\da-zA-Z]{5}\.txt$/
+  // path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
   console.log(path);
 });
+```
 
-// return value match a /^[\da-zA-Z]{5}\.tmp$/
-mktemp.createFileSync('XXXXX.tmp');
+sync version:
 
-mktemp.createDir('XXXXXXX', function(err, path) {
+```js
+const mktemp = require('mktemp');
+
+// path match a /^\.\/[0-9a-zA-Z]{3}\.txt$/
+const path = mktemp.createFileSync('./XXX.txt');
+```
+
+### createDir
+
+```js
+const mktemp = require('mktemp');
+
+async function main() {
+  const path = await mktemp.createDir('./XXX');
+
+  // path match a /^\.\/[0-9a-zA-Z]{3}$/
+  console.log(path);
+}
+main();
+```
+
+callback style:
+
+```js
+const mktemp = require('mktemp');
+
+mktemp.createDir('./XXX', function (err, path) {
   if (err) throw err;
 
-  // path match a /^[\da-zA-Z]{7}$/
+  // path match a /^\.\/[0-9a-zA-Z]{3}$/
   console.log(path);
 });
-
-// return value match a /^XXX-[\da-zA-Z]{3}$/
-mktemp.createDirSync('XXX-XXX');
 ```
 
-if support Promise, can use Promise style.
+sync version:
 
 ```js
-var mktemp = require('mktemp');
+const mktemp = require('mktemp');
 
-mktemp
-  .createFile('XXXXX.txt')
-  .then(function(path) {
-    // path match a /^[\da-zA-Z]{5}\.txt$/
-    console.log(path);
-  })
-  .catch(function(err) {
-    console.error(err);
-  });
-
-mktemp
-  .createDir('XXXXX')
-  .then(function(path) {
-    // path match a /^[\da-zA-Z]{5}$/
-    console.log(path);
-  })
-  .catch(function(err) {
-    console.error(err);
-  });
+// path match a /^\.\/[0-9a-zA-Z]{3}$/
+const path = mktemp.createDirSync('./XXX');
 ```
 
-mktemp functions are replace to random string from placeholder "X" in template. see example:
+### Permissions
+
+some create functions are can pass permissions:
 
 ```js
-mktemp.createFileSync('XXXXXXX');  // match a /^[\da-zA-Z]{7}$/
-mktemp.createFileSync('XXX.tmp');  // match a /^[\da-zA-Z]{3}\.tmp$/
-mktemp.createFileSync('XXX-XXX');  // match a /^XXX-[\da-zA-Z]{3}$/
+const path = await mktemp.createDir('./XXX', 0o600);
 ```
+
+if create file or directory is unexpected permissions, see below:
+
+- [`fs.mkdir` is creating the directory with different permissions than those specified](https://stackoverflow.com/questions/30815154/fs-mkdir-is-creating-the-directory-with-different-permissions-than-those-speci)
+- [process.umask(mask)](https://nodejs.org/dist/latest-v16.x/docs/api/process.html#processumaskmask)
 
 ## Functions
 
-### createFile(template[, callback])
-
-* `template`
-  * `String` - filename template
-* `callback`
-  * `function(err, path)` - callback function
-    * `err` : `Error|Null` - error object
-    * `path` :  `String` -  path
-
-create blank file of unique filename. permission is `0600`.
-
-it throws TypeError if node.js unsupported Promise and callback is not a function.
-
-### createFileSync(template)
-
-* `template`
-  * `String` - filename template
-* `return`
-  * `String` - path
-
-sync version createFile.
-
-### createDir(template[, callback])
-
-* `template`
-  * `String` - dirname template
-* `callback`
-  * `function(err, path)` - callback function
-    * `err` : `Error|Null` - error object
-    * `path` : `String` - path
-
-create directory of unique dirname. permission is `0700`.
-
-it throws TypeError if node.js unsupported Promise and callback is not a function.
-
-### createDirSync(template)
-
-* `template`
-  * `String` - dirname template
-* `return`
-  * `String` - path
-
-sync version createDir.
+see [docs](docs) or https://sasaplus1.github.io/mktemp
 
 ## Contributors
 
-* [Michael Ficarra](https://github.com/michaelficarra)
-* [rjz](https://github.com/rjz)
+- [Michael Ficarra](https://github.com/michaelficarra)
+- [rjz](https://github.com/rjz)
 
 ## License
 
