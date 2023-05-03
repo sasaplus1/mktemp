@@ -1,7 +1,7 @@
 {
   "name": "mktemp",
   "description": "mktemp command for node.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "contributors": [
     "Michael Ficarra <github.public.email@michael.ficarra.me>",
