@@ -8,15 +8,12 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
-    "@babel/core": "7.4.5",
-    "@babel/register": "7.4.4",
     "@tsconfig/strictest": "^2.0.1",
     "@types/mocha": "5.2.7",
     "@types/node": "12.0.12",
     "@types/sinon": "7.0.13",
     "@typescript-eslint/eslint-plugin": "1.9.0",
     "@typescript-eslint/parser": "1.9.0",
-    "babel-preset-power-assert": "3.0.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.3.0",
     "eslint-plugin-node": "9.1.0",
@@ -24,7 +21,6 @@
     "espower-typescript": "9.0.2",
     "mocha": "6.1.4",
     "npm-run-all": "^4.1.5",
-    "power-assert": "1.6.1",
     "prettier": "^2.8.8",
     "sinon": "7.3.2",
     "typescript": "3.4.5"
