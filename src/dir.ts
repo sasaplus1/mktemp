@@ -20,7 +20,7 @@ function tryCreateDir(
 ): void {
   let dirname: string | null = uniqueName.generate(template);
 
-  fs.mkdir(dirname, 448 /*=0700*/, function(err) {
+  fs.mkdir(dirname, 448 /*=0700*/, function (err) {
     if (err) {
       if (err.code === 'EEXIST' && retryCount > 0) {
         setImmediate(tryCreateDir, template, retryCount - 1, callback);
@@ -48,7 +48,7 @@ export function createDir(
   callback?: (err: NodeJS.ErrnoException | null, dirname: string | null) => void
 ): undefined | Promise<string | null> {
   if (typeof callback !== 'function') {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       createDir(template, (err, dirname) =>
         err ? reject(err) : resolve(dirname)
       );

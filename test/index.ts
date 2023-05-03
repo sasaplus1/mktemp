@@ -4,8 +4,8 @@ import { describe, it } from 'mocha';
 
 import * as mktemp from '../src';
 
-describe('index', function() {
-  it('should export some functions', function() {
+describe('index', function () {
+  it('should export some functions', function () {
     assert(typeof mktemp.createFile === 'function');
     assert(typeof mktemp.createFileSync === 'function');
     assert(typeof mktemp.createDir === 'function');

@@ -20,7 +20,7 @@ function tryCreateFile(
 ): void {
   let filename: string | null = uniqueName.generate(template);
 
-  fs.open(filename, 'ax+', 384 /*=0600*/, function(err, fd) {
+  fs.open(filename, 'ax+', 384 /*=0600*/, function (err, fd) {
     if (err) {
       if (err.code === 'EEXIST' && retryCount > 0) {
         setImmediate(tryCreateFile, template, retryCount - 1, callback);
@@ -33,7 +33,7 @@ function tryCreateFile(
     }
 
     if (fd) {
-      fs.close(fd, function(err) {
+      fs.close(fd, function (err) {
         callback(err, filename);
       });
     } else {
@@ -57,7 +57,7 @@ export function createFile(
   ) => void
 ): undefined | Promise<string | null> {
   if (typeof callback !== 'function') {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       createFile(template, (err, filename) =>
         err ? reject(err) : resolve(filename)
       );
