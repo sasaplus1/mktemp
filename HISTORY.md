@@ -1,3 +1,7 @@
+# 1.0.1 / 2023-05-03
+
+  - add missing type files
+
 # 1.0.0 / 2019-05-27
 
   - modernize
