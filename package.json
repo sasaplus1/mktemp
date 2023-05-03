@@ -51,11 +51,15 @@
   },
   "scripts": {
     "build": "tsc",
-    "fix": "eslint --cache --ext .ts --fix .",
-    "fixpack": "npx fixpack",
+    "fix": "run-p --print-label fix:*",
+    "fix:eslint": "eslint --fix .",
+    "fix:fixpack": "npx fixpack",
+    "fix:prettier": "prettier --write .",
     "lint": "eslint --cache --ext .ts .",
-    "mocha": "mocha",
-    "test": "npm run lint && npm run mocha"
+    "lint:eslint": "eslint .",
+    "lint:fixpack": "npm fixpack --dryRun",
+    "lint:prettier": "prettier --check .",
+    "test": "mocha"
   },
   "sideEffects": false,
   "types": "./index.d.ts"
