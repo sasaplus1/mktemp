@@ -1,9 +1,5 @@
 # mktemp
 
-[![npm version](https://badge.fury.io/js/mktemp.svg)](https://badge.fury.io/js/mktemp)
-[![Try mktemp on RunKit](https://badge.runkitcdn.com/mktemp.svg)](https://npm.runkit.com/mktemp)
-[![renovate](https://badges.renovateapi.com/github/sasaplus1/mktemp)](https://renovatebot.com)
-
 mktemp command for node.js
 
 ## Installation
