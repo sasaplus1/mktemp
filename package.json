@@ -48,6 +48,18 @@
     "type": "git",
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "overrides": [
+      {
+        "files": "*.json",
+        "options": {
+          "parser": "json-stringify"
+        }
+      }
+    ]
+  },
   "scripts": {
     "build": "tsc",
     "fix": "run-p --print-label fix:*",
