@@ -8,8 +8,8 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
-    "@babel/core": "7.4.5",
-    "@babel/register": "7.4.4",
+    "@babel/core": "7.21.8",
+    "@babel/register": "7.21.0",
     "@tsconfig/strictest": "^2.0.1",
     "@types/mocha": "5.2.7",
     "@types/node": "12.0.12",
