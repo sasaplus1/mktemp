@@ -1,14 +1,11 @@
 {
   "extends": [
     "config:base",
-    ":automergePatch",
     ":label(renovate)",
-    ":timezone(Asia/Tokyo)"
-  ],
-  "packageRules": [
-    {
-      "extends": "monorepo:babel",
-      "groupName": "babel monorepo"
-    }
+    ":preserveSemverRanges",
+    ":assignee(sasaplus1)",
+    ":timezone(Asia/Tokyo)",
+    "group:definitelyTyped",
+    "group:linters"
   ]
 }
