@@ -2,7 +2,7 @@ import assert = require('assert');
 
 import { describe, it } from 'mocha';
 
-import * as mktemp from '../';
+import * as mktemp from '../src';
 
 describe('index', function() {
   it('should export some functions', function() {
