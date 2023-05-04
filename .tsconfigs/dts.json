@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outFile": "../dist/index.d.ts"
+  },
+  "files": [
+    "../src/index.ts"
+  ]
+}

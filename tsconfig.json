@@ -1,12 +1,9 @@
 {
-  "extends": "@tsconfig/strictest/tsconfig.json",
-  "compilerOptions": {
-    "declaration": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "sourceMap": true,
-    "target": "ESNext"
-  }
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": ".tsconfigs/lint.json"
+    }
+  ]
 }

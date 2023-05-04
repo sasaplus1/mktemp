@@ -71,7 +71,10 @@
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "run-p --print-label build:*",
+    "build:cjs": "tsc -p .tsconfigs/cjs.json",
+    "build:dts": "tsc -p .tsconfigs/dts.json",
+    "build:esm": "tsc -p .tsconfigs/esm.json",
     "fix": "run-p --print-label fix:*",
     "fix:eslint": "eslint --fix .",
     "fix:fixpack": "npx fixpack",
