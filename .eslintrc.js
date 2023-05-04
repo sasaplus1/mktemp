@@ -19,7 +19,6 @@ const overrides = [];
 
 overrides.push({
   extends: typescriptExtends,
-  excludedFiles: './test/*.ts',
   files: ['./src/*.ts'],
   plugins: [...typescriptPlugins],
   rules: {
@@ -27,22 +26,6 @@ overrides.push({
   },
   settings: {
     node: {
-      tryExtensions
-    }
-  }
-});
-
-overrides.push({
-  extends: typescriptExtends,
-  files: ['./test/*.ts'],
-  plugins: [...typescriptPlugins],
-  rules: {
-    ...tsdocRules
-  },
-  settings: {
-    node: {
-      // NOTE: no effect
-      // allowModules: ['node:assert', 'node:test'],
       tryExtensions
     }
   }
