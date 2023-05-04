@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { after, afterEach, before, beforeEach, describe, it } from 'mocha';
 import * as sinon from 'sinon';
 
-import * as mktemp from '../';
+import * as mktemp from '../src';
 
 describe('mktemp', function () {
   const isPromise = typeof Promise === 'function';
