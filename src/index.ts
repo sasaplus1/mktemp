@@ -4,5 +4,5 @@
  * Released under the MIT license.
  */
 
-export * from './dir';
-export * from './file';
+export * from './creation';
+export { generateUniqueName } from './unique_name';
