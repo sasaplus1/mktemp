@@ -1,17 +1,12 @@
 {
+  "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
     "declaration": true,
     "module": "CommonJS",
-    "newLine": "lf",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "sourceMap": true,
-    "strict": true,
     "target": "ESNext"
-  },
-  "include": [
-    "**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "test/**/*.ts"
-  ]
+  }
 }
