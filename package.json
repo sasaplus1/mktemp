@@ -29,16 +29,23 @@
     "node": ">=8.3",
     "npm": ">=8"
   },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
   "files": [
-    "index.d.ts",
-    "index.js",
-    "index.js.map",
-    "src/*.d.ts",
-    "src/*.js",
-    "src/*.js.map"
+    "dist"
   ],
   "license": "MIT",
-  "main": "./index.js",
+  "main": "./dist/cjs/index.js",
   "mocha": {
     "extension": [
       "ts"
@@ -53,6 +60,7 @@
       "src/*.ts"
     ]
   },
+  "module": "./dist/esm/index.js",
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
@@ -87,5 +95,5 @@
     "test": "mocha"
   },
   "sideEffects": false,
-  "types": "./index.d.ts"
+  "types": "./dist/index.d.ts"
 }
