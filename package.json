@@ -80,6 +80,7 @@
     "lint:eslint": "eslint .",
     "lint:fixpack": "npx fixpack --dryRun",
     "lint:prettier": "prettier --check .",
+    "lint:tsc": "tsc --noEmit",
     "test": "mocha"
   },
   "sideEffects": false,
