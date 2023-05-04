@@ -14,7 +14,7 @@ describe('creation', function () {
   const hasPromise = typeof Promise === 'function';
 
   describe('createFile()', function () {
-    it('success cases', function () {
+    describe('success cases', function () {
       let fsOpenStub: sinon.SinonStub;
       let fsCloseStub: sinon.SinonStub;
 
@@ -145,12 +145,12 @@ describe('creation', function () {
     describe('when available files not found', function () {
       let fsOpenStub: sinon.SinonStub;
 
-      beforeEach(function () {
+      before(function () {
         fsOpenStub = sinon.stub(fs, 'open');
         fsOpenStub.callsArgWith(3, { code: 'EEXIST' });
       });
 
-      afterEach(function () {
+      after(function () {
         fsOpenStub.restore();
       });
 
@@ -160,7 +160,8 @@ describe('creation', function () {
             return assert.fail();
           }
 
-          assert(err.code === 'EEXIST');
+          assert(err instanceof RangeError);
+          assert(err.message === 'over max retry count');
 
           done();
         });
