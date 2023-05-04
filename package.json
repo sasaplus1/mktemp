@@ -39,6 +39,21 @@
   ],
   "license": "MIT",
   "main": "./index.js",
+  "mocha": {
+    "extension": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register/transpile-only"
+    ],
+    "spec": [
+      "test/*.ts"
+    ],
+    "watch-files": [
+      "src/*.ts",
+      "test/*.ts"
+    ]
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
