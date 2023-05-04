@@ -47,11 +47,10 @@
       "ts-node/register/transpile-only"
     ],
     "spec": [
-      "test/*.ts"
+      "src/*.test.ts"
     ],
     "watch-files": [
-      "src/*.ts",
-      "test/*.ts"
+      "src/*.ts"
     ]
   },
   "prettier": {
