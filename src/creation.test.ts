@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import fs from 'node:fs';
 
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 
 import {
   createFile,

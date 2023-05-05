@@ -1,4 +1,4 @@
-import * as fs from 'node:fs';
+import fs from 'node:fs';
 
 import { generateUniqueName, getOutcomeCount } from './unique_name';
 
