@@ -92,7 +92,7 @@
     "lint:fixpack": "npx fixpack --dryRun",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
-    "test": "mocha"
+    "test": "TS_NODE_PROJECT=.tsconfigs/test.json mocha"
   },
   "sideEffects": false,
   "types": "./dist/index.d.ts"
