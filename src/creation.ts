@@ -6,11 +6,21 @@ import { generateUniqueName, getOutcomeCount } from './unique_name';
  * private
  * -------------------------------------------------------------------------- */
 
+/** callback */
 type Callback = (
   err: NodeJS.ErrnoException | null,
   path: string | null
 ) => void;
 
+/**
+ * tryCreate() parameters
+ *
+ * @param callback - callback
+ * @param isDir - create directory if true, otherwise create file
+ * @param mode - permission
+ * @param retryCount - retry count
+ * @param template - template string
+ */
 type TryCreateParams = {
   callback: Callback;
   isDir: boolean;
@@ -50,6 +60,8 @@ function isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 
 /**
  * try create unique name file or directory
+ *
+ * {@link TryCreateParams}
  */
 function tryCreate({
   callback,
