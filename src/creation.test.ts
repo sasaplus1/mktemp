@@ -1,4 +1,13 @@
-import { describe, it, beforeAll, afterAll, beforeEach, afterEach, assert, vi } from 'vitest';
+import {
+  describe,
+  it,
+  beforeAll,
+  afterAll,
+  beforeEach,
+  afterEach,
+  assert,
+  vi
+} from 'vitest';
 import fs from 'node:fs';
 
 import {
@@ -18,12 +27,18 @@ describe('creation', function () {
 
       beforeAll(function () {
         // always pass with null
-        fsOpenSpy = vi.spyOn(fs, 'open').mockImplementation((_path: any, _flags: any, _mode: any, callback: any) => {
-          callback(null);
-        });
-        fsCloseSpy = vi.spyOn(fs, 'close').mockImplementation((_fd: any, callback: any) => { 
-          callback(null);
-        });
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation(
+            (_path: any, _flags: any, _mode: any, callback: any) => {
+              callback(null);
+            }
+          );
+        fsCloseSpy = vi
+          .spyOn(fs, 'close')
+          .mockImplementation((_fd: any, callback: any) => {
+            callback(null);
+          });
       });
 
       afterAll(function () {
@@ -35,7 +50,9 @@ describe('creation', function () {
         return new Promise((resolve, reject) => {
           createFile('XXXXX.tmp', function (err, path): void {
             if (err || path === null) {
-              return reject(new Error('Expected success but got error or null'));
+              return reject(
+                new Error('Expected success but got error or null')
+              );
             }
 
             assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
@@ -48,7 +65,9 @@ describe('creation', function () {
         return new Promise((resolve, reject) => {
           createFile('XXXXX.tmp', 384, function (err, path): void {
             if (err || path === null) {
-              return reject(new Error('Expected success but got error or null'));
+              return reject(
+                new Error('Expected success but got error or null')
+              );
             }
 
             assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
@@ -57,25 +76,31 @@ describe('creation', function () {
         });
       });
 
-      it.skipIf(!hasPromise)('should create unique name file, Promise version', function () {
-        return createFile('XXXXX.tmp').then(function (path): void {
-          if (path === null) {
-            throw new Error('Expected path but got null');
-          }
+      it.skipIf(!hasPromise)(
+        'should create unique name file, Promise version',
+        function () {
+          return createFile('XXXXX.tmp').then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
 
-          assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
-        });
-      });
+            assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
+          });
+        }
+      );
 
-      it.skipIf(!hasPromise)('should create unique name file with mode, Promise version', function () {
-        return createFile('XXXXX.tmp', 384).then(function (path): void {
-          if (path === null) {
-            throw new Error('Expected path but got null');
-          }
+      it.skipIf(!hasPromise)(
+        'should create unique name file with mode, Promise version',
+        function () {
+          return createFile('XXXXX.tmp', 384).then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
 
-          assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
-        });
-      });
+            assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
+          });
+        }
+      );
     });
 
     describe('fail cases', function () {
@@ -84,12 +109,16 @@ describe('creation', function () {
 
       beforeAll(function () {
         // always pass with error
-        fsOpenSpy = vi.spyOn(fs, 'open').mockImplementation((_path, _flags, _mode, callback) => {
-          callback({ code: 'EACCES' });
-        });
-        fsCloseSpy = vi.spyOn(fs, 'close').mockImplementation((_fd, callback) => {
-          callback(null);
-        });
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation((_path, _flags, _mode, callback) => {
+            callback({ code: 'EACCES' });
+          });
+        fsCloseSpy = vi
+          .spyOn(fs, 'close')
+          .mockImplementation((_fd, callback) => {
+            callback(null);
+          });
       });
 
       afterAll(function () {
@@ -125,17 +154,22 @@ describe('creation', function () {
 
       beforeAll(function () {
         // pass with error sometimes
-        mockFn = vi.fn()
+        mockFn = vi
+          .fn()
           .mockReturnValueOnce({ code: 'EEXIST' })
           .mockReturnValueOnce({ code: 'EEXIST' })
           .mockReturnValueOnce(null);
 
-        fsOpenSpy = vi.spyOn(fs, 'open').mockImplementation((_path, _flags, _mode, callback) => {
-          callback(mockFn(), null);
-        });
-        fsCloseSpy = vi.spyOn(fs, 'close').mockImplementation((_fd, callback) => {
-          callback(null);
-        });
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation((_path, _flags, _mode, callback) => {
+            callback(mockFn(), null);
+          });
+        fsCloseSpy = vi
+          .spyOn(fs, 'close')
+          .mockImplementation((_fd, callback) => {
+            callback(null);
+          });
       });
 
       afterAll(function () {
@@ -162,9 +196,11 @@ describe('creation', function () {
       let fsOpenSpy: any;
 
       beforeAll(function () {
-        fsOpenSpy = vi.spyOn(fs, 'open').mockImplementation((_path, _flags, _mode, callback) => {
-          callback({ code: 'EEXIST' });
-        });
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation((_path, _flags, _mode, callback) => {
+            callback({ code: 'EEXIST' });
+          });
       });
 
       afterAll(function () {
@@ -195,7 +231,9 @@ describe('creation', function () {
       beforeAll(function () {
         // always return fd
         fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockReturnValue(100);
-        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {});
+        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {
+          return;
+        });
       });
 
       afterAll(function () {
@@ -221,7 +259,9 @@ describe('creation', function () {
         fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockImplementation(() => {
           throw { code: 'EACCES' };
         });
-        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {});
+        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {
+          return;
+        });
       });
 
       afterAll(function () {
@@ -243,15 +283,22 @@ describe('creation', function () {
 
       beforeAll(function () {
         // throws error sometimes
-        mockFn = vi.fn()
-          .mockImplementationOnce(() => { throw { code: 'EEXIST' }; })
-          .mockImplementationOnce(() => { throw { code: 'EEXIST' }; })
+        mockFn = vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
           .mockReturnValueOnce(100);
 
         fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockImplementation(() => {
           return mockFn();
         });
-        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {});
+        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {
+          return;
+        });
       });
 
       afterAll(function () {
@@ -281,12 +328,9 @@ describe('creation', function () {
       });
 
       it('should throws an error', function () {
-        assert.throws(
-          function () {
-            createFileSync('temp-X');
-          },
-          /over max retry count/
-        );
+        assert.throws(function () {
+          createFileSync('temp-X');
+        }, /over max retry count/);
       });
     });
   });
@@ -296,9 +340,11 @@ describe('creation', function () {
 
       beforeAll(function () {
         // always pass with null
-        fsMkdirSpy = vi.spyOn(fs, 'mkdir').mockImplementation((_path, _mode, callback) => {
-          callback(null);
-        });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback(null);
+          });
       });
 
       afterAll(function () {
@@ -309,7 +355,9 @@ describe('creation', function () {
         return new Promise((resolve, reject) => {
           createDir('XXXXX', function (err, path): void {
             if (err || path === null) {
-              return reject(new Error('Expected success but got error or null'));
+              return reject(
+                new Error('Expected success but got error or null')
+              );
             }
 
             assert(/^[\da-zA-Z]{5}$/.test(path));
@@ -322,7 +370,9 @@ describe('creation', function () {
         return new Promise((resolve, reject) => {
           createDir('XXXXX', 448, function (err, path): void {
             if (err || path === null) {
-              return reject(new Error('Expected success but got error or null'));
+              return reject(
+                new Error('Expected success but got error or null')
+              );
             }
 
             assert(/^[\da-zA-Z]{5}$/.test(path));
@@ -331,25 +381,31 @@ describe('creation', function () {
         });
       });
 
-      it.skipIf(!hasPromise)('should create unique name dir, Promise version', function () {
-        return createDir('XXXXX').then(function (path): void {
-          if (path === null) {
-            throw new Error('Expected path but got null');
-          }
+      it.skipIf(!hasPromise)(
+        'should create unique name dir, Promise version',
+        function () {
+          return createDir('XXXXX').then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
 
-          assert(/^[\da-zA-Z]{5}$/.test(path));
-        });
-      });
+            assert(/^[\da-zA-Z]{5}$/.test(path));
+          });
+        }
+      );
 
-      it.skipIf(!hasPromise)('should create unique name dir with mode, Promise version', function () {
-        return createDir('XXXXX', 448).then(function (path): void {
-          if (path === null) {
-            throw new Error('Expected path but got null');
-          }
+      it.skipIf(!hasPromise)(
+        'should create unique name dir with mode, Promise version',
+        function () {
+          return createDir('XXXXX', 448).then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
 
-          assert(/^[\da-zA-Z]{5}$/.test(path));
-        });
-      });
+            assert(/^[\da-zA-Z]{5}$/.test(path));
+          });
+        }
+      );
     });
 
     describe('fail cases', function () {
@@ -357,9 +413,11 @@ describe('creation', function () {
 
       beforeAll(function () {
         // always pass with error
-        fsMkdirSpy = vi.spyOn(fs, 'mkdir').mockImplementation((_path, _mode, callback) => {
-          callback({ code: 'EACCES' });
-        });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback({ code: 'EACCES' });
+          });
       });
 
       afterAll(function () {
@@ -393,14 +451,17 @@ describe('creation', function () {
 
       beforeAll(function () {
         // pass with error sometimes
-        mockFn = vi.fn()
+        mockFn = vi
+          .fn()
           .mockReturnValueOnce({ code: 'EEXIST' })
           .mockReturnValueOnce({ code: 'EEXIST' })
           .mockReturnValueOnce(null);
 
-        fsMkdirSpy = vi.spyOn(fs, 'mkdir').mockImplementation((_path, _mode, callback) => {
-          callback(mockFn(), null);
-        });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback(mockFn(), null);
+          });
       });
 
       afterAll(function () {
@@ -426,9 +487,11 @@ describe('creation', function () {
       let fsMkdirSpy: any;
 
       beforeEach(function () {
-        fsMkdirSpy = vi.spyOn(fs, 'mkdir').mockImplementation((_path, _mode, callback) => {
-          callback({ code: 'EEXIST' });
-        });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback({ code: 'EEXIST' });
+          });
       });
 
       afterEach(function () {
@@ -456,7 +519,9 @@ describe('creation', function () {
     describe('success cases', function () {
       beforeAll(function () {
         // basic stub
-        fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {});
+        fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {
+          return;
+        });
       });
 
       afterAll(function () {
@@ -499,9 +564,14 @@ describe('creation', function () {
 
       beforeAll(function () {
         // throws error sometimes
-        mockFn = vi.fn()
-          .mockImplementationOnce(() => { throw { code: 'EEXIST' }; })
-          .mockImplementationOnce(() => { throw { code: 'EEXIST' }; })
+        mockFn = vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
           .mockReturnValueOnce(100);
 
         fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {
@@ -535,12 +605,9 @@ describe('creation', function () {
       });
 
       it('should throws an error', function () {
-        assert.throws(
-          function () {
-            createDirSync('');
-          },
-          /over max retry count/
-        );
+        assert.throws(function () {
+          createDirSync('');
+        }, /over max retry count/);
       });
     });
   });
