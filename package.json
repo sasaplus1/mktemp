@@ -43,6 +43,10 @@
   "license": "MIT",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "4.43.0",
+    "@rollup/rollup-linux-x64-gnu": "4.43.0"
+  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
