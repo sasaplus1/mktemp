@@ -3,6 +3,7 @@
   "extends": [
     "local>sasaplus1/renovate-config:main.json5",
     "local>sasaplus1/renovate-config:npm.json5",
+    "local>sasaplus1/renovate-config:automerge-all.json5",
     ":assignee(sasaplus1)"
   ]
 }
