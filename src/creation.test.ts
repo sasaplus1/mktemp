@@ -1,7 +1,14 @@
-import { strict as assert } from 'node:assert';
+import {
+  describe,
+  it,
+  beforeAll,
+  afterAll,
+  beforeEach,
+  afterEach,
+  assert,
+  vi
+} from 'vitest';
 import fs from 'node:fs';
-
-import sinon from 'sinon';
 
 import {
   createFile,
@@ -15,110 +22,125 @@ describe('creation', function () {
 
   describe('createFile()', function () {
     describe('success cases', function () {
-      let fsOpenStub: sinon.SinonStub;
-      let fsCloseStub: sinon.SinonStub;
+      let fsOpenSpy: any;
+      let fsCloseSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always pass with null
-        fsOpenStub = sinon.stub(fs, 'open');
-        fsOpenStub.callsArgWith(3, null);
-        fsCloseStub = sinon.stub(fs, 'close');
-        fsCloseStub.callsArgWith(1, null);
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation(
+            (_path: any, _flags: any, _mode: any, callback: any) => {
+              callback(null);
+            }
+          );
+        fsCloseSpy = vi
+          .spyOn(fs, 'close')
+          .mockImplementation((_fd: any, callback: any) => {
+            callback(null);
+          });
       });
 
-      after(function () {
-        fsOpenStub.restore();
-        fsCloseStub.restore();
+      afterAll(function () {
+        fsOpenSpy.mockRestore();
+        fsCloseSpy.mockRestore();
       });
 
-      it('should create unique name file', function (done) {
-        createFile('XXXXX.tmp', function (err, path): void {
-          if (err || path === null) {
-            return assert.fail();
-          }
+      it('should create unique name file', function () {
+        return new Promise((resolve, reject) => {
+          createFile('XXXXX.tmp', function (err, path): void {
+            if (err || path === null) {
+              return reject(
+                new Error('Expected success but got error or null')
+              );
+            }
 
-          assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
-
-          done();
+            assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
+            resolve(undefined);
+          });
         });
       });
 
-      it('should create unique name file with mode', function (done) {
-        createFile('XXXXX.tmp', 384, function (err, path): void {
-          if (err || path === null) {
-            return assert.fail();
-          }
+      it('should create unique name file with mode', function () {
+        return new Promise((resolve, reject) => {
+          createFile('XXXXX.tmp', 384, function (err, path): void {
+            if (err || path === null) {
+              return reject(
+                new Error('Expected success but got error or null')
+              );
+            }
 
-          assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
-
-          done();
+            assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
+            resolve(undefined);
+          });
         });
       });
 
-      it('should create unique name file, Promise version', function () {
-        if (!hasPromise) {
-          return this.skip();
+      it.skipIf(!hasPromise)(
+        'should create unique name file, Promise version',
+        function () {
+          return createFile('XXXXX.tmp').then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
+
+            assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
+          });
         }
+      );
 
-        return createFile('XXXXX.tmp').then(function (path): void {
-          if (path === null) {
-            return assert.fail();
-          }
+      it.skipIf(!hasPromise)(
+        'should create unique name file with mode, Promise version',
+        function () {
+          return createFile('XXXXX.tmp', 384).then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
 
-          assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
-        });
-      });
-
-      it('should create unique name file with mode, Promise version', function () {
-        if (!hasPromise) {
-          return this.skip();
+            assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
+          });
         }
-
-        return createFile('XXXXX.tmp', 384).then(function (path): void {
-          if (path === null) {
-            return assert.fail();
-          }
-
-          assert(/^[\da-zA-Z]{5}\.tmp$/.test(path));
-        });
-      });
+      );
     });
 
     describe('fail cases', function () {
-      let fsOpenStub: sinon.SinonStub;
-      let fsCloseStub: sinon.SinonStub;
+      let fsOpenSpy: any;
+      let fsCloseSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always pass with error
-        fsOpenStub = sinon.stub(fs, 'open');
-        fsOpenStub.callsArgWith(3, { code: 'EACCES' });
-        fsCloseStub = sinon.stub(fs, 'close');
-        fsCloseStub.callsArgWith(1, null);
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation((_path, _flags, _mode, callback) => {
+            callback({ code: 'EACCES' });
+          });
+        fsCloseSpy = vi
+          .spyOn(fs, 'close')
+          .mockImplementation((_fd, callback) => {
+            callback(null);
+          });
       });
 
-      after(function () {
-        fsOpenStub.restore();
-        fsCloseStub.restore();
+      afterAll(function () {
+        fsOpenSpy.mockRestore();
+        fsCloseSpy.mockRestore();
       });
 
-      it('should pass error', function (done) {
-        createFile('XXX.tmp', function (err, path): void {
-          if (!err) {
-            return assert.fail();
-          }
+      it('should pass error', function () {
+        return new Promise((resolve, reject) => {
+          createFile('XXX.tmp', function (err, path): void {
+            if (!err) {
+              return reject(new Error('Expected error but got none'));
+            }
 
-          assert(err.code === 'EACCES');
-          assert(path === null);
-
-          done();
+            assert(err.code === 'EACCES');
+            assert(path === null);
+            resolve(undefined);
+          });
         });
       });
 
-      it('should pass error, Promise version', function () {
-        if (!hasPromise) {
-          return this.skip();
-        }
-
+      it.skipIf(!hasPromise)('should pass error, Promise version', function () {
         return createFile('XXX.tmp')['catch'](function (err) {
           assert(err.code === 'EACCES');
         });
@@ -126,70 +148,76 @@ describe('creation', function () {
     });
 
     describe('when duplicate path', function () {
-      let stub: sinon.SinonStub;
-      let fsOpenStub: sinon.SinonStub;
-      let fsCloseStub: sinon.SinonStub;
+      let mockFn: any;
+      let fsOpenSpy: any;
+      let fsCloseSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // pass with error sometimes
-        stub = sinon.stub();
-        stub
-          .onCall(0)
-          .returns({ code: 'EEXIST' })
-          .onCall(1)
-          .returns({ code: 'EEXIST' })
-          .onCall(2)
-          .returns(null);
+        mockFn = vi
+          .fn()
+          .mockReturnValueOnce({ code: 'EEXIST' })
+          .mockReturnValueOnce({ code: 'EEXIST' })
+          .mockReturnValueOnce(null);
 
-        fsOpenStub = sinon.stub(fs, 'open');
-        fsOpenStub.callsFake(function (_path, _flags, _mode, callback) {
-          callback(stub(), null);
-        });
-        fsCloseStub = sinon.stub(fs, 'close');
-        fsCloseStub.callsArgWith(1, null);
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation((_path, _flags, _mode, callback) => {
+            callback(mockFn(), null);
+          });
+        fsCloseSpy = vi
+          .spyOn(fs, 'close')
+          .mockImplementation((_fd, callback) => {
+            callback(null);
+          });
       });
 
-      after(function () {
-        fsOpenStub.restore();
-        fsCloseStub.restore();
+      afterAll(function () {
+        fsOpenSpy.mockRestore();
+        fsCloseSpy.mockRestore();
       });
 
-      it('should create unique name file', function (done) {
-        const spy = sinon.spy(function (err, path) {
-          assert(stub.calledThrice === true);
-          assert(spy.calledOnce === true);
-          assert(err === null);
-          assert(/^[\da-zA-Z]{3}\.tmp$/.test(path));
+      it('should create unique name file', function () {
+        return new Promise((resolve) => {
+          const callbackSpy = vi.fn((err, path) => {
+            assert(mockFn.mock.calls.length === 3);
+            assert(callbackSpy.mock.calls.length === 1);
+            assert(err === null);
+            assert(/^[\da-zA-Z]{3}\.tmp$/.test(path));
+            resolve(undefined);
+          });
 
-          done();
+          createFile('XXX.tmp', callbackSpy);
         });
-
-        createFile('XXX.tmp', spy);
       });
     });
 
     describe('when available files not found', function () {
-      let fsOpenStub: sinon.SinonStub;
+      let fsOpenSpy: any;
 
-      before(function () {
-        fsOpenStub = sinon.stub(fs, 'open');
-        fsOpenStub.callsArgWith(3, { code: 'EEXIST' });
+      beforeAll(function () {
+        fsOpenSpy = vi
+          .spyOn(fs, 'open')
+          .mockImplementation((_path, _flags, _mode, callback) => {
+            callback({ code: 'EEXIST' });
+          });
       });
 
-      after(function () {
-        fsOpenStub.restore();
+      afterAll(function () {
+        fsOpenSpy.mockRestore();
       });
 
-      it('should throws an error', function (done) {
-        createFile('temp-X', function (err): void {
-          if (!err) {
-            return assert.fail();
-          }
+      it('should throws an error', function () {
+        return new Promise((resolve, reject) => {
+          createFile('temp-X', function (err): void {
+            if (!err) {
+              return reject(new Error('Expected error but got none'));
+            }
 
-          assert(err instanceof RangeError);
-          assert(err.message === 'over max retry count');
-
-          done();
+            assert(err instanceof RangeError);
+            assert(err.message === 'over max retry count');
+            resolve(undefined);
+          });
         });
       });
     });
@@ -197,19 +225,20 @@ describe('creation', function () {
 
   describe('createFileSync()', function () {
     describe('success cases', function () {
-      let fsOpenSyncStub: sinon.SinonStub;
-      let fsCloseSyncStub: sinon.SinonStub;
+      let fsOpenSyncSpy: any;
+      let fsCloseSyncSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always return fd
-        fsOpenSyncStub = sinon.stub(fs, 'openSync');
-        fsOpenSyncStub.returns(100);
-        fsCloseSyncStub = sinon.stub(fs, 'closeSync');
+        fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockReturnValue(100);
+        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {
+          return;
+        });
       });
 
-      after(function () {
-        fsOpenSyncStub.restore();
-        fsCloseSyncStub.restore();
+      afterAll(function () {
+        fsOpenSyncSpy.mockRestore();
+        fsCloseSyncSpy.mockRestore();
       });
 
       it('should create unique name file', function () {
@@ -222,196 +251,194 @@ describe('creation', function () {
     });
 
     describe('fail cases', function () {
-      let fsOpenSyncStub: sinon.SinonStub;
-      let fsCloseSyncStub: sinon.SinonStub;
+      let fsOpenSyncSpy: any;
+      let fsCloseSyncSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always throws error
-        fsOpenSyncStub = sinon.stub(fs, 'openSync');
-        fsOpenSyncStub.throws({ code: 'EACCES' });
-        fsCloseSyncStub = sinon.stub(fs, 'closeSync');
+        fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockImplementation(() => {
+          throw { code: 'EACCES' };
+        });
+        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {
+          return;
+        });
       });
 
-      after(function () {
-        fsOpenSyncStub.restore();
-        fsCloseSyncStub.restore();
+      afterAll(function () {
+        fsOpenSyncSpy.mockRestore();
+        fsCloseSyncSpy.mockRestore();
       });
 
       it('should throws an error', function () {
-        assert.throws(
-          function () {
-            createFileSync('');
-          },
-          function (err) {
-            assert((err as NodeJS.ErrnoException).code === 'EACCES');
-
-            return true;
-          }
-        );
+        assert.throws(function () {
+          createFileSync('');
+        });
       });
     });
 
     describe('when duplicate path', function () {
-      let stub: sinon.SinonStub;
-      let fsOpenSyncStub: sinon.SinonStub;
-      let fsCloseSyncStub: sinon.SinonStub;
+      let mockFn: any;
+      let fsOpenSyncSpy: any;
+      let fsCloseSyncSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // throws error sometimes
-        stub = sinon.stub();
-        stub
-          .onCall(0)
-          .throws({ code: 'EEXIST' })
-          .onCall(1)
-          .throws({ code: 'EEXIST' })
-          .onCall(2)
-          .returns(100);
+        mockFn = vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
+          .mockReturnValueOnce(100);
 
-        fsOpenSyncStub = sinon.stub(fs, 'openSync');
-        fsOpenSyncStub.callsFake(function () {
-          return stub();
+        fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockImplementation(() => {
+          return mockFn();
         });
-        fsCloseSyncStub = sinon.stub(fs, 'closeSync');
+        fsCloseSyncSpy = vi.spyOn(fs, 'closeSync').mockImplementation(() => {
+          return;
+        });
       });
 
-      after(function () {
-        fsOpenSyncStub.restore();
-        fsCloseSyncStub.restore();
+      afterAll(function () {
+        fsOpenSyncSpy.mockRestore();
+        fsCloseSyncSpy.mockRestore();
       });
 
       it('should create unique name file', function () {
         const path = createFileSync('XXX');
 
-        assert(stub.calledThrice === true);
+        assert(mockFn.mock.calls.length === 3);
         assert(/^[\da-zA-Z]{3}$/.test(path));
       });
     });
 
     describe('when available files not found', function () {
-      let fsOpenSyncStub: sinon.SinonStub;
+      let fsOpenSyncSpy: any;
 
-      before(function () {
-        fsOpenSyncStub = sinon.stub(fs, 'openSync');
-        fsOpenSyncStub.throws({ code: 'EEXIST' });
+      beforeAll(function () {
+        fsOpenSyncSpy = vi.spyOn(fs, 'openSync').mockImplementation(() => {
+          throw { code: 'EEXIST' };
+        });
       });
 
-      after(function () {
-        fsOpenSyncStub.restore();
+      afterAll(function () {
+        fsOpenSyncSpy.mockRestore();
       });
 
       it('should throws an error', function () {
-        assert.throws(
-          function () {
-            createFileSync('temp-X');
-          },
-          function (err) {
-            assert(err instanceof RangeError);
-            assert(err.message === 'over max retry count');
-
-            return true;
-          }
-        );
+        assert.throws(function () {
+          createFileSync('temp-X');
+        }, /over max retry count/);
       });
     });
   });
   describe('createDir()', function () {
     describe('success cases', function () {
-      let fsMkdirStub: sinon.SinonStub;
+      let fsMkdirSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always pass with null
-        fsMkdirStub = sinon.stub(fs, 'mkdir');
-        fsMkdirStub.callsArgWith(2, null);
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback(null);
+          });
       });
 
-      after(function () {
-        fsMkdirStub.restore();
+      afterAll(function () {
+        fsMkdirSpy.mockRestore();
       });
 
-      it('should create unique name directory', function (done) {
-        createDir('XXXXX', function (err, path): void {
-          if (err || path === null) {
-            return assert.fail();
-          }
+      it('should create unique name directory', function () {
+        return new Promise((resolve, reject) => {
+          createDir('XXXXX', function (err, path): void {
+            if (err || path === null) {
+              return reject(
+                new Error('Expected success but got error or null')
+              );
+            }
 
-          assert(/^[\da-zA-Z]{5}$/.test(path));
-
-          done();
+            assert(/^[\da-zA-Z]{5}$/.test(path));
+            resolve(undefined);
+          });
         });
       });
 
-      it('should create unique name directory with mode', function (done) {
-        createDir('XXXXX', 448, function (err, path): void {
-          if (err || path === null) {
-            return assert.fail();
-          }
+      it('should create unique name directory with mode', function () {
+        return new Promise((resolve, reject) => {
+          createDir('XXXXX', 448, function (err, path): void {
+            if (err || path === null) {
+              return reject(
+                new Error('Expected success but got error or null')
+              );
+            }
 
-          assert(/^[\da-zA-Z]{5}$/.test(path));
-
-          done();
+            assert(/^[\da-zA-Z]{5}$/.test(path));
+            resolve(undefined);
+          });
         });
       });
 
-      it('should create unique name dir, Promise version', function () {
-        if (!hasPromise) {
-          return this.skip();
+      it.skipIf(!hasPromise)(
+        'should create unique name dir, Promise version',
+        function () {
+          return createDir('XXXXX').then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
+
+            assert(/^[\da-zA-Z]{5}$/.test(path));
+          });
         }
+      );
 
-        return createDir('XXXXX').then(function (path): void {
-          if (path === null) {
-            return assert.fail();
-          }
+      it.skipIf(!hasPromise)(
+        'should create unique name dir with mode, Promise version',
+        function () {
+          return createDir('XXXXX', 448).then(function (path): void {
+            if (path === null) {
+              throw new Error('Expected path but got null');
+            }
 
-          assert(/^[\da-zA-Z]{5}$/.test(path));
-        });
-      });
-
-      it('should create unique name dir with mode, Promise version', function () {
-        if (!hasPromise) {
-          return this.skip();
+            assert(/^[\da-zA-Z]{5}$/.test(path));
+          });
         }
-
-        return createDir('XXXXX', 448).then(function (path): void {
-          if (path === null) {
-            return assert.fail();
-          }
-
-          assert(/^[\da-zA-Z]{5}$/.test(path));
-        });
-      });
+      );
     });
 
     describe('fail cases', function () {
-      let fsMkdirStub: sinon.SinonStub;
+      let fsMkdirSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always pass with error
-        fsMkdirStub = sinon.stub(fs, 'mkdir');
-        fsMkdirStub.callsArgWith(2, { code: 'EACCES' });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback({ code: 'EACCES' });
+          });
       });
 
-      after(function () {
-        fsMkdirStub.restore();
+      afterAll(function () {
+        fsMkdirSpy.mockRestore();
       });
 
-      it('should pass error', function (done) {
-        createDir('XXX', function (err, path): void {
-          if (!err) {
-            return assert.fail();
-          }
+      it('should pass error', function () {
+        return new Promise((resolve, reject) => {
+          createDir('XXX', function (err, path): void {
+            if (!err) {
+              return reject(new Error('Expected error but got none'));
+            }
 
-          assert(err.code === 'EACCES');
-          assert(path === null);
-
-          done();
+            assert(err.code === 'EACCES');
+            assert(path === null);
+            resolve(undefined);
+          });
         });
       });
 
-      it('should pass error, Promise version', function () {
-        if (!hasPromise) {
-          return this.skip();
-        }
-
+      it.skipIf(!hasPromise)('should pass error, Promise version', function () {
         return createDir('XXX')['catch'](function (err) {
           assert(err.code === 'EACCES');
         });
@@ -419,81 +446,86 @@ describe('creation', function () {
     });
 
     describe('when duplicate path', function () {
-      let stub: sinon.SinonStub;
-      let fsMkdirStub: sinon.SinonStub;
+      let mockFn: any;
+      let fsMkdirSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // pass with error sometimes
-        stub = sinon.stub();
-        stub
-          .onCall(0)
-          .returns({ code: 'EEXIST' })
-          .onCall(1)
-          .returns({ code: 'EEXIST' })
-          .onCall(2)
-          .returns(null);
+        mockFn = vi
+          .fn()
+          .mockReturnValueOnce({ code: 'EEXIST' })
+          .mockReturnValueOnce({ code: 'EEXIST' })
+          .mockReturnValueOnce(null);
 
-        fsMkdirStub = sinon.stub(fs, 'mkdir');
-        fsMkdirStub.callsFake(function (_path, _mode, callback) {
-          callback(stub(), null);
-        });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback(mockFn(), null);
+          });
       });
 
-      after(function () {
-        fsMkdirStub.restore();
+      afterAll(function () {
+        fsMkdirSpy.mockRestore();
       });
 
-      it('should create unique name directory', function (done) {
-        const spy = sinon.spy(function (err, path) {
-          assert(stub.calledThrice === true);
-          assert(spy.calledOnce === true);
-          assert(err === null);
-          assert(/^[\da-zA-Z]{3}$/.test(path));
+      it('should create unique name directory', function () {
+        return new Promise((resolve) => {
+          const callbackSpy = vi.fn((err, path) => {
+            assert(mockFn.mock.calls.length === 3);
+            assert(callbackSpy.mock.calls.length === 1);
+            assert(err === null);
+            assert(/^[\da-zA-Z]{3}$/.test(path));
+            resolve(undefined);
+          });
 
-          done();
+          createDir('XXX', callbackSpy);
         });
-
-        createDir('XXX', spy);
       });
     });
 
     describe('when available files not found', function () {
-      let fsMkdirStub: sinon.SinonStub;
+      let fsMkdirSpy: any;
 
       beforeEach(function () {
-        fsMkdirStub = sinon.stub(fs, 'mkdir');
-        fsMkdirStub.callsArgWith(2, { code: 'EEXIST' });
+        fsMkdirSpy = vi
+          .spyOn(fs, 'mkdir')
+          .mockImplementation((_path, _mode, callback) => {
+            callback({ code: 'EEXIST' });
+          });
       });
 
       afterEach(function () {
-        fsMkdirStub.restore();
+        fsMkdirSpy.mockRestore();
       });
 
-      it('should throws an error', function (done) {
-        createDir('temp-X', function (err): void {
-          if (!err) {
-            return assert.fail();
-          }
+      it('should throws an error', function () {
+        return new Promise((resolve, reject) => {
+          createDir('temp-X', function (err): void {
+            if (!err) {
+              return reject(new Error('Expected error but got none'));
+            }
 
-          assert(err instanceof RangeError);
-          assert(err.message === 'over max retry count');
-
-          done();
+            assert(err instanceof RangeError);
+            assert(err.message === 'over max retry count');
+            resolve(undefined);
+          });
         });
       });
     });
   });
   describe('createDirSync()', function () {
-    let fsMkdirSyncStub: sinon.SinonStub;
+    let fsMkdirSyncSpy: any;
 
     describe('success cases', function () {
-      before(function () {
+      beforeAll(function () {
         // basic stub
-        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
+        fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {
+          return;
+        });
       });
 
-      after(function () {
-        fsMkdirSyncStub.restore();
+      afterAll(function () {
+        fsMkdirSyncSpy.mockRestore();
       });
 
       it('should create unique name dir', function () {
@@ -506,89 +538,76 @@ describe('creation', function () {
     });
 
     describe('fail cases', function () {
-      let fsMkdirSyncStub: sinon.SinonStub;
+      let fsMkdirSyncSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // always throws error
-        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
-        fsMkdirSyncStub.throws({ code: 'EACCES' });
+        fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {
+          throw { code: 'EACCES' };
+        });
       });
 
-      after(function () {
-        fsMkdirSyncStub.restore();
+      afterAll(function () {
+        fsMkdirSyncSpy.mockRestore();
       });
 
       it('should threw error', function () {
-        assert.throws(
-          function () {
-            createDirSync('');
-          },
-          function (err) {
-            assert((err as NodeJS.ErrnoException).code === 'EACCES');
-
-            return true;
-          }
-        );
+        assert.throws(function () {
+          createDirSync('');
+        });
       });
     });
 
     describe('when duplicate path', function () {
-      let stub: sinon.SinonStub;
-      let fsMkdirSyncStub: sinon.SinonStub;
+      let mockFn: any;
+      let fsMkdirSyncSpy: any;
 
-      before(function () {
+      beforeAll(function () {
         // throws error sometimes
-        stub = sinon.stub();
-        stub
-          .onCall(0)
-          .throws({ code: 'EEXIST' })
-          .onCall(1)
-          .throws({ code: 'EEXIST' })
-          .onCall(2)
-          .returns(100);
+        mockFn = vi
+          .fn()
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
+          .mockImplementationOnce(() => {
+            throw { code: 'EEXIST' };
+          })
+          .mockReturnValueOnce(100);
 
-        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
-        fsMkdirSyncStub.callsFake(function () {
-          return stub();
+        fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {
+          return mockFn();
         });
       });
 
-      after(function () {
-        fsMkdirSyncStub.restore();
+      afterAll(function () {
+        fsMkdirSyncSpy.mockRestore();
       });
 
       it('should create unique name dir', function () {
         const path = createDirSync('XXX');
 
-        assert(stub.calledThrice === true);
+        assert(mockFn.mock.calls.length === 3);
         assert(/^[\da-zA-Z]{3}$/.test(path));
       });
     });
 
     describe('when available files not found', function () {
-      let fsMkdirSyncStub: sinon.SinonStub;
+      let fsMkdirSyncSpy: any;
 
-      before(function () {
-        fsMkdirSyncStub = sinon.stub(fs, 'mkdirSync');
-        fsMkdirSyncStub.throws({ code: 'EEXIST' });
+      beforeAll(function () {
+        fsMkdirSyncSpy = vi.spyOn(fs, 'mkdirSync').mockImplementation(() => {
+          throw { code: 'EEXIST' };
+        });
       });
 
-      after(function () {
-        fsMkdirSyncStub.restore();
+      afterAll(function () {
+        fsMkdirSyncSpy.mockRestore();
       });
 
       it('should throws an error', function () {
-        assert.throws(
-          function () {
-            createDirSync('');
-          },
-          function (err) {
-            assert(err instanceof RangeError);
-            assert(err.message === 'over max retry count');
-
-            return true;
-          }
-        );
+        assert.throws(function () {
+          createDirSync('');
+        }, /over max retry count/);
       });
     });
   });

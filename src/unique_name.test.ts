@@ -1,4 +1,4 @@
-import { strict as assert } from 'node:assert';
+import { describe, it, assert } from 'vitest';
 
 import { generateUniqueName, getOutcomeCount } from './unique_name';
 
