@@ -30,12 +30,22 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    },
+    "./*": {
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.mjs"
+      },
+      "require": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
       }
     }
   },
@@ -43,8 +53,8 @@
     "dist"
   ],
   "license": "MIT",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "optionalDependencies": {
     "@rollup/rollup-darwin-arm64": "4.43.0",
     "@rollup/rollup-linux-x64-gnu": "4.43.0"
@@ -80,5 +90,5 @@
     "test": "vitest run"
   },
   "sideEffects": false,
-  "types": "./dist/cjs/index.js"
+  "types": "./dist/index.d.js"
 }
