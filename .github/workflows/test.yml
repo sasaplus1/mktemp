@@ -22,7 +22,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
   test:
-    name: test node.js ${{ matrix.node }}
+    name: node.js ${{ matrix.node }}
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 5
