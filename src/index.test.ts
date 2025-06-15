@@ -44,7 +44,6 @@ describe('createXxx & createXxxSync', function () {
       const resultPath = await mktemp.createFile(template, mode);
 
       assert.ok(resultPath !== null);
-      assert.ok(fs.existsSync(resultPath));
       // In Linux, the actual file mode contains the system default values,
       // so check that the specified permission bits are applied
       const stat = await fs.promises.stat(resultPath);
@@ -68,7 +67,6 @@ describe('createXxx & createXxxSync', function () {
             const fileName = path.basename(resultPath);
 
             assert.ok(/^[\da-zA-Z]{5}\.tmp$/.test(fileName));
-            assert.ok(fs.existsSync(resultPath));
 
             // In Linux, the actual file mode contains the system default values,
             // so check that the specified permission bits are applied
@@ -102,7 +100,6 @@ describe('createXxx & createXxxSync', function () {
             const fileName = path.basename(resultPath);
 
             assert.ok(/^[\da-zA-Z]{5}\.tmp$/.test(fileName));
-            assert.ok(fs.existsSync(resultPath));
 
             // In Linux, the actual file mode contains the system default values,
             // so check that the specified permission bits are applied
@@ -134,7 +131,6 @@ describe('createXxx & createXxxSync', function () {
         const fileName = path.basename(resultPath);
 
         assert.ok(/^[\da-zA-Z]{5}\.tmp$/.test(fileName));
-        assert.ok(fs.existsSync(resultPath));
 
         // In Linux, the actual file mode contains the system default values,
         // so check that the specified permission bits are applied
@@ -157,7 +153,6 @@ describe('createXxx & createXxxSync', function () {
         const fileName = path.basename(resultPath);
 
         assert.ok(/^[\da-zA-Z]{5}\.tmp$/.test(fileName));
-        assert.ok(fs.existsSync(resultPath));
 
         // In Linux, the actual file mode contains the system default values,
         // so check that the specified permission bits are applied
@@ -180,7 +175,6 @@ describe('createXxx & createXxxSync', function () {
         const fileName = path.basename(resultPath);
 
         assert.ok(/^[\da-zA-Z]{5}\.tmp$/.test(fileName));
-        assert.ok(fs.existsSync(resultPath));
         // In Linux, the actual file mode contains the system default values,
         // so check that the specified permission bits are applied
         const stat = fs.statSync(resultPath);
@@ -203,7 +197,6 @@ describe('createXxx & createXxxSync', function () {
         const fileName = path.basename(resultPath);
 
         assert.ok(/^[\da-zA-Z]{5}\.tmp$/.test(fileName));
-        assert.ok(fs.existsSync(resultPath));
         // In Linux, the actual file mode contains the system default values,
         // so check that the specified permission bits are applied
         const stat = fs.statSync(resultPath);
