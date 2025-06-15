@@ -68,6 +68,12 @@
         "options": {
           "parser": "json-stringify"
         }
+      },
+      {
+        "files": "tsconfig.json",
+        "options": {
+          "parser": "jsonc"
+        }
       }
     ]
   },
