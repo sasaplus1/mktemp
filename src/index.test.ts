@@ -1,21 +1,14 @@
 import { describe, it, assert } from 'vitest';
-
 import * as mktemp from './index';
 
-describe('index', function () {
-  it('should export createFile', function () {
-    assert(typeof mktemp.createFile === 'function');
-  });
-  it('should export createFileSync', function () {
-    assert(typeof mktemp.createFileSync === 'function');
-  });
-  it('should export createDir', function () {
-    assert(typeof mktemp.createDir === 'function');
-  });
-  it('should export createDirSync', function () {
-    assert(typeof mktemp.createDirSync === 'function');
-  });
-  it('should export generateUniqueName', function () {
-    assert(typeof mktemp.generateUniqueName === 'function');
+describe('exports', function () {
+  it.each([
+    'createFile',
+    'createFileSync',
+    'createDir',
+    'createDirSync',
+    'generateUniqueName'
+  ] as const)('should export %s', function (functionName: keyof typeof mktemp) {
+    assert.strictEqual(typeof mktemp[functionName], 'function');
   });
 });
