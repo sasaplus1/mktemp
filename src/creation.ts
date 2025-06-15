@@ -25,6 +25,17 @@ const _r________ = 384; /* =0o600 */
 const _rw_______ = 448; /* =0o700 */
 
 /**
+ * getOutcomeCount("X") * 1 → 1 - (35/36)^(36*1) = 0.63728996689
+ * ≈ 63%
+ * 63% chance of success, 37% chance of failure
+ *
+ * getOutcomeCount("X") * 3 → 1 - (35/36)^(36*3) = 0.9522823874
+ * ≈ 95%
+ * 95% chance of success, 5% chance of failure
+ */
+const RETRY_MULTIPLIER = 3;
+
+/**
  * check mode is fs.Mode
  *
  * @param mode - target value
@@ -170,7 +181,7 @@ export function createFile(
     callback,
     isDir: false,
     mode,
-    retryCount: getOutcomeCount(template),
+    retryCount: getOutcomeCount(template) * RETRY_MULTIPLIER,
     template
   });
 }
@@ -301,7 +312,7 @@ export function createDir(
     callback,
     isDir: true,
     mode,
-    retryCount: getOutcomeCount(template),
+    retryCount: getOutcomeCount(template) * RETRY_MULTIPLIER,
     template
   });
 }
