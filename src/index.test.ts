@@ -47,7 +47,7 @@ describe('createXxx & createXxxSync', function () {
       assert.ok(fs.existsSync(resultPath));
       // In Linux, the actual file mode contains the system default values,
       // so check that the specified permission bits are applied
-      const stat = fs.statSync(resultPath);
+      const stat = await fs.promises.stat(resultPath);
       const actualMode = stat.mode & parseInt('777', 8);
       assert.strictEqual(actualMode, mode);
     });
