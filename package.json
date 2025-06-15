@@ -94,7 +94,7 @@
     "lint:fixpack": "fixpack --dryRun",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run --coverage"
   },
   "sideEffects": false,
   "types": "./dist/index.d.js"
