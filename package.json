@@ -85,11 +85,11 @@
   },
   "scripts": {
     "build": "tsup",
-    "fix": "run-p --print-label fix:*",
+    "fix": "run-p -l fix:*",
     "fix:eslint": "eslint --fix .",
     "fix:fixpack": "fixpack",
     "fix:prettier": "prettier --write .",
-    "lint": "run-p --print-label lint:*",
+    "lint": "run-p -l lint:*",
     "lint:eslint": "eslint .",
     "lint:fixpack": "fixpack --dryRun",
     "lint:prettier": "prettier --check .",
