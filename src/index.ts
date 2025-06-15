@@ -4,5 +4,10 @@
  * Released under the MIT license.
  */
 
-export * from './creation';
+export {
+  createDir,
+  createFile,
+  createDirSync,
+  createFileSync
+} from './creation';
 export { generateUniqueName } from './unique_name';
