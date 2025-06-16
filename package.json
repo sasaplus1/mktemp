@@ -25,7 +25,7 @@
     "vitest": "3.2.3"
   },
   "engines": {
-    "node": "20",
+    "node": "22",
     "npm": "11"
   },
   "exports": {
