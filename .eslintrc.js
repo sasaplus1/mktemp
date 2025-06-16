@@ -20,6 +20,11 @@ const overrides = [];
 overrides.push({
   extends: typescriptExtends,
   files: ['./src/*.ts'],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
   plugins: [...typescriptPlugins],
   rules: {
     ...tsdocRules
