@@ -169,7 +169,11 @@ export function createFile(
       // NOTE: maybe unreachable to else statement, this code is for the tsc
       if (isMode(mode)) {
         createFile(template, mode, function (err, path) {
-          err ? reject(err) : resolve(path);
+          if (err) {
+            reject(err);
+          } else {
+            resolve(path);
+          }
         });
       } else {
         reject(new TypeError(`mode must be a fs.Mode: ${mode}`));
@@ -300,7 +304,11 @@ export function createDir(
       // NOTE: maybe unreachable to else statement, this code is for the tsc
       if (isMode(mode)) {
         createDir(template, mode, function (err, path) {
-          err ? reject(err) : resolve(path);
+          if (err) {
+            reject(err);
+          } else {
+            resolve(path);
+          }
         });
       } else {
         reject(new TypeError(`mode must be a fs.Mode: ${mode}`));
