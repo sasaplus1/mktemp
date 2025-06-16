@@ -29,7 +29,6 @@ jobs:
       - run: npm ci
       - run: npm run ${{ matrix.command }}
   test:
-    name: node.js ${{ matrix.node }}
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -49,9 +48,3 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm ci
       - run: npm test
-  summarize-test-results:
-    if: always()
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - run: test '${{ needs.test.result }}' == 'success'
