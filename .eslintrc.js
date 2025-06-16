@@ -2,7 +2,7 @@ const typescriptExtends = [
   'eslint:recommended',
   'plugin:@typescript-eslint/eslint-recommended',
   'plugin:@typescript-eslint/recommended',
-  'plugin:node/recommended-module',
+  'plugin:n/recommended-module',
   'prettier'
 ];
 
@@ -25,7 +25,7 @@ overrides.push({
     ...tsdocRules
   },
   settings: {
-    node: {
+    n: {
       tryExtensions
     }
   }
@@ -35,7 +35,7 @@ config.env = {
   es6: true,
   node: true
 };
-config.extends = ['eslint:recommended', 'plugin:node/recommended', 'prettier'];
+config.extends = ['eslint:recommended', 'plugin:n/recommended', 'prettier'];
 config.overrides = overrides;
 config.parserOptions = {
   ecmaVersion: 'latest',
