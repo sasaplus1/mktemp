@@ -8,20 +8,22 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
+    "@eslint/eslintrc": "3.3.1",
     "@tsconfig/strictest": "2.0.5",
     "@types/node": "22.15.31",
-    "@typescript-eslint/eslint-plugin": "8.34.0",
-    "@typescript-eslint/parser": "8.34.0",
     "@vitest/coverage-v8": "3.2.3",
     "eslint": "9.29.0",
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-n": "17.20.0",
     "eslint-plugin-tsdoc": "0.4.0",
     "fixpack": "4.0.0",
+    "globals": "16.2.0",
+    "jiti": "2.4.2",
     "npm-run-all2": "8.0.4",
     "prettier": "3.5.3",
     "tsup": "8.5.0",
     "typescript": "5.8.3",
+    "typescript-eslint": "8.34.1",
     "vitest": "3.2.3"
   },
   "engines": {
@@ -86,11 +88,11 @@
   "scripts": {
     "build": "tsup",
     "fix": "run-p -l fix:*",
-    "fix:eslint": "ESLINT_USE_FLAT_CONFIG=false eslint --fix .",
+    "fix:eslint": "eslint --fix .",
     "fix:fixpack": "fixpack",
     "fix:prettier": "prettier --write .",
     "lint": "run-p -l lint:*",
-    "lint:eslint": "ESLINT_USE_FLAT_CONFIG=false eslint .",
+    "lint:eslint": "eslint .",
     "lint:fixpack": "fixpack --dryRun",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
