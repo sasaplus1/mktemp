@@ -12,7 +12,7 @@
     "@types/node": "22.15.32",
     "@typescript-eslint/eslint-plugin": "8.34.1",
     "@typescript-eslint/parser": "8.34.1",
-    "@vitest/coverage-v8": "3.2.3",
+    "@vitest/coverage-v8": "3.2.4",
     "eslint": "9.29.0",
     "eslint-config-prettier": "10.1.5",
     "eslint-plugin-n": "17.20.0",
@@ -22,7 +22,7 @@
     "prettier": "3.5.3",
     "tsup": "8.5.0",
     "typescript": "5.8.3",
-    "vitest": "3.2.3"
+    "vitest": "3.2.4"
   },
   "engines": {
     "node": "22",
