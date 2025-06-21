@@ -1,6 +1,6 @@
 {
   "name": "mktemp",
-  "description": "mktemp command for node.js",
+  "description": "create temporary files and directories",
   "version": "1.0.1",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "contributors": [
