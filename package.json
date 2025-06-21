@@ -24,9 +24,34 @@
     "typescript": "5.8.3",
     "vitest": "3.2.4"
   },
+  "devEngines": {
+    "os": [
+      {
+        "name": "darwin"
+      },
+      {
+        "name": "linux"
+      }
+    ],
+    "cpu": [
+      {
+        "name": "x86"
+      },
+      {
+        "name": "arm64"
+      }
+    ],
+    "runtime": {
+      "name": "node",
+      "version": "20 || 22 || 24"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "10 || 11"
+    }
+  },
   "engines": {
-    "node": "22",
-    "npm": "11"
+    "node": "20 || 22 || 24"
   },
   "exports": {
     ".": {
