@@ -78,6 +78,10 @@
       }
     ]
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
