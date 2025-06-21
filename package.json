@@ -24,9 +24,34 @@
     "typescript": "5.8.3",
     "vitest": "3.2.4"
   },
+  "devEngines": {
+    "os": [
+      {
+        "name": "darwin"
+      },
+      {
+        "name": "linux"
+      }
+    ],
+    "cpu": [
+      {
+        "name": "x64"
+      },
+      {
+        "name": "arm64"
+      }
+    ],
+    "runtime": {
+      "name": "node",
+      "version": "20 || 22 || 24"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "10 || 11"
+    }
+  },
   "engines": {
-    "node": "22",
-    "npm": "11"
+    "node": "20 || 22 || 24"
   },
   "exports": {
     ".": {
@@ -56,10 +81,6 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "optionalDependencies": {
-    "@rollup/rollup-darwin-arm64": "4.43.0",
-    "@rollup/rollup-linux-x64-gnu": "4.43.0"
-  },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none",
