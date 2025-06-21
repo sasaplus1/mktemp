@@ -1,3 +1,8 @@
+# 2.0.1 / 2025-06-22
+
+- update engines
+- use devEngines
+
 # 2.0.0 / 2025-06-21
 
 - modernize
