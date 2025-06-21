@@ -49,3 +49,15 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm ci
       - run: npm test
+  test-result:
+    if: >
+      !cancelled()
+      && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository)
+    needs:
+      - check
+      - test
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - run: |
+          test '${{ needs.check.result }}' != 'failure' && test '${{ needs.test.result }}' != 'failure'
