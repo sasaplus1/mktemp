@@ -59,5 +59,4 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
-      - run: |
-          test '${{ needs.check.result }}' != 'failure' && test '${{ needs.test.result }}' != 'failure'
+      - run: test '${{ needs.check.result }}' != 'failure' && test '${{ needs.test.result }}' != 'failure'
