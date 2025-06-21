@@ -1,7 +1,7 @@
 {
   "name": "mktemp",
   "description": "create temporary files and directories",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "author": "sasa+1 <sasaplus1@gmail.com>",
   "contributors": [
     "Michael Ficarra <github.public.email@michael.ficarra.me>",
