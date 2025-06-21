@@ -1,3 +1,9 @@
+# 2.0.0 / 2025-06-21
+
+- modernize
+- permissions can be set
+- retries increased
+
 # 1.0.1 / 2023-05-03
 
 - add missing type files
