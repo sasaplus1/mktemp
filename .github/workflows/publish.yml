@@ -19,7 +19,7 @@ jobs:
           cache: npm
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
-      - run: npm install -g npm@$(jq -r .engines.npm package.json)
+      - run: npm install -g npm@"$(jq -r .engines.npm package.json)"
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -27,6 +27,7 @@ jobs:
       - run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-      - run: gh release create ${{ github.ref_name }} --generate-notes --title ${{ github.ref_name }}
+      - run: gh release create '${{ github.ref_name }}' --title '${{ github.ref_name }}' --generate-notes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PROMPT_DISABLED: 1
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
