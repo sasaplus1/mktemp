@@ -19,7 +19,6 @@ jobs:
           cache: npm
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
-      - run: npm install -g npm@"$(jq -r .engines.npm package.json)"
       - run: npm ci
       - run: npm run lint
       - run: npm run build
