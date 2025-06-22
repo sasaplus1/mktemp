@@ -1,4 +1,3 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
