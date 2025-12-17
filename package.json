@@ -43,11 +43,11 @@
     ],
     "runtime": {
       "name": "node",
-      "version": "20 || 22 || 24"
+      "version": "24"
     },
     "packageManager": {
       "name": "npm",
-      "version": "10 || 11"
+      "version": "11"
     }
   },
   "engines": {
