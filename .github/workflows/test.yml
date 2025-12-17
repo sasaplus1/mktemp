@@ -31,7 +31,7 @@ jobs:
           path: ~/.npm
           key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: npm-${{ runner.os }}-
-      - run: npm install -g npm@$(jq -r .devEngines.packageManager.version package.json)
+      - run: npm install -g "npm@$(jq -r .devEngines.packageManager.version package.json)"
       - run: npm ci
       - uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
@@ -62,7 +62,7 @@ jobs:
           path: ~/.npm
           key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: npm-${{ runner.os }}-
-      - run: npm install -g npm@$(jq -r .devEngines.packageManager.version package.json)
+      - run: npm install -g "npm@$(jq -r .devEngines.packageManager.version package.json)"
       - run: npm ci
       - uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
