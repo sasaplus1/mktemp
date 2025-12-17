@@ -25,29 +25,10 @@
     "vitest": "3.2.4"
   },
   "devEngines": {
-    "os": [
-      {
-        "name": "darwin"
-      },
-      {
-        "name": "linux"
-      }
-    ],
-    "cpu": [
-      {
-        "name": "x64"
-      },
-      {
-        "name": "arm64"
-      }
-    ],
-    "runtime": {
-      "name": "node",
-      "version": "24"
-    },
     "packageManager": {
       "name": "npm",
-      "version": "11"
+      "version": "11",
+      "onFail": "error"
     }
   },
   "engines": {
