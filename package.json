@@ -8,7 +8,7 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
-    "@tsconfig/strictest": "2.0.6",
+    "@tsconfig/strictest": "2.0.8",
     "@types/node": "22.18.12",
     "@typescript-eslint/eslint-plugin": "8.46.2",
     "@typescript-eslint/parser": "8.46.2",
