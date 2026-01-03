@@ -8,18 +8,12 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
+    "@biomejs/biome": "2.3.10",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.4",
-    "@typescript-eslint/eslint-plugin": "8.49.0",
-    "@typescript-eslint/parser": "8.49.0",
     "@vitest/coverage-v8": "4.0.15",
-    "eslint": "9.39.2",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-n": "17.23.1",
-    "eslint-plugin-tsdoc": "0.5.0",
     "fixpack": "4.0.0",
     "npm-run-all2": "8.0.4",
-    "prettier": "3.7.4",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.0.15"
@@ -62,24 +56,6 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "none",
-    "overrides": [
-      {
-        "files": "*.json",
-        "options": {
-          "parser": "json-stringify"
-        }
-      },
-      {
-        "files": "tsconfig.json",
-        "options": {
-          "parser": "jsonc"
-        }
-      }
-    ]
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -92,13 +68,11 @@
   "scripts": {
     "build": "tsup",
     "fix": "run-p -l fix:*",
-    "fix:eslint": "ESLINT_USE_FLAT_CONFIG=false eslint --fix .",
+    "fix:biome": "biome check --write .",
     "fix:fixpack": "fixpack",
-    "fix:prettier": "prettier --write .",
     "lint": "run-p -l lint:*",
-    "lint:eslint": "ESLINT_USE_FLAT_CONFIG=false eslint .",
+    "lint:biome": "biome lint .",
     "lint:fixpack": "fixpack --dryRun",
-    "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
     "test": "vitest run --coverage"
   },

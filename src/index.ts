@@ -6,8 +6,8 @@
 
 export {
   createDir,
-  createFile,
   createDirSync,
+  createFile,
   createFileSync
 } from './creation';
 export { generateUniqueName } from './unique_name';

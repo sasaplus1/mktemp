@@ -71,7 +71,7 @@ function tryCreate({
 }: TryCreateParams) {
   const path = generateUniqueName(template);
 
-  const fn = function (err: NodeJS.ErrnoException | null, fd?: number): void {
+  const fn = (err: NodeJS.ErrnoException | null, fd?: number): void => {
     if (err) {
       if (err.code === 'EEXIST') {
         // NOTE: EEXIST error
@@ -95,7 +95,7 @@ function tryCreate({
     }
 
     if (fd) {
-      fs.close(fd, function (err) {
+      fs.close(fd, (err) => {
         callback(err, path);
       });
     } else {
@@ -165,10 +165,10 @@ export function createFile(
   // NOTE: if don't pass mode argument, mode is initialize to _r________
 
   if (typeof callback !== 'function') {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       // NOTE: maybe unreachable to else statement, this code is for the tsc
       if (isMode(mode)) {
-        createFile(template, mode, function (err, path) {
+        createFile(template, mode, (err, path) => {
           if (err) {
             reject(err);
           } else {
@@ -300,10 +300,10 @@ export function createDir(
   // NOTE: if don't pass mode argument, mode is initialize to _rw_______
 
   if (typeof callback !== 'function') {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       // NOTE: maybe unreachable to else statement, this code is for the tsc
       if (isMode(mode)) {
-        createDir(template, mode, function (err, path) {
+        createDir(template, mode, (err, path) => {
           if (err) {
             reject(err);
           } else {
