@@ -14,26 +14,22 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: pnpm-version
+        run: echo "version=$(jq -r .devEngines.packageManager.version package.json)" >> "$GITHUB_OUTPUT"
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          version: ${{ steps.pnpm-version.outputs.version }}
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
-          package-manager-cache: false
-      - uses: actions/cache/restore@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: npm-${{ runner.os }}-
-      # for OIDC authentication
-      - run: npm install -g "npm@$(jq -r .devEngines.packageManager.version package.json)"
-      - run: npm ci
-      - uses: actions/cache/save@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-      - run: npm run lint
-      - run: npm run build
-      - run: npm test
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run build
+      - run: pnpm test
+      # use npm for OIDC authentication (pnpm does not support OIDC yet)
+      - run: npm install -g npm@11
       - run: npm publish
       - run: gh release create '${{ github.ref_name }}' --title '${{ github.ref_name }}' --generate-notes
         env:
