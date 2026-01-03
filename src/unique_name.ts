@@ -22,7 +22,7 @@ export function getOutcomeCount(template: string): number {
     return 1;
   }
 
-  return Math.pow(tableLength, matches[1].length);
+  return tableLength ** matches[1].length;
 }
 
 /**
