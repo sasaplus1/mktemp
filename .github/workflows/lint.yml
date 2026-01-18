@@ -16,4 +16,4 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - uses: docker://rhysd/actionlint:latest
+      - uses: docker://rhysd/actionlint:latest@sha256:ef8299f97635c4c30e2298f48f30763ab782a4ad2c95b744649439a039421e36
