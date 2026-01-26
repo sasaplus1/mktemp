@@ -12,12 +12,12 @@
     "@biomejs/biome": "2.3.11",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.9",
-    "@vitest/coverage-v8": "4.0.15",
+    "@vitest/coverage-v8": "4.0.18",
     "fixpack": "4.0.0",
     "npm-run-all2": "8.0.4",
     "tsdown": "0.20.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.15"
+    "vitest": "4.0.18"
   },
   "devEngines": {
     "packageManager": {
