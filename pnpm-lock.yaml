@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.18.2
+        specifier: 0.18.2
         version: 0.18.2
       '@biomejs/biome':
         specifier: 2.3.10
@@ -30,7 +30,7 @@ importers:
         specifier: 8.0.4
         version: 8.0.4
       tsdown:
-        specifier: ^0.20.1
+        specifier: 0.20.1
         version: 0.20.1(@arethetypeswrong/core@0.18.2)(typescript@5.9.3)
       typescript:
         specifier: 5.9.3
