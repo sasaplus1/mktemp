@@ -14,7 +14,7 @@
     "@vitest/coverage-v8": "4.0.15",
     "fixpack": "4.0.0",
     "npm-run-all2": "8.0.4",
-    "tsup": "8.5.1",
+    "tsdown": "^0.20.1",
     "typescript": "5.9.3",
     "vitest": "4.0.15"
   },
@@ -31,22 +31,22 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
+        "types": "./dist/index.d.mts",
         "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     },
     "./*": {
       "import": {
-        "types": "./dist/*.d.ts",
+        "types": "./dist/*.d.mts",
         "default": "./dist/*.mjs"
       },
       "require": {
-        "types": "./dist/*.d.ts",
-        "default": "./dist/*.js"
+        "types": "./dist/*.d.cts",
+        "default": "./dist/*.cjs"
       }
     }
   },
@@ -54,7 +54,7 @@
     "dist"
   ],
   "license": "MIT",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "publishConfig": {
     "access": "public",
@@ -66,7 +66,7 @@
     "url": "https://github.com/sasaplus1/mktemp.git"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "fix": "run-p -l fix:*",
     "fix:biome": "biome check --write .",
     "fix:fixpack": "fixpack",
@@ -77,5 +77,5 @@
     "test": "vitest run --coverage"
   },
   "sideEffects": false,
-  "types": "./dist/index.d.js"
+  "types": "./dist/index.d.cts"
 }
