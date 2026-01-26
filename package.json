@@ -69,7 +69,7 @@
   "scripts": {
     "build": "tsdown",
     "check": "run-p -l check:*",
-    "check:attw": "pnpm pack && run-p -l check:attw:* && rm mktemp-*.tgz",
+    "check:attw": "run-s -l build && pnpm pack && run-p -l check:attw:* && rm mktemp-*.tgz",
     "check:attw:esm-only": "attw mktemp-*.tgz --profile esm-only",
     "check:attw:node16": "attw mktemp-*.tgz --profile node16",
     "check:attw:strict": "attw mktemp-*.tgz --profile strict",
