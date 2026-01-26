@@ -8,6 +8,7 @@
     "rjz <rj@rjzaworski.com>"
   ],
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@biomejs/biome": "2.3.10",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.4",
@@ -67,6 +68,11 @@
   },
   "scripts": {
     "build": "tsdown",
+    "check": "run-p -l check:*",
+    "check:attw": "pnpm pack && run-p -l check:attw:* && rm mktemp-*.tgz",
+    "check:attw:esm-only": "attw mktemp-*.tgz --profile esm-only",
+    "check:attw:node16": "attw mktemp-*.tgz --profile node16",
+    "check:attw:strict": "attw mktemp-*.tgz --profile strict",
     "fix": "run-p -l fix:*",
     "fix:biome": "biome check --write .",
     "fix:fixpack": "fixpack",
