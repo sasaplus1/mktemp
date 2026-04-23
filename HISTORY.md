@@ -1,3 +1,7 @@
+# 2.0.3 / 2026-04-23
+
+- maintenance update
+
 # 2.0.2 / 2025-09-13
 
 - publish with OIDC authentication
