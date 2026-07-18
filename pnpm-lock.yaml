@@ -30,8 +30,8 @@ importers:
         specifier: 9.0.2
         version: 9.0.2
       tsdown:
-        specifier: 0.22.7
-        version: 0.22.7(@arethetypeswrong/core@0.18.5)(typescript@7.0.2)
+        specifier: 0.22.8
+        version: 0.22.8(@arethetypeswrong/core@0.18.5)(typescript@7.0.2)
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -1005,14 +1005,14 @@ packages:
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
-  rolldown-plugin-dts@0.27.8:
-    resolution: {integrity: sha512-IjBTFpkrYYJPRUmIjUJFsZdR1zeHskFcEwFDzSfFDoC2pZcSNgLrBUcDFY9K0Q+A1TZJR3q9MlVomxMDP8AuLQ==}
+  rolldown-plugin-dts@0.27.9:
+    resolution: {integrity: sha512-d54yt65+ZF/Mk8H6P36As02PAMdaiWRSzVNtJRc1h7nCgUFjuRI4cN2DyTfJyfVpPH6pgy7/2D7YQH1/Rh75Yg==}
     engines: {node: ^22.18.0 || >=24.11.0}
     peerDependencies:
       '@ts-macro/tsc': ^0.3.6
-      '@typescript/native-preview': '>=7.0.0-dev.20260325.1'
+      '@typescript/native-preview': '*'
       rolldown: ^1.0.0
-      typescript: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: ^5.0.0 || ^6.0.0 || ~7.0.0
       vue-tsc: ~3.2.0 || ~3.3.0
     peerDependenciesMeta:
       '@ts-macro/tsc':
@@ -1109,14 +1109,14 @@ packages:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
 
-  tsdown@0.22.7:
-    resolution: {integrity: sha512-4egbOzc9dxVv/QS+gDV75FIxDIjQQeOnXBlUuikyjmn0ozuc6FW11djJjEEo3vqkuJRygpnKHurnj+Iwftk4VA==}
+  tsdown@0.22.8:
+    resolution: {integrity: sha512-6FOLlr1iLcE3LheqQt13hVUWtTduJNwF2akPskPe8Tf1hr+N5UULHzrNZYTMNwL6lr2UyQ8iefVBB6tdqp1PCQ==}
     engines: {node: ^22.18.0 || >=24.11.0}
     hasBin: true
     peerDependencies:
       '@arethetypeswrong/core': ^0.18.1
-      '@tsdown/css': 0.22.7
-      '@tsdown/exe': 0.22.7
+      '@tsdown/css': 0.22.8
+      '@tsdown/exe': 0.22.8
       '@vitejs/devtools': '*'
       publint: ^0.3.8
       tsx: '*'
@@ -2012,7 +2012,7 @@ snapshots:
 
   resolve-pkg-maps@1.0.0: {}
 
-  rolldown-plugin-dts@0.27.8(rolldown@1.1.5)(typescript@7.0.2):
+  rolldown-plugin-dts@0.27.9(rolldown@1.1.5)(typescript@7.0.2):
     dependencies:
       dts-resolver: 3.0.0
       get-tsconfig: 5.0.0-beta.5
@@ -2111,7 +2111,7 @@ snapshots:
 
   tree-kill@1.2.2: {}
 
-  tsdown@0.22.7(@arethetypeswrong/core@0.18.5)(typescript@7.0.2):
+  tsdown@0.22.8(@arethetypeswrong/core@0.18.5)(typescript@7.0.2):
     dependencies:
       ansis: 4.3.1
       cac: 7.0.0
@@ -2122,7 +2122,7 @@ snapshots:
       obug: 2.1.3
       picomatch: 4.0.5
       rolldown: 1.1.5
-      rolldown-plugin-dts: 0.27.8(rolldown@1.1.5)(typescript@7.0.2)
+      rolldown-plugin-dts: 0.27.9(rolldown@1.1.5)(typescript@7.0.2)
       semver: 7.8.5
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
