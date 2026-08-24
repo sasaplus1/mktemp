@@ -1,3 +1,8 @@
+# 2.0.4 / 2026-08-24
+
+- update engines
+- maintenance update
+
 # 2.0.3 / 2026-04-23
 
 - maintenance update

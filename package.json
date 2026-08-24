@@ -1,12 +1,8 @@
 {
   "name": "mktemp",
   "description": "create temporary files and directories",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": "sasa+1 <sasaplus1@gmail.com>",
-  "contributors": [
-    "Michael Ficarra <github.public.email@michael.ficarra.me>",
-    "rjz <rj@rjzaworski.com>"
-  ],
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
     "@biomejs/biome": "2.5.9",

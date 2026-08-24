@@ -120,11 +120,6 @@ create directory of unique dirname. return Promise if callback is not passed.
 
 sync version createDir.
 
-## Contributors
-
-- [Michael Ficarra](https://github.com/michaelficarra)
-- [rjz](https://github.com/rjz)
-
 ## License
 
 The MIT license.
