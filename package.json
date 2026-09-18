@@ -8,12 +8,12 @@
     "@biomejs/biome": "2.5.13",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.4",
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/coverage-v8": "5.0.0",
     "fixpack": "4.0.0",
     "npm-run-all2": "9.0.3",
     "tsdown": "0.23.0",
     "typescript": "7.0.2",
-    "vitest": "4.1.11"
+    "vitest": "5.0.0"
   },
   "devEngines": {
     "packageManager": {
