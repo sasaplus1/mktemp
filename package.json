@@ -7,7 +7,7 @@
     "@arethetypeswrong/cli": "0.18.5",
     "@biomejs/biome": "2.5.15",
     "@tsconfig/strictest": "2.0.8",
-    "@types/node": "24.19.2",
+    "@types/node": "26.6.5",
     "@vitest/coverage-v8": "5.0.5",
     "fixpack": "4.0.0",
     "npm-run-all2": "9.0.3",
