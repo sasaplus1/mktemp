@@ -6,7 +6,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
     "@biomejs/biome": "2.6.7",
-    "@tsconfig/strictest": "2.0.8",
+    "@tsconfig/strictest": "2.0.9",
     "@types/node": "26.6.6",
     "@vitest/coverage-v8": "5.1.0",
     "fixpack": "4.0.0",
